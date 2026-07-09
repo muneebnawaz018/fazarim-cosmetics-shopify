@@ -1,0 +1,94 @@
+/*
+  Fazarim overrides on top of Dawn.
+  Kept in one file so Dawn's own stylesheets stay untouched and upgradable.
+  Loaded from layout/theme.liquid, after base.css.
+*/
+
+/* ---------------------------------------------------------------- header */
+
+/* Wordmark: bold uppercase, tightly tracked. */
+.header__heading-link {
+  padding: 0;
+}
+
+.header__heading-link .h2,
+.header__heading-link span {
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 2.6rem;
+  line-height: 1;
+}
+
+/* Nav row: small, bold, uppercase, generously tracked. */
+.header__inline-menu .header__menu-item {
+  font-size: 1.3rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  padding-block: 1.2rem;
+}
+
+/* Dawn underlines the active link; the reference marks it with colour instead. */
+.header__inline-menu .header__menu-item span {
+  text-decoration: none;
+}
+
+.header__inline-menu > ul > li:first-child .header__menu-item {
+  color: rgb(var(--color-foreground));
+}
+
+/* Mega-menu panel: quieter headings, tighter rows. */
+.mega-menu__link--level-2 {
+  font-size: 1.3rem;
+}
+
+.mega-menu__list .mega-menu__link {
+  padding-block: 0.6rem;
+}
+
+/*
+  Cart badge is always rendered now (see sections/header.liquid) so an empty
+  cart shows "0", matching the reference. Dawn only sized it for 1+ digits.
+*/
+.cart-count-bubble {
+  min-width: 1.7rem;
+  height: 1.7rem;
+  font-size: 1rem;
+  font-weight: 600;
+  bottom: auto;
+  top: -0.4rem;
+  left: auto;
+  right: -0.6rem;
+}
+
+/* ------------------------------------------------------- category tiles */
+
+/*
+  Dawn caps `columns_desktop` at 6, but the reference runs 9 across.
+  Its .grid is flexbox with calc'd widths, so we recompute for 9 rather
+  than reaching for grid-template-columns.
+
+  `collection-list--9-items` is emitted by Dawn from the block count, so
+  this only applies to a 9-tile list and needs no section-id coupling.
+*/
+@media screen and (min-width: 990px) {
+  .collection-list--9-items.grid--6-col-desktop .grid__item {
+    width: calc(11.11% - var(--grid-desktop-horizontal-spacing) * 8 / 9);
+    max-width: calc(11.11% - var(--grid-desktop-horizontal-spacing) * 8 / 9);
+  }
+}
+
+/* Tile captions: compact, uppercase, centred under the image. */
+.collection-list--9-items .card__heading {
+  font-size: 1.3rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  text-align: center;
+}
+
+.collection-list-title {
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}

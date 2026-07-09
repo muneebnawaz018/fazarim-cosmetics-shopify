@@ -60,7 +60,7 @@
           }
         }
       },
-      "type_header_font": "playfair_display_n4",
+      "type_header_font": "poppins_n7",
       "heading_scale": 110,
       "type_body_font": "assistant_n4",
       "body_scale": 100,
@@ -68,7 +68,7 @@
       "spacing_sections": 0,
       "spacing_grid_horizontal": 8,
       "spacing_grid_vertical": 8,
-      "animations_reveal_on_scroll": true,
+      "animations_reveal_on_scroll": false,
       "animations_hover_elements": "none",
       "buttons_border_thickness": 1,
       "buttons_border_opacity": 100,

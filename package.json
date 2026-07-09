@@ -1,0 +1,29 @@
+{
+  "name": "fazarim-cosmetics-shopify",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Fazarim Cosmetics Shopify theme — dev scripts",
+  "config": {
+    "store": "fazarim-cosmetics.myshopify.com",
+    "themeId": "160480395477"
+  },
+  "scripts": {
+    "stop": "pkill -f 'shopify theme dev' 2>/dev/null; lsof -ti:9292 2>/dev/null | xargs kill 2>/dev/null; echo 'dev server stopped'",
+    "predev": "npm run stop",
+    "dev": "shopify theme dev --path ./fazarim-theme --store fazarim-cosmetics.myshopify.com --store-password deotra",
+    "restart": "npm run dev",
+    "start": "npm run dev",
+    "push": "shopify theme push --path ./fazarim-theme --store fazarim-cosmetics.myshopify.com --theme 160480395477",
+    "push:new": "shopify theme push --path ./fazarim-theme --store fazarim-cosmetics.myshopify.com --unpublished --theme \"Fazarim Custom\"",
+    "pull": "shopify theme pull --path ./fazarim-theme --store fazarim-cosmetics.myshopify.com --theme 160480395477",
+    "publish": "shopify theme publish --path ./fazarim-theme --store fazarim-cosmetics.myshopify.com --theme 160480395477",
+    "setup:verify": "node scripts/shopify-setup.mjs verify",
+    "setup:dry": "node scripts/shopify-setup.mjs all --dry-run",
+    "setup": "node scripts/shopify-setup.mjs all",
+    "assets:client": "node scripts/shopify-setup.mjs assets --assets data/assets.client.json",
+    "images:client": "node scripts/shopify-setup.mjs images --assets data/assets.client.json",
+    "list": "shopify theme list --store fazarim-cosmetics.myshopify.com",
+    "check": "shopify theme check --path ./fazarim-theme",
+    "logout": "shopify auth logout"
+  }
+}

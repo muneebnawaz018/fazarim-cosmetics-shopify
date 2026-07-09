@@ -17,7 +17,8 @@
             "box_align": "middle-left",
             "text_alignment": "left",
             "text_alignment_mobile": "center",
-            "color_scheme": "scheme-1"
+            "color_scheme": "scheme-1",
+            "image": "shopify://shop_images/photo-1596462502278-27bfdc403348.jpg"
           }
         },
         "slide-2": {
@@ -34,11 +35,15 @@
             "box_align": "middle-center",
             "text_alignment": "center",
             "text_alignment_mobile": "center",
-            "color_scheme": "scheme-3"
+            "color_scheme": "scheme-3",
+            "image": "shopify://shop_images/photo-1522335789203-aabd1fc54bc9.jpg"
           }
         }
       },
-      "block_order": ["slide-1", "slide-2"],
+      "block_order": [
+        "slide-1",
+        "slide-2"
+      ],
       "settings": {
         "layout": "full_bleed",
         "slide_height": "large",
@@ -53,21 +58,79 @@
     "category_tiles": {
       "type": "collection-list",
       "blocks": {
-        "cat-1": { "type": "featured_collection", "settings": { "collection": "" } },
-        "cat-2": { "type": "featured_collection", "settings": { "collection": "" } },
-        "cat-3": { "type": "featured_collection", "settings": { "collection": "" } },
-        "cat-4": { "type": "featured_collection", "settings": { "collection": "" } },
-        "cat-5": { "type": "featured_collection", "settings": { "collection": "" } },
-        "cat-6": { "type": "featured_collection", "settings": { "collection": "" } }
+        "cat-1": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "makeup"
+          }
+        },
+        "cat-2": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "foundation"
+          }
+        },
+        "cat-3": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "lipstick"
+          }
+        },
+        "cat-4": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "mascara"
+          }
+        },
+        "cat-5": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "moisturizer"
+          }
+        },
+        "cat-6": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "skincare"
+          }
+        },
+        "cat-7": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "bath-body"
+          }
+        },
+        "cat-8": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "hair"
+          }
+        },
+        "cat-9": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "nail-polish"
+          }
+        }
       },
-      "block_order": ["cat-1", "cat-2", "cat-3", "cat-4", "cat-5", "cat-6"],
+      "block_order": [
+        "cat-1",
+        "cat-2",
+        "cat-3",
+        "cat-4",
+        "cat-5",
+        "cat-6",
+        "cat-7",
+        "cat-8",
+        "cat-9"
+      ],
       "settings": {
-        "title": "Shop by category",
+        "title": "Product Categories",
         "heading_size": "h1",
         "image_ratio": "square",
         "columns_desktop": 6,
         "color_scheme": "scheme-1",
-        "show_view_all": true,
+        "show_view_all": false,
         "columns_mobile": "2",
         "swipe_on_mobile": true,
         "padding_top": 48,
@@ -82,7 +145,7 @@
         "description": "",
         "show_description": false,
         "description_style": "body",
-        "collection": "all",
+        "collection": "sale",
         "products_to_show": 8,
         "columns_desktop": 4,
         "color_scheme": "scheme-2",
@@ -110,7 +173,7 @@
         "description": "",
         "show_description": false,
         "description_style": "body",
-        "collection": "all",
+        "collection": "new-arrivals",
         "products_to_show": 8,
         "columns_desktop": 4,
         "color_scheme": "scheme-1",
@@ -131,49 +194,51 @@
       }
     },
     "promo": {
-      "type": "rich-text",
+      "type": "image-banner",
       "blocks": {
-        "caption": {
-          "type": "caption",
-          "settings": {
-            "caption": "Limited time",
-            "text_style": "caption-with-letter-spacing",
-            "text_size": "medium"
-          }
-        },
         "heading": {
           "type": "heading",
           "settings": {
-            "heading": "15% off your first order",
+            "heading": "The Glow Edit",
             "heading_size": "h1"
           }
         },
         "text": {
           "type": "text",
           "settings": {
-            "text": "<p>Join the Fazarim list for early access to drops, clean-beauty tips, and members-only offers.</p>"
+            "text": "Up to 40% off best-selling makeup & skincare.",
+            "text_style": "body"
           }
         },
         "button": {
-          "type": "button",
+          "type": "buttons",
           "settings": {
-            "button_label": "Shop the edit",
-            "button_link": "shopify://collections/all",
-            "button_style_secondary": false,
-            "button_label_2": "",
-            "button_link_2": "",
-            "button_style_secondary_2": false
+            "button_label_1": "Shop Sale",
+            "button_link_1": "/collections/sale",
+            "button_style_secondary_1": false,
+            "button_label_2": "New Arrivals",
+            "button_link_2": "/collections/new-arrivals",
+            "button_style_secondary_2": true
           }
         }
       },
-      "block_order": ["caption", "heading", "text", "button"],
+      "block_order": [
+        "heading",
+        "text",
+        "button"
+      ],
       "settings": {
-        "desktop_content_position": "center",
-        "content_alignment": "center",
-        "color_scheme": "scheme-3",
-        "full_width": true,
-        "padding_top": 52,
-        "padding_bottom": 52
+        "image_overlay_opacity": 20,
+        "image_height": "medium",
+        "desktop_content_position": "middle-left",
+        "show_text_box": true,
+        "desktop_content_alignment": "left",
+        "color_scheme": "scheme-1",
+        "image_behavior": "none",
+        "mobile_content_alignment": "center",
+        "stack_images_on_mobile": true,
+        "show_text_below": true,
+        "image": "shopify://shop_images/photo-1512496015851-a90fb38ba796.jpg"
       }
     },
     "best_sellers": {
@@ -184,9 +249,9 @@
         "description": "",
         "show_description": false,
         "description_style": "body",
-        "collection": "all",
+        "collection": "best-sellers",
         "products_to_show": 8,
-        "columns_desktop": 4,
+        "columns_desktop": 3,
         "color_scheme": "scheme-1",
         "full_width": false,
         "show_view_all": true,
@@ -238,7 +303,12 @@
           }
         }
       },
-      "block_order": ["caption", "heading", "text", "button"],
+      "block_order": [
+        "caption",
+        "heading",
+        "text",
+        "button"
+      ],
       "settings": {
         "height": "large",
         "desktop_image_width": "medium",
@@ -285,7 +355,11 @@
           }
         }
       },
-      "block_order": ["col-1", "col-2", "col-3"],
+      "block_order": [
+        "col-1",
+        "col-2",
+        "col-3"
+      ],
       "settings": {
         "title": "Why Fazarim",
         "heading_size": "h1",
@@ -324,12 +398,72 @@
           "settings": {}
         }
       },
-      "block_order": ["heading", "paragraph", "email_form"],
+      "block_order": [
+        "heading",
+        "paragraph",
+        "email_form"
+      ],
       "settings": {
         "color_scheme": "scheme-5",
         "full_width": true,
         "padding_top": 52,
         "padding_bottom": 52
+      }
+    },
+    "makeup": {
+      "type": "featured-collection",
+      "settings": {
+        "title": "Makeup",
+        "heading_size": "h1",
+        "description": "",
+        "show_description": false,
+        "description_style": "body",
+        "collection": "makeup",
+        "products_to_show": 8,
+        "columns_desktop": 4,
+        "color_scheme": "scheme-1",
+        "full_width": false,
+        "show_view_all": true,
+        "view_all_style": "solid",
+        "enable_desktop_slider": true,
+        "swipe_on_mobile": true,
+        "image_ratio": "portrait",
+        "image_shape": "default",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": true,
+        "quick_add": "standard",
+        "columns_mobile": "2",
+        "padding_top": 48,
+        "padding_bottom": 36
+      }
+    },
+    "skincare": {
+      "type": "featured-collection",
+      "settings": {
+        "title": "Skincare",
+        "heading_size": "h1",
+        "description": "",
+        "show_description": false,
+        "description_style": "body",
+        "collection": "skincare",
+        "products_to_show": 8,
+        "columns_desktop": 4,
+        "color_scheme": "scheme-2",
+        "full_width": false,
+        "show_view_all": true,
+        "view_all_style": "solid",
+        "enable_desktop_slider": true,
+        "swipe_on_mobile": true,
+        "image_ratio": "portrait",
+        "image_shape": "default",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": true,
+        "quick_add": "standard",
+        "columns_mobile": "2",
+        "padding_top": 48,
+        "padding_bottom": 36
       }
     }
   },
@@ -340,6 +474,8 @@
     "new_arrivals",
     "promo",
     "best_sellers",
+    "makeup",
+    "skincare",
     "brand_story",
     "why_fazarim",
     "newsletter"

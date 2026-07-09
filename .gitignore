@@ -1,0 +1,7 @@
+# Secrets — never commit
+.godaddy.env
+*.env
+.env
+
+# OS
+.DS_Store

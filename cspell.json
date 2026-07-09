@@ -1,0 +1,32 @@
+{
+  "version": "0.2",
+  "language": "en",
+  "words": [
+    "cspell",
+    "deotra",
+    "endcapture",
+    "endcase",
+    "endcomment",
+    "endfor",
+    "endform",
+    "endif",
+    "endpaginate",
+    "endschema",
+    "endstyle",
+    "endunless",
+    "fazarim",
+    "godaddy",
+    "liquid",
+    "myshopify",
+    "pkill",
+    "shopify",
+    "shpat",
+    "unpublished"
+  ],
+  "ignorePaths": [
+    "node_modules/**",
+    "fazarim-theme/assets/**.js",
+    "fazarim-theme/locales/**",
+    "*.env"
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "$comment": "DUMMY / DEV ONLY. Royalty-free Unsplash imagery so the theme renders during development.",
+  "$warning": "DO NOT LAUNCH WITH THESE. They are stock photos of other brands' products. Replace with the client's own photography before going live.",
+  "$howToReplace": "Copy this file to assets.client.json, swap every URL for the client's image (any publicly reachable URL — Shopify fetches server-side), then run: npm run images:client && npm run assets:client",
+
+  "label": "dummy (Unsplash — replace before launch)",
+
+  "productImages": {
+    "silk-finish-foundation":   "https://images.unsplash.com/photo-1631730359585-38a4935cbec4?w=1200&q=80",
+    "velvet-matte-lipstick":    "https://images.unsplash.com/photo-1586495777744-4413f21062fa?w=1200&q=80",
+    "lash-volume-mascara":      "https://images.unsplash.com/photo-1631214540553-ff044a3ff1d4?w=1200&q=80",
+    "flawless-concealer":       "https://images.unsplash.com/photo-1596704017254-9b121068fb31?w=1200&q=80",
+    "hydra-glow-moisturizer":   "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=1200&q=80",
+    "vitamin-c-serum":          "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=1200&q=80",
+    "gentle-foaming-cleanser":  "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=1200&q=80",
+    "daily-defense-sunscreen":  "https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=1200&q=80",
+    "nourish-body-wash":        "https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?w=1200&q=80",
+    "silk-body-lotion":         "https://images.unsplash.com/photo-1601049541289-9b1b7bbbfe19?w=1200&q=80",
+    "repair-shampoo":           "https://images.unsplash.com/photo-1535585209827-a15fcdbc4c2d?w=1200&q=80",
+    "argan-hair-oil":           "https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?w=1200&q=80"
+  },
+
+  "themeAssets": {
+    "hero-1": "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=2400&q=80",
+    "hero-2": "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=2400&q=80",
+    "promo":  "https://images.unsplash.com/photo-1512496015851-a90fb38ba796?w=2400&q=80"
+  }
+}

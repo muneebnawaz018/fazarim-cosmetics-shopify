@@ -1,0 +1,56 @@
+{
+  "$comment": "PERMANENT. The store's information architecture — collections and navigation. Version-controlled, re-runnable on any store. Product rows live in sample-products.csv. Imagery lives in assets.dummy.json (dev) or assets.client.json (real).",
+
+  "collections": [
+    { "handle": "sale",         "title": "Sale",         "rule": { "column": "tag",  "condition": "sale" } },
+    { "handle": "new-arrivals", "title": "New Arrivals", "rule": { "column": "tag",  "condition": "new" } },
+    { "handle": "best-sellers", "title": "Best Sellers", "rule": { "column": "tag",  "condition": "best-seller" } },
+    { "handle": "makeup",       "title": "Makeup",       "rule": { "column": "tag",  "condition": "makeup" } },
+    { "handle": "skincare",     "title": "Skincare",     "rule": { "column": "tag",  "condition": "skincare" } },
+    { "handle": "bath-body",    "title": "Bath & Body",  "rule": { "column": "tag",  "condition": "bath-body" } },
+    { "handle": "hair",         "title": "Hair",         "rule": { "column": "tag",  "condition": "hair" } },
+    { "handle": "accessories",  "title": "Accessories",  "rule": { "column": "tag",  "condition": "accessories" } },
+    { "handle": "gifts",        "title": "Gifts",        "rule": { "column": "tag",  "condition": "gifts" } },
+
+    { "handle": "foundation",   "title": "Foundation",   "rule": { "column": "type", "condition": "Foundation" } },
+    { "handle": "lipstick",     "title": "Lips",         "rule": { "column": "type", "condition": "Lipstick" } },
+    { "handle": "mascara",      "title": "Eye Makeup",   "rule": { "column": "type", "condition": "Mascara" } },
+    { "handle": "moisturizer",  "title": "Moisturizer",  "rule": { "column": "type", "condition": "Moisturizer" } },
+    { "handle": "nail-polish",  "title": "Nail Polish",  "rule": { "column": "type", "condition": "Nail Polish" } }
+  ],
+
+  "menu": {
+    "handle": "main-menu",
+    "title": "Main menu",
+    "items": [
+      { "title": "Sale", "collection": "sale" },
+      {
+        "title": "Makeup", "collection": "makeup",
+        "items": [
+          { "title": "Face Makeup", "collection": "foundation" },
+          { "title": "Eye Makeup",  "collection": "mascara" },
+          { "title": "Lips",        "collection": "lipstick" },
+          { "title": "Nails",       "collection": "nail-polish" }
+        ]
+      },
+      {
+        "title": "Skincare", "collection": "skincare",
+        "items": [
+          { "title": "Moisturizer", "collection": "moisturizer" },
+          { "title": "Serums",      "collection": "skincare" },
+          { "title": "Sunscreen",   "collection": "skincare" }
+        ]
+      },
+      { "title": "Bath and Body", "collection": "bath-body" },
+      { "title": "Hair",          "collection": "hair" },
+      { "title": "Accessories",   "collection": "accessories" },
+      { "title": "Gifts",         "collection": "gifts" }
+    ]
+  },
+
+  "$targetsComment": "Where theme imagery gets wired into templates/index.json. Asset keys resolve against the active assets.*.json file.",
+  "themeAssetTargets": {
+    "hero":  { "section": "hero",  "slides": ["hero-1", "hero-2"] },
+    "promo": { "section": "promo", "asset": "promo" }
+  }
+}
