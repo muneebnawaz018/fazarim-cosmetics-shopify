@@ -34,7 +34,7 @@ We will replace it or refund it in full, including delivery charges, and we will
 
 ## How to start a return
 
-Email **<ceo@fazarim.com>** with:
+Email **ceo@fazarim.com** with:
 
 - Your order number
 - What you're returning and why
@@ -62,7 +62,7 @@ The fastest way to exchange something is to return the original item for a refun
 
 ## Questions
 
-**Email:** <ceo@fazarim.com>
+**Email:** ceo@fazarim.com
 **Phone:** [CLIENT PHONE]
 **Address:** [CLIENT BUSINESS ADDRESS]
 

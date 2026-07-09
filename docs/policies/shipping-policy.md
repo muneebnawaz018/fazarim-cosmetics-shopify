@@ -35,7 +35,7 @@ If your tracking shows the parcel as delivered but you haven't received it, plea
 
 1. Check with others at your delivery address
 2. Check any safe place or reception the courier may have used
-3. Contact us at **<ceo@fazarim.com>** with your order number
+3. Contact us at **ceo@fazarim.com** with your order number
 
 Please allow the full estimated delivery window to pass before reporting an order as missing.
 
@@ -57,7 +57,7 @@ If your parcel arrives visibly damaged, photograph it **before opening**, and co
 
 ## Questions
 
-**Email:** <ceo@fazarim.com>
+**Email:** ceo@fazarim.com
 **Phone:** [CLIENT PHONE]
 
 ---

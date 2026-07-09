@@ -7,7 +7,7 @@ These terms govern your use of **fazarim.com** and any purchase you make from Fa
 Fazarim Cosmetics
 [CLIENT BUSINESS ADDRESS]
 Pakistan
-<ceo@fazarim.com>
+ceo@fazarim.com
 
 ## Using this site
 
@@ -95,7 +95,7 @@ These terms are governed by the laws of **Pakistan**, and the courts of Pakistan
 
 ## Contact
 
-**Email:** <ceo@fazarim.com>
+**Email:** ceo@fazarim.com
 **Phone:** [CLIENT PHONE]
 
 ---

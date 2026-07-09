@@ -49,7 +49,7 @@ We may also disclose information if we are legally required to, or to protect ou
 
 ## Marketing
 
-If you opt in, we'll email you about new products and offers. Every email has an unsubscribe link, and you can also email **<ceo@fazarim.com>** to be removed at any time.
+If you opt in, we'll email you about new products and offers. Every email has an unsubscribe link, and you can also email **ceo@fazarim.com** to be removed at any time.
 
 We don't email you marketing unless you asked for it.
 
@@ -71,7 +71,7 @@ You can ask us to:
 - Correct anything that's wrong
 - Delete your information, where we're not legally required to keep it
 
-Email **<ceo@fazarim.com>** and we'll respond.
+Email **ceo@fazarim.com** and we'll respond.
 
 ## Children
 
@@ -83,7 +83,7 @@ We may update this policy as the business changes or the law requires. The date 
 
 ## Contact
 
-**Email:** <ceo@fazarim.com>
+**Email:** ceo@fazarim.com
 **Phone:** [CLIENT PHONE]
 **Address:** [CLIENT BUSINESS ADDRESS]
 
