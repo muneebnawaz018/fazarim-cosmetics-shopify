@@ -326,7 +326,9 @@ async function menus() {
   const { collections: cols } = await gql('{ collections(first: 100) { nodes { id handle } } }');
   const gid = Object.fromEntries(cols.nodes.map((n) => [n.handle, n.id]));
 
-  const toItem = ({ title, collection, items }) => {
+  /** An item is either a collection (resolved to a gid) or a literal url. */
+  const toItem = ({ title, collection, url, type, items }) => {
+    if (!collection) return { title, type: type || 'HTTP', url, ...(items?.length && { items: items.map(toItem) }) };
     const id = gid[collection];
     if (!id) console.log(`  warn: collection '${collection}' missing — '${title}' falls back to a URL link`);
     return {
@@ -336,27 +338,31 @@ async function menus() {
       ...(items?.length && { items: items.map(toItem) }),
     };
   };
-  const items = STRUCTURE.menu.items.map(toItem);
 
-  if (DRY_RUN) {
-    console.log(`[dry] ${STRUCTURE.menu.handle} structure:`);
-    for (const i of items) {
-      console.log(`  ${i.title}`);
-      i.items?.forEach((s) => console.log(`    └─ ${s.title}`));
+  const { menus: existing } = DRY_RUN ? { menus: { nodes: [] } } : await gql(MENU_QUERY);
+
+  for (const menu of STRUCTURE.menus) {
+    const items = menu.items.map(toItem);
+
+    if (DRY_RUN) {
+      console.log(`[dry] ${menu.handle}:`);
+      for (const i of items) {
+        console.log(`  ${i.title}`);
+        i.items?.forEach((s) => console.log(`    └─ ${s.title}`));
+      }
+      continue;
     }
-    return;
+
+    const found = existing.nodes.find((m) => m.handle === menu.handle);
+    const vars = { title: menu.title, handle: menu.handle, items };
+    const result = found
+      ? (await gql(MENU_UPDATE, { ...vars, id: found.id })).menuUpdate
+      : (await gql(MENU_CREATE, vars)).menuCreate;
+    if (result.userErrors.length) fail(JSON.stringify(result.userErrors, null, 2));
+
+    console.log(`${menu.handle} ${found ? 'updated' : 'created'}: ${items.length} top-level items`);
+    for (const i of items) console.log(`  ${i.title}${i.items ? ` (${i.items.length} sub)` : ''}`);
   }
-
-  const { menus: existing } = await gql(MENU_QUERY);
-  const found = existing.nodes.find((m) => m.handle === STRUCTURE.menu.handle);
-  const vars = { title: STRUCTURE.menu.title, handle: STRUCTURE.menu.handle, items };
-  const result = found
-    ? (await gql(MENU_UPDATE, { ...vars, id: found.id })).menuUpdate
-    : (await gql(MENU_CREATE, vars)).menuCreate;
-  if (result.userErrors.length) fail(JSON.stringify(result.userErrors, null, 2));
-
-  console.log(`${STRUCTURE.menu.handle} ${found ? 'updated' : 'created'}: ${items.length} top-level items`);
-  for (const i of items) console.log(`  ${i.title}${i.items ? ` (${i.items.length} sub)` : ''}`);
 }
 
 // ------------------------------------------------------------------- entry

@@ -26,16 +26,9 @@
             "heading": "Help",
             "menu": "footer"
           }
-        },
-        "learn": {
-          "type": "link_list",
-          "settings": {
-            "heading": "Company",
-            "menu": "footer"
-          }
         }
       },
-      "block_order": ["brand", "shop", "help", "learn"],
+      "block_order": ["brand", "shop", "help"],
       "settings": {
         "color_scheme": "scheme-4",
         "newsletter_enable": false,
@@ -44,7 +37,7 @@
         "show_social": true,
         "enable_country_selector": false,
         "enable_language_selector": false,
-        "payment_enable": true,
+        "payment_enable": false,
         "show_policy": true,
         "margin_top": 0,
         "padding_top": 52,

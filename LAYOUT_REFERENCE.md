@@ -45,7 +45,7 @@ Strategy: **Shopaholic structure** (proven PK cosmetics) + **Drunk Elephant fini
 | Brand callout ("Why Fazarim") | ✅ `multicolumn` |
 | Instagram / UGC feed | ❌ not built |
 | Newsletter | ✅ |
-| Footer | ⚠️ stock Dawn — Drunk Elephant treatment not applied |
+| Footer | ⚠️ brand + Shop + Help columns; payment icons off until a gateway exists (see `LAUNCH_CHECKLIST.md`). Drunk Elephant treatment not applied |
 | **Product page** | ❌ **stock Dawn** |
 | **Collection page** | ❌ **stock Dawn** |
 

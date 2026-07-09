@@ -19,34 +19,47 @@
     { "handle": "nail-polish",  "title": "Nail Polish",  "rule": { "column": "type", "condition": "Nail Polish" } }
   ],
 
-  "menu": {
-    "handle": "main-menu",
-    "title": "Main menu",
-    "items": [
-      { "title": "Sale", "collection": "sale" },
-      {
-        "title": "Makeup", "collection": "makeup",
-        "items": [
-          { "title": "Face Makeup", "collection": "foundation" },
-          { "title": "Eye Makeup",  "collection": "mascara" },
-          { "title": "Lips",        "collection": "lipstick" },
-          { "title": "Nails",       "collection": "nail-polish" }
-        ]
-      },
-      {
-        "title": "Skincare", "collection": "skincare",
-        "items": [
-          { "title": "Moisturizer", "collection": "moisturizer" },
-          { "title": "Serums",      "collection": "skincare" },
-          { "title": "Sunscreen",   "collection": "skincare" }
-        ]
-      },
-      { "title": "Bath and Body", "collection": "bath-body" },
-      { "title": "Hair",          "collection": "hair" },
-      { "title": "Accessories",   "collection": "accessories" },
-      { "title": "Gifts",         "collection": "gifts" }
-    ]
-  },
+  "$menusComment": "The footer 'Help' menu is deliberately thin. Only /search and /policies/privacy-policy resolve today; refund, shipping and terms 404 until the client publishes them (drafts in docs/policies/). Add those items here at that point and re-run `npm run setup`. Never link a page that does not exist.",
+
+  "menus": [
+    {
+      "handle": "main-menu",
+      "title": "Main menu",
+      "items": [
+        { "title": "Sale", "collection": "sale" },
+        {
+          "title": "Makeup", "collection": "makeup",
+          "items": [
+            { "title": "Face Makeup", "collection": "foundation" },
+            { "title": "Eye Makeup",  "collection": "mascara" },
+            { "title": "Lips",        "collection": "lipstick" },
+            { "title": "Nails",       "collection": "nail-polish" }
+          ]
+        },
+        {
+          "title": "Skincare", "collection": "skincare",
+          "items": [
+            { "title": "Moisturizer", "collection": "moisturizer" },
+            { "title": "Serums",      "collection": "skincare" },
+            { "title": "Sunscreen",   "collection": "skincare" }
+          ]
+        },
+        { "title": "Bath and Body", "collection": "bath-body" },
+        { "title": "Hair",          "collection": "hair" },
+        { "title": "Accessories",   "collection": "accessories" },
+        { "title": "Gifts",         "collection": "gifts" }
+      ]
+    },
+    {
+      "handle": "footer",
+      "title": "Footer menu",
+      "items": [
+        { "title": "Search",               "type": "SEARCH", "url": "/search" },
+        { "title": "Privacy Policy",       "type": "HTTP",   "url": "/policies/privacy-policy" },
+        { "title": "Your Privacy Choices", "type": "HTTP",   "url": "/pages/data-sharing-opt-out" }
+      ]
+    }
+  ],
 
   "$targetsComment": "Where theme imagery gets wired into templates/index.json. Asset keys resolve against the active assets.*.json file.",
   "themeAssetTargets": {

@@ -59,6 +59,22 @@ Most Pakistani orders are **Cash on Delivery**. COD adds a courier fee (~Rs 50�
 and **COD refunds are manual** — no automatic reversal. The client needs a refund process
 defined before the first return.
 
+#### Footer payment icons — off on purpose
+
+`payment_enable: false` in `sections/footer-group.json`.
+
+The store has **zero payment providers installed** (`paymentSettings.supportedDigitalWallets`
+returns `[]`). With icons on, Dawn loops `shop.enabled_payment_types` and Shopify serves its
+dev-store placeholder set: Visa, Mastercard, Amex, **PayPal**, Diners, Discover. PayPal does
+not operate in Pakistan at all, and Amex/Diners/Discover are barely issued there. A customer
+would see a payment promise the checkout cannot keep.
+
+**Turn it back on once a gateway is installed.** `shop.enabled_payment_types` populates
+itself from the live gateway — install Safepay and the footer shows Visa/Mastercard/PayPak
+with no theme change. Do not hardcode icons: Easypaisa and JazzCash logos are trademarks we
+have no licence to ship, and `payment_type_svg_tag` has no type for them. If the client wants
+those marks, they must supply licensed assets and a custom snippet.
+
 ### Store policies — drafted, awaiting client
 
 Drafts are written and tailored to the real configuration: [`docs/policies/`](docs/policies/)
