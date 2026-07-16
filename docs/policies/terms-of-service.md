@@ -5,7 +5,7 @@ These terms govern your use of **fazarim.com** and any purchase you make from Fa
 ## Who we are
 
 Fazarim Cosmetics
-[CLIENT BUSINESS ADDRESS]
+Office no. 401, Building A1, Sheranwala Heights, near Izmir Town, Canal Road, Lahore
 Pakistan
 ceo@fazarim.com
 

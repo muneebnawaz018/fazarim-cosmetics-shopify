@@ -85,7 +85,7 @@ We may update this policy as the business changes or the law requires. The date 
 
 **Email:** ceo@fazarim.com
 **Phone:** [CLIENT PHONE]
-**Address:** [CLIENT BUSINESS ADDRESS]
+**Address:** Office no. 401, Building A1, Sheranwala Heights, near Izmir Town, Canal Road, Lahore
 
 ---
 

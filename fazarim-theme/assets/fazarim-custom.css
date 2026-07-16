@@ -43,6 +43,44 @@ button.shopify-payment-button__button--unbranded {
   line-height: 1.7;
 }
 
+/* ----------------------------------------------------------- breadcrumbs */
+
+/* SRS 11.1. Quiet by design — a wayfinding aid, not a headline. */
+.breadcrumbs {
+  margin-block: 1.4rem 0;
+}
+
+.breadcrumbs__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.2rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-size: 1.2rem;
+  letter-spacing: 0.03em;
+}
+
+.breadcrumbs__item:not(:first-child)::before {
+  content: "/";
+  margin-inline: 0.6rem;
+  color: rgba(var(--color-foreground), 0.45);
+}
+
+.breadcrumbs__link {
+  color: rgba(var(--color-foreground), 0.65);
+  text-decoration: none;
+}
+
+.breadcrumbs__link:hover {
+  color: rgb(var(--color-foreground));
+  text-decoration: underline;
+}
+
+.breadcrumbs__item--current {
+  color: rgb(var(--color-foreground));
+}
+
 /* ---------------------------------------------------------------- header */
 
 /*

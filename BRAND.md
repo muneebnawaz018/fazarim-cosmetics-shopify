@@ -151,7 +151,7 @@ Specified order, top to bottom:
 | 8 | Best Sellers | §8.1.11 | ✅ |
 | 9 | Shop by Skin Concern | §8.1.12 | ✅ 10 concern tiles |
 | 10 | Customer Reviews | §8.1.13 | ❌ **not built — deliberate** |
-| 11 | Footer — 6 columns + newsletter | §8.1.14 | ⚠️ 3 columns |
+| 11 | Footer — 6 columns + newsletter | §8.1.14 | ⚠️ newsletter ✅, 3 of 6 columns |
 
 ### Why Customer Reviews is not built
 
@@ -274,5 +274,5 @@ app or reverse proxy — Shopify's URL structure is fixed. Flag to the client.
 | 3 | Free shipping over **Rs. 10,000** (§8.1.4) | Rs 10,000 | ✅ resolved — banner and live rate agree |
 | 4 | URL `/skincare/serums` (§6.3) | `/collections/serums` | Shopify's URL structure is fixed |
 | 5 | Customer Reviews (§8.1.13) | not built | Would require fabricated testimonials |
-| 6 | 6-column footer (§8.1.14) | 3 columns | Most target pages don't exist yet |
+| 6 | 6-column footer (§8.1.14) | newsletter + 3 columns + contact info | Remaining columns need pages that don't exist yet |
 | 7 | Fazarim Academy nav (§6.2) | omitted | No pages built; would 404 |

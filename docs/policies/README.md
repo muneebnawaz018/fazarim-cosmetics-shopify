@@ -35,8 +35,7 @@ Paste each file's contents into the matching field, then **Save**.
 3. **Who pays return postage?** Drafts say the customer, unless the item was faulty or wrong.
 4. **Refund method** — bank transfer / Easypaisa / JazzCash? Drafts leave this open. Card
    refunds route back automatically; **Cash on Delivery refunds do not** and need a manual process.
-5. **Business address and phone** — placeholders. Blocked on the Pakistan business entity
-   (see `LAUNCH_CHECKLIST.md`).
+5. **Phone** — still a placeholder. The business address is filled in (Office no. 401, Building A1, Sheranwala Heights, near Izmir Town, Canal Road, Lahore) — the Shopify *store address setting* remains blocked on the Pakistan business entity (see `LAUNCH_CHECKLIST.md`).
 6. **GST / sales tax registration** — the store currently reads "Not collecting". If the client
    is registered, the Terms and pricing copy must say whether prices include tax.
 

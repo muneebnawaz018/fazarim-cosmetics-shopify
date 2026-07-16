@@ -426,21 +426,39 @@ async function collections() {
 }
 
 async function images() {
-  const all = await paginate('products.json?limit=250&fields=id,handle,images', 'products');
+  const all = await paginate('products.json?limit=250&fields=id,handle,title,images', 'products');
   const byHandle = new Map(all.map((p) => [p.handle, p]));
   console.log(`assets: ${ASSETS.label}`);
   let attached = 0;
+  let alted = 0;
   for (const [handle, src] of dataEntries(ASSETS.productImages)) {
     const product = byHandle.get(handle);
     if (!product) { console.log(`  warn    ${handle} not on store (run products first)`); continue; }
-    if (product.images?.length) { console.log(`  skip    ${handle} (has image)`); continue; }
+    const alt = `${product.title} — Fazarim`;
+    if (product.images?.length) {
+      /*
+        Converge alt text on images that already exist. SRS 11.1: "Images shall support
+        ALT text" — the original POST sent none, so every product image shipped with
+        alt="", which reads as decorative to screen readers and says nothing to search.
+      */
+      for (const img of product.images.filter((i) => !(i.alt ?? '').trim())) {
+        if (DRY_RUN) { console.log(`  [dry] alt -> ${handle}`); alted++; continue; }
+        await api(`products/${product.id}/images/${img.id}.json`, {
+          method: 'PUT', body: { image: { id: img.id, alt } },
+        });
+        console.log(`  alt     ${handle}`);
+        alted++;
+        await sleep(300);
+      }
+      continue;
+    }
     if (DRY_RUN) { console.log(`  [dry] attach -> ${handle}`); attached++; continue; }
-    await api(`products/${product.id}/images.json`, { method: 'POST', body: { image: { src } } });
+    await api(`products/${product.id}/images.json`, { method: 'POST', body: { image: { src, alt } } });
     console.log(`  image   ${handle}`);
     attached++;
     await sleep(400);
   }
-  console.log(`done: ${attached} images attached`);
+  console.log(`done: ${attached} attached, ${alted} alt text set`);
   if (ASSETS.$warning) console.log(`\n⚠️  ${ASSETS.$warning}`);
 }
 

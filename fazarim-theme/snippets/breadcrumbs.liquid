@@ -1,0 +1,76 @@
+{%- comment -%}
+  Breadcrumb trail — SRS 11.1: "Breadcrumb navigation shall be implemented on all
+  internal pages." Rendered from layout/theme.liquid on product, collection, page
+  and search templates; the homepage never shows one.
+
+  A product's trail routes through its first collection when it has one, so
+  "Home / Hair Oil / Argan Hair Oil" rather than a flat "Home / Argan Hair Oil".
+
+  Emits schema.org BreadcrumbList JSON-LD alongside the visible nav (SRS 11
+  references Schema.org structured data).
+{%- endcomment -%}
+
+{%- liquid
+  assign crumb_url = ''
+  assign crumb_title = ''
+  case template.name
+    when 'product'
+      comment
+        Prefer the browse category as the parent crumb. `collections.first` is
+        arbitrary and tends to pick a merchandising collection like Best Sellers,
+        which is not where the product "lives".
+      endcomment
+      assign parent = nil
+      for c in product.collections
+        if c.handle == 'skincare' or c.handle == 'hair-care' or c.handle == 'body-care'
+          assign parent = c
+          break
+        endif
+      endfor
+      unless parent
+        assign parent = product.collections.first
+      endunless
+      if parent
+        assign crumb_url = parent.url
+        assign crumb_title = parent.title
+      endif
+      assign leaf = product.title
+    when 'collection'
+      assign leaf = collection.title
+    when 'page'
+      assign leaf = page.title
+    when 'search'
+      assign leaf = 'general.search.search' | t
+  endcase
+-%}
+
+{%- if leaf != blank -%}
+  <nav class="breadcrumbs page-width" aria-label="breadcrumbs">
+    <ol class="breadcrumbs__list" role="list">
+      <li class="breadcrumbs__item">
+        <a class="breadcrumbs__link" href="{{ routes.root_url }}">{{ 'general.breadcrumbs.home' | t: default: 'Home' }}</a>
+      </li>
+      {%- if crumb_title != blank -%}
+        <li class="breadcrumbs__item">
+          <a class="breadcrumbs__link" href="{{ crumb_url }}">{{ crumb_title }}</a>
+        </li>
+      {%- endif -%}
+      <li class="breadcrumbs__item breadcrumbs__item--current" aria-current="page">{{ leaf }}</li>
+    </ol>
+  </nav>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": {{ shop.url | append: routes.root_url | json }} }
+        {%- if crumb_title != blank -%}
+          ,{ "@type": "ListItem", "position": 2, "name": {{ crumb_title | json }}, "item": {{ shop.url | append: crumb_url | json }} }
+          ,{ "@type": "ListItem", "position": 3, "name": {{ leaf | json }} }
+        {%- else -%}
+          ,{ "@type": "ListItem", "position": 2, "name": {{ leaf | json }} }
+        {%- endif -%}
+      ]
+    }
+  </script>
+{%- endif -%}

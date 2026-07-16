@@ -345,6 +345,10 @@
       tabindex="-1"
       data-template="{{ template.name }}"
     >
+      {%- comment -%} SRS 11.1 requires breadcrumbs on internal pages. {%- endcomment -%}
+      {%- if template.name == 'product' or template.name == 'collection' or template.name == 'page' or template.name == 'search' -%}
+        {%- render 'breadcrumbs' -%}
+      {%- endif -%}
       {{ content_for_layout }}
     </main>
 

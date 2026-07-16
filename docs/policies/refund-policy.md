@@ -64,7 +64,7 @@ The fastest way to exchange something is to return the original item for a refun
 
 **Email:** ceo@fazarim.com
 **Phone:** [CLIENT PHONE]
-**Address:** [CLIENT BUSINESS ADDRESS]
+**Address:** Office no. 401, Building A1, Sheranwala Heights, near Izmir Town, Canal Road, Lahore
 
 ---
 

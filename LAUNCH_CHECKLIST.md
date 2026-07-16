@@ -32,6 +32,10 @@ Consequences while it stays US:
 | `Settings → General → Store address → Country` | **greyed out** — "Change country in business details" |
 | `country_code` | `US` |
 | `province`, `city`, `phone` | empty |
+
+> The street address itself is known (Office no. 401, Building A1, Sheranwala Heights, near
+> Izmir Town, Canal Road, Lahore) and is already in the policy drafts, contact page and footer.
+> Only this Settings → General field stays locked until the entity moves to Pakistan.
 | `Shop location` (shipping origin) | `United States` |
 
 Harmless on a dev store — no real orders, shipments, or payouts. A hard blocker at launch.
@@ -128,10 +132,13 @@ SRS §6.1/§6.2 put it in the primary nav: educational videos, skin and hair gui
 consultations, downloadable resources. None exist. **Omitted from the menu** so it can't 404.
 This is a substantial feature, not a page — scope it with the client.
 
-### SEO requirements not yet met
+### SEO requirements
 
-SRS §11 assigns these to the developer. Outstanding: breadcrumbs on all internal pages
-(§11.1), and the §6.3 URL scheme (`/skincare/serums`, `/academy`) which **Shopify cannot
+Breadcrumbs are **done** (2026-07-16): rendered on product, collection, page and search
+templates with schema.org BreadcrumbList JSON-LD. Product trails route through the browse
+category (Home > Hair Care > Argan Hair Oil). Product image ALT text is set on all 14 images.
+
+Still outstanding: the §6.3 URL scheme (`/skincare/serums`, `/academy`) which **Shopify cannot
 produce** — its URL structure is fixed at `/collections/<handle>`. Flag to the client.
 
 ### FAQ contradicts the refund policy — client must pick one
