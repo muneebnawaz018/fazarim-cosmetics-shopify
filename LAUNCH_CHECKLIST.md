@@ -181,34 +181,54 @@ npm run assets:client
 Structure is never touched — `data/store-structure.json` stays as is.
 See the `$warning` field in `data/assets.dummy.json`.
 
-### Product and collection pages
+### Collection page
 
-**Still stock Dawn.** Only the homepage has been built. A customer clicking any of the 9 category
-tiles or 12 products lands on a page that looks nothing like the header we built.
+**Still stock Dawn.** The homepage and product page are built; the collection page is not.
+A customer clicking any category tile lands on an unstyled Dawn grid.
 
-### Remove Shopify's test products
+### Remove Shopify's demo products
 
-17 generated snowboard / gift-card products remain. They do **not** appear on the homepage —
-the smart collections filter on cosmetics tags — but they show in catalog and search.
-Kept intentionally for testing. Delete once real inventory lands.
+The dev store still carries **14 snowboards**, a ski wax, and a gift card that Shopify generated.
+They do not reach the homepage — the smart collections filter on skincare / hair-care /
+body-care tags — but they show in search and `/collections/all`.
 
-### Fill the empty collections
+Four off-brand makeup products from our own first-pass catalog also remain
+(`silk-finish-foundation`, `velvet-matte-lipstick`, `lash-volume-mascara`, `flawless-concealer`).
+These **do** reach the homepage: they carry `best-seller` and `new` tags, so they surface in
+those carousels alongside the real range.
 
-`accessories`, `gifts`, `nail-polish` have **zero products** — nothing carries those tags/types.
-Their nav links and category tiles render blank. Needs real client inventory.
+```bash
+npm run prune:dry   # show exactly what would go
+npm run prune       # delete the handles listed under `retire` in store-structure.json
+```
+
+The snowboards are not in the `retire` list — add them there if you want them gone too.
 
 ### Catalog depth
 
-12 products across 6 homepage carousels means the same items repeat across Sale, New Arrivals,
-Best Sellers, Makeup, and Skincare. The reference site carries hundreds — its density **is** the
-design. Set client expectations.
+14 products across 6 homepage carousels means the same items repeat across Sale, New Arrivals
+and Best Sellers. The reference site carries hundreds — its density **is** the design.
+Set client expectations.
 
-### Confirm the shipping rate
+### Ingredient lists are dummy data
 
-`Standard — Rs 250, free over Rs 5,000, 3–5 business days`
+`custom.ingredients` and `custom.how_to_use` carry plausible INCI-style lists written for
+development. **They are invented.** Cosmetics ingredient disclosure is a safety matter — an
+allergen omitted or wrongly listed is a real problem for a real customer, and the Terms draft
+leans on ingredients being "correctly listed on the product".
 
-Rs 250 is a placeholder in the normal band (domestic courier runs ~Rs 150–300). Use the client's
-actual negotiated rate. Decide whether a COD fee is absorbed or passed on.
+The client must supply the actual INCI list for every product before launch. They go in the
+`Ingredients` and `How To Use` columns of the products CSV, then `npm run setup:tabs`.
+
+### Confirm the shipping rate with the client
+
+`Standard — Rs 250, free over Rs 10,000, 3–5 business days`
+
+Rs 250 sits in the normal band (domestic courier runs ~Rs 150–300) but is still a placeholder —
+use the client's actual negotiated rate. Decide whether a COD fee is absorbed or passed on.
+
+The Rs 10,000 threshold follows SRS §8.1.4; Rs 5,000 was the earlier deliberate choice. Rs 250
+is absorbed on every order above the line, so this is a margin decision the client should make.
 
 ### Checkout and email
 

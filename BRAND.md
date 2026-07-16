@@ -170,6 +170,54 @@ substantiate them; they are regulated claims in most markets.
 
 ---
 
+## Product page
+
+SRS §8.3 (Products) is **empty headings** — 8.3.1 Product Categories, 8.3.2 Product Details,
+8.3.3 Product Gallery, 8.3.4 Product Inquiry all have titles and no content. Same hole as §10.
+So the page follows Dawn plus the brand, not a spec.
+
+Built: media gallery with thumbnail slider and lightbox zoom, sticky product info, button-style
+variant pills, quantity, buy buttons, description, three collapsible tabs, a trust row
+(Dermatologist Approved / Sulphate-Free / Cruelty-Free, matching SRS §8.1.7), and share.
+
+### Tabs are per-product, via metafields
+
+Dawn's `collapsible_tab` renders `block.settings.content` — **one static string for the entire
+catalog**. That had the soap and shampoo pages both telling customers to *"apply to clean
+skin"*, and every product showing the literal placeholder *"Full ingredient list (INCI) goes
+here."*
+
+For cosmetics that is not a cosmetic problem. The Terms draft says we are not liable for a
+reaction to an ingredient *"correctly listed on the product"* — a defence that assumes the
+ingredients are listed.
+
+`sections/main-product.liquid` now reads a product metafield when the block names one:
+
+| block | `product_metafield` | metafield |
+|-------|--------------------|-----------|
+| `tab_ingredients` | `ingredients` | `custom.ingredients` |
+| `tab_how_to` | `how_to_use` | `custom.how_to_use` |
+
+Falls back to the block's static content when a product has no value — the fallback text says
+so plainly rather than pretending.
+
+Populate from the CSV's `Ingredients` and `How To Use` columns:
+
+```bash
+npm run setup:tabs
+```
+
+The client's real INCI lists drop into those same two columns. Definitions are
+`multi_line_text_field`, `PUBLIC_READ` on the storefront.
+
+### The rating block renders nothing
+
+`main` carries a `rating` block, but with no reviews app installed Dawn outputs zero markup for
+it. Inert, not broken — it starts working the day a reviews app lands. Same reason Customer
+Reviews is not built (see above).
+
+---
+
 ## Navigation — SRS §6.2
 
 ```text

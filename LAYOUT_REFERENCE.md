@@ -53,7 +53,7 @@ Order is dictated by SRS §8.1.3–§8.1.14, not by us. Full table in [BRAND.md]
 | Customer Reviews | ❌ **not built** — would require inventing testimonials. Needs a reviews app |
 | Promo banner | ✅ one `image-banner` |
 | Footer | ⚠️ 3 of 6 SRS columns; payment icons off until a gateway exists |
-| **Product page** | ❌ **stock Dawn** |
+| **Product page** | ✅ gallery, sticky info, variant pills, per-product Ingredients / How-to-use / Shipping tabs, trust row |
 | **Collection page** | ❌ **stock Dawn** |
 | Fazarim Academy | ❌ not built — omitted from nav so it can't 404 |
 

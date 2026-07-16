@@ -30,6 +30,7 @@
     "prune:dry": "node scripts/shopify-setup.mjs prune --dry-run",
     "prune": "node scripts/shopify-setup.mjs prune",
     "covers:client": "node scripts/shopify-setup.mjs covers --assets data/assets.client.json",
-    "scopes": "node scripts/shopify-setup.mjs scopes"
+    "scopes": "node scripts/shopify-setup.mjs scopes",
+    "setup:tabs": "node scripts/shopify-setup.mjs tabs"
   }
 }

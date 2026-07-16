@@ -15,6 +15,7 @@
  *   verify       check auth
  *   scopes       show granted vs needed API scopes, and live-probe them
  *   products     import from sample-products.dummy.csv
+ *   tabs         per-product ingredients + how-to, as metafields
  *   collections  smart collections from structure rules
  *   images       attach product images (from the active assets file)
  *   covers       attach collection images (category + concern tiles)
@@ -305,6 +306,52 @@ async function paginate(path, key) {
     url = next?.[1] ?? null;
   }
   return out;
+}
+
+const METAFIELDS_SET = `
+  mutation metafieldsSet($metafields: [MetafieldsSetInput!]!) {
+    metafieldsSet(metafields: $metafields) { userErrors { field message } }
+  }`;
+
+/*
+  Per-product tab content.
+
+  Dawn's `collapsible_tab` renders `block.settings.content` — one static string for every
+  product in the catalog, which had the soap and shampoo pages both telling customers to
+  "apply to clean skin". Ingredient disclosure is not decoration on cosmetics: the Terms
+  draft leans on ingredients being "correctly listed on the product".
+
+  So the tabs read product metafields instead (see sections/main-product.liquid).
+*/
+async function tabs() {
+  const rows = parseCsv(await readFile(join(ROOT, 'sample-products.dummy.csv'), 'utf8'));
+  const wanted = rows.filter((r) => r.Handle?.trim() && (r.Ingredients?.trim() || r['How To Use']?.trim()));
+  const { products: live } = await gql('{ products(first: 100) { nodes { id handle } } }');
+  const byHandle = new Map(live.nodes.map((p) => [p.handle, p.id]));
+
+  const metafields = [];
+  for (const r of wanted) {
+    const id = byHandle.get(r.Handle.trim());
+    if (!id) { console.log(`  warn    ${r.Handle} not on store (run products first)`); continue; }
+    for (const [key, value] of [['ingredients', r.Ingredients], ['how_to_use', r['How To Use']]]) {
+      if (value?.trim()) {
+        metafields.push({ ownerId: id, namespace: 'custom', key, type: 'multi_line_text_field', value: value.trim() });
+      }
+    }
+  }
+
+  if (DRY_RUN) {
+    console.log(`[dry] would set ${metafields.length} metafield(s) across ${wanted.length} product(s)`);
+    return;
+  }
+
+  // metafieldsSet caps at 25 per call.
+  for (let i = 0; i < metafields.length; i += 25) {
+    const { metafieldsSet } = await gql(METAFIELDS_SET, { metafields: metafields.slice(i, i + 25) });
+    if (metafieldsSet.userErrors.length) fail(JSON.stringify(metafieldsSet.userErrors, null, 2));
+    await sleep(300);
+  }
+  console.log(`done: ${metafields.length} metafield(s) set on ${wanted.length} product(s)`);
 }
 
 /** Tag lists are set-equal regardless of order or spacing. */
@@ -655,8 +702,8 @@ async function menus() {
 
 // ------------------------------------------------------------------- entry
 
-const COMMANDS = { verify, scopes, products, collections, images, covers, assets, logo, menus, prune };
-const ORDER = ['verify', 'products', 'collections', 'images', 'covers', 'assets', 'logo', 'menus'];
+const COMMANDS = { verify, scopes, products, tabs, collections, images, covers, assets, logo, menus, prune };
+const ORDER = ['verify', 'products', 'tabs', 'collections', 'images', 'covers', 'assets', 'logo', 'menus'];
 
 const cmd = process.argv.slice(2).find((a) => !a.startsWith('--')) ?? 'verify';
 if (DRY_RUN) console.log('>>> DRY RUN — nothing will be written\n');

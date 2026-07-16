@@ -119,12 +119,14 @@ Shopify Admin — that revokes it instantly.
   Sale / New Arrivals / Best Sellers, Shop by Skin Concern (10), promo banner
 - Header: real logo left, SRS mega menu (Sale · Skincare · Hair Care · Body Care ·
   Best Sellers · Kits & Bundles), always-visible cart badge
+- Product page: gallery, sticky info, variant pills, trust row, and **per-product**
+  Ingredients / How-to-use tabs driven by metafields (`npm run setup:tabs`)
 - 14 dummy products across the real product lines, 26 auto-populating smart collections
 - Store: PKR, Asia/Karachi, metric/grams, Pakistan-only market
 
 ## What isn't
 
-- **Product and collection pages** — still stock Dawn
+- **Collection page** — still stock Dawn
 - **All imagery is Unsplash placeholder** — legally must be replaced before launch
 - **Larken headers** — commercial font, no webfont licence; Playfair Display stands in
 - **Customer Reviews** (SRS §8.1.13) — would require inventing testimonials; needs a reviews app

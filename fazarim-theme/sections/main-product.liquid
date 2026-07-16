@@ -223,8 +223,25 @@
                         {{- 'icon-caret.svg' | inline_asset_content -}}
                       </summary>
                       <div class="accordion__content rte" id="ProductAccordion-{{ block.id }}-{{ section.id }}">
-                        {{ block.settings.content }}
-                        {{ block.settings.page.content }}
+                        {%- liquid
+                          # `content` is one static string for the whole catalog, which had the
+                          # soap and shampoo pages both saying "apply to clean skin". Where a
+                          # product carries the metafield named in `product_metafield`, its own
+                          # text wins. Populated by `npm run setup:tabs`.
+                          assign tab_text = ''
+                          if block.settings.product_metafield != blank
+                            assign mf = product.metafields.custom[block.settings.product_metafield]
+                            if mf != blank
+                              assign tab_text = mf.value
+                            endif
+                          endif
+                        -%}
+                        {%- if tab_text != blank -%}
+                          {{ tab_text | newline_to_br }}
+                        {%- else -%}
+                          {{ block.settings.content }}
+                          {{ block.settings.page.content }}
+                        {%- endif -%}
                       </div>
                     </details>
                   </div>
@@ -1025,6 +1042,12 @@
           "id": "heading",
           "default": "t:sections.main-product.blocks.collapsible_tab.settings.heading.default",
           "label": "t:sections.main-product.blocks.collapsible_tab.settings.heading.label"
+        },
+        {
+          "type": "text",
+          "id": "product_metafield",
+          "label": "Per-product metafield key",
+          "info": "A key under the `custom` namespace, e.g. ingredients or how_to_use. When the product has that metafield, its text replaces the static content below — otherwise the content below is used. Populate with `npm run setup:tabs`."
         },
         {
           "type": "select",

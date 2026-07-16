@@ -45,8 +45,9 @@
           "settings": {
             "heading": "Ingredients",
             "icon": "leaf",
-            "content": "<p>Full ingredient list (INCI) goes here. Clean formula — no parabens, sulfates, or phthalates.</p>",
-            "page": ""
+            "content": "<p>Ingredient list for this product is being finalised. Contact ceo@fazarim.com if you need it before ordering.</p>",
+            "page": "",
+            "product_metafield": "ingredients"
           }
         },
         "tab_how_to": {
@@ -54,8 +55,9 @@
           "settings": {
             "heading": "How to use",
             "icon": "check_mark",
-            "content": "<p>Apply to clean skin morning and night. Patch test before first use.</p>",
-            "page": ""
+            "content": "<p>See the product packaging for directions. Patch test before first use.</p>",
+            "page": "",
+            "product_metafield": "how_to_use"
           }
         },
         "tab_shipping": {
@@ -63,7 +65,7 @@
           "settings": {
             "heading": "Shipping & returns",
             "icon": "truck",
-            "content": "<p>Free shipping on orders over Rs. 5,000. Easy 7-day returns on unopened items.</p>",
+            "content": "<p>Free shipping on orders over Rs. 10,000. Standard delivery is Rs. 250 (3\u20135 business days). We deliver within Pakistan only.</p><p>Unopened items can be returned within 7 days. For hygiene reasons, opened products cannot be returned unless faulty.</p>",
             "page": ""
           }
         },
@@ -71,12 +73,12 @@
           "type": "icon-with-text",
           "settings": {
             "layout": "horizontal",
-            "icon_1": "heart",
-            "heading_1": "Cruelty-free",
-            "icon_2": "check_mark",
-            "heading_2": "Dermatologist tested",
-            "icon_3": "leaf",
-            "heading_3": "Clean formula"
+            "icon_1": "check_mark",
+            "heading_1": "Dermatologist Approved",
+            "icon_2": "leaf",
+            "heading_2": "Sulphate-Free",
+            "icon_3": "heart",
+            "heading_3": "Cruelty-Free"
           }
         },
         "share": {
