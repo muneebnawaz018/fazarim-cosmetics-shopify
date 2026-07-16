@@ -49,13 +49,15 @@ brand/
   fazarim-icon.png          icon mark
 
 data/
-  store-structure.json      PERMANENT — collections, nav, and the `retire` list
+  store-structure.json      PERMANENT — collections (+ intro copy, SEO meta), nav, `retire` list
+  pages.json                index of the pages in content/
   assets.dummy.json         DUMMY — Unsplash placeholders, replace before launch
 
 scripts/
   shopify-setup.mjs         store data automation (products, collections, nav, images)
   godaddy.sh                domain/DNS lookups (read-only)
 
+content/                    page bodies (About Us, FAQ, Contact) as HTML
 sample-products.dummy.csv   14 dummy products, Shopify CSV format
 docs/policies/              legal drafts for the client
 ```
@@ -121,12 +123,13 @@ Shopify Admin — that revokes it instantly.
   Best Sellers · Kits & Bundles), always-visible cart badge
 - Product page: gallery, sticky info, variant pills, trust row, and **per-product**
   Ingredients / How-to-use tabs driven by metafields (`npm run setup:tabs`)
+- Collection pages: banner image, intro copy and SEO meta on all 26, filters + sorting
+- About Us, FAQ (18 answers) and Contact — the client's own SRS copy, linked in the footer
 - 14 dummy products across the real product lines, 26 auto-populating smart collections
 - Store: PKR, Asia/Karachi, metric/grams, Pakistan-only market
 
 ## What isn't
 
-- **Collection page** — still stock Dawn
 - **All imagery is Unsplash placeholder** — legally must be replaced before launch
 - **Larken headers** — commercial font, no webfont licence; Playfair Display stands in
 - **Customer Reviews** (SRS §8.1.13) — would require inventing testimonials; needs a reviews app

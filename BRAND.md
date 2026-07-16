@@ -218,6 +218,36 @@ Reviews is not built (see above).
 
 ---
 
+## Collection page
+
+Every category tile and nav item lands here, so it carries the same card style as the homepage
+carousels: portrait ratio, secondary image on hover, quick-add, 24 per page, horizontal filters
+and sorting.
+
+### Intro copy is an SEO requirement, not decoration
+
+SRS §11.1: *"Category pages shall contain optimized introductory content"* and *"All pages shall
+support editable meta descriptions."* Every collection shipped with both empty — the banner
+rendered a literal `<div class="collection-hero__description rte"></div>` on all 26 pages.
+
+Copy lives in `data/store-structure.json` per collection:
+
+| field | goes to | renders as |
+|-------|---------|-----------|
+| `description` | collection body | the banner intro paragraph |
+| `seoDescription` | `seo.description` | `<meta name="description">` |
+
+```bash
+npm run setup:copy
+```
+
+Converges rather than skipping — edit the JSON, re-run, the store catches up.
+
+Banner images come from `collectionImages` in the assets file (`npm run setup:covers`); the
+same images drive the homepage category and concern tiles.
+
+---
+
 ## Navigation — SRS §6.2
 
 ```text

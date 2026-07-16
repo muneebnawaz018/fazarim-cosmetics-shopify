@@ -54,8 +54,10 @@ Order is dictated by SRS §8.1.3–§8.1.14, not by us. Full table in [BRAND.md]
 | Promo banner | ✅ one `image-banner` |
 | Footer | ⚠️ 3 of 6 SRS columns; payment icons off until a gateway exists |
 | **Product page** | ✅ gallery, sticky info, variant pills, per-product Ingredients / How-to-use / Shipping tabs, trust row |
-| **Collection page** | ❌ **stock Dawn** |
+| **Collection page** | ✅ banner image + intro copy + SEO meta on all 26, horizontal filters, sorting, 24/page matching the homepage card style |
+| About Us / FAQ / Contact | ✅ SRS §8.2 / §8.5 (18 Qs) / §8.6 copy, linked in the footer |
 | Fazarim Academy | ❌ not built — omitted from nav so it can't 404 |
+| Blog | ❌ not built — SRS §8.4 is an empty heading |
 
 Social icons sit in the announcement bar, not top-right of the header as in the reference —
 Dawn has no markup for that, it needs a `header.liquid` change.

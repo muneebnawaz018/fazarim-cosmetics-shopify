@@ -17,10 +17,12 @@
  *   products     import from sample-products.dummy.csv
  *   tabs         per-product ingredients + how-to, as metafields
  *   collections  smart collections from structure rules
+ *   copy         collection intro text + SEO meta descriptions
  *   images       attach product images (from the active assets file)
  *   covers       attach collection images (category + concern tiles)
  *   assets       upload hero/promo, patch index.json
  *   logo         upload brand/*.png, wire into theme settings
+ *   pages        About Us / FAQ / Contact from content/*.html
  *   menus        build nested nav
  *   all          everything, in dependency order
  *
@@ -543,6 +545,117 @@ async function prune() {
   console.log(`done: ${hitP.length} products, ${hitC.length} collections deleted`);
 }
 
+const PAGE_CREATE = `
+  mutation pageCreate($page: PageCreateInput!) {
+    pageCreate(page: $page) { page { id handle } userErrors { field message } }
+  }`;
+const PAGE_UPDATE = `
+  mutation pageUpdate($id: ID!, $page: PageUpdateInput!) {
+    pageUpdate(id: $id, page: $page) { page { id handle } userErrors { field message } }
+  }`;
+
+/**
+ * Shopify pages — About Us, FAQ, Contact.
+ *
+ * Body HTML lives in content/*.html; data/pages.json is only the index. Copy is the client's
+ * own, lifted from the SRS (§8.2 About, §8.5 FAQ, §8.6 Contact).
+ *
+ * Read `$conflictComment` in data/pages.json before trusting the FAQ: two of its answers are
+ * not true of the store as it stands.
+ */
+async function pages() {
+  const index = await readJson(join(ROOT, 'data', 'pages.json'));
+  const { pages: live } = await gql('{ pages(first: 100) { nodes { id handle } } }');
+  const byHandle = new Map(live.nodes.map((p) => [p.handle, p.id]));
+
+  let made = 0;
+  let updated = 0;
+  for (const p of index.pages) {
+    const body = await readFile(join(ROOT, p.file), 'utf8');
+    /*
+      Two things the input types do not do the obvious way:
+
+      - `templateSuffix` is only sent when the index names one. Shopify's stock contact page
+        carries templateSuffix "contact" -> templates/page.contact.json, which is what renders
+        the actual contact form; sending null would silently drop it.
+      - There is no `seo` field on PageCreateInput/PageUpdateInput (unlike CollectionInput).
+        Page SEO is `global.title_tag` / `global.description_tag` metafields.
+    */
+    const seo = [
+      ['title_tag', p.seoTitle],
+      ['description_tag', p.seoDescription],
+    ]
+      .filter(([, v]) => v)
+      .map(([key, value]) => ({ namespace: 'global', key, type: 'single_line_text_field', value }));
+
+    const input = {
+      title: p.title,
+      handle: p.handle,
+      body,
+      isPublished: true,
+      ...(p.templateSuffix !== undefined && { templateSuffix: p.templateSuffix }),
+      ...(seo.length && { metafields: seo }),
+    };
+    const id = byHandle.get(p.handle);
+
+    if (DRY_RUN) {
+      console.log(`  [dry] ${id ? 'update' : 'create'} /pages/${p.handle.padEnd(12)} ${body.length} bytes`);
+      id ? updated++ : made++;
+      continue;
+    }
+
+    const res = id
+      ? (await gql(PAGE_UPDATE, { id, page: input })).pageUpdate
+      : (await gql(PAGE_CREATE, { page: input })).pageCreate;
+    if (res.userErrors.length) fail(JSON.stringify(res.userErrors, null, 2));
+    console.log(`  ${id ? 'updated' : 'created'} /pages/${p.handle}`);
+    id ? updated++ : made++;
+    await sleep(300);
+  }
+  console.log(`done: ${made} created, ${updated} updated`);
+  if (index.$conflictComment) console.log(`\n⚠️  ${index.$conflictComment}`);
+}
+
+/**
+ * Collection intro copy + meta descriptions.
+ *
+ * SRS §11.1 requires category pages to carry "optimized introductory content" and editable
+ * meta descriptions. Every collection shipped with both empty, so the banner rendered
+ * `<div class="collection-hero__description rte"></div>` — an empty box on every category page.
+ */
+async function copy() {
+  const wanted = STRUCTURE.collections.filter((c) => c.description || c.seoDescription);
+  if (!wanted.length) return console.log('no collection copy in store-structure.json');
+
+  const { collections: live } = await gql(
+    '{ collections(first: 100) { nodes { id handle description seo { description } } } }'
+  );
+  const byHandle = new Map(live.nodes.map((c) => [c.handle, c]));
+
+  let set = 0;
+  for (const c of wanted) {
+    const l = byHandle.get(c.handle);
+    if (!l) { console.log(`  warn    ${c.handle} not on store (run collections first)`); continue; }
+
+    const drift = {};
+    if (c.description && (l.description ?? '').trim() !== c.description) {
+      drift.descriptionHtml = `<p>${c.description}</p>`;
+    }
+    if (c.seoDescription && (l.seo?.description ?? '') !== c.seoDescription) {
+      drift.seo = { description: c.seoDescription };
+    }
+    if (!Object.keys(drift).length) { console.log(`  ok      ${c.handle}`); continue; }
+    if (DRY_RUN) { console.log(`  [dry] copy ${c.handle.padEnd(22)} ${Object.keys(drift).join(', ')}`); set++; continue; }
+
+    const { collectionUpdate } = await gql(COLLECTION_IMAGE_SET, { input: { id: l.id, ...drift } });
+    if (collectionUpdate.userErrors.length) fail(JSON.stringify(collectionUpdate.userErrors));
+    console.log(`  copy    ${c.handle.padEnd(22)} ${Object.keys(drift).join(', ')}`);
+    set++;
+    await sleep(300);
+  }
+  console.log(`done: ${set} collection(s) updated`);
+}
+
 const COLLECTION_IMAGE_SET = `
   mutation collectionUpdate($input: CollectionInput!) {
     collectionUpdate(input: $input) { collection { handle } userErrors { field message } }
@@ -702,8 +815,8 @@ async function menus() {
 
 // ------------------------------------------------------------------- entry
 
-const COMMANDS = { verify, scopes, products, tabs, collections, images, covers, assets, logo, menus, prune };
-const ORDER = ['verify', 'products', 'tabs', 'collections', 'images', 'covers', 'assets', 'logo', 'menus'];
+const COMMANDS = { verify, scopes, products, tabs, collections, copy, images, covers, assets, logo, pages, menus, prune };
+const ORDER = ['verify', 'products', 'tabs', 'collections', 'copy', 'images', 'covers', 'assets', 'logo', 'pages', 'menus'];
 
 const cmd = process.argv.slice(2).find((a) => !a.startsWith('--')) ?? 'verify';
 if (DRY_RUN) console.log('>>> DRY RUN — nothing will be written\n');

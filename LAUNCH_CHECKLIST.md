@@ -134,6 +134,32 @@ SRS §11 assigns these to the developer. Outstanding: breadcrumbs on all interna
 (§11.1), and the §6.3 URL scheme (`/skincare/serums`, `/academy`) which **Shopify cannot
 produce** — its URL structure is fixed at `/collections/<handle>`. Flag to the client.
 
+### FAQ contradicts the refund policy — client must pick one
+
+Two customer-facing documents disagree on the single clause most likely to cause a dispute:
+
+| document | says |
+| -------- | ---- |
+| `/pages/faq` (SRS §8.5, verbatim) | "Returns and exchanges are accepted **only** for damaged, defective, or incorrectly delivered products" |
+| `docs/policies/refund-policy.md` | "You have **7 days** from the day your order arrives to request a return" — unopened items, any reason |
+
+One grants a change-of-mind return, the other refuses it. A customer will read the refund
+policy, request a return, and support will point at the FAQ.
+
+**The client decides which is the real policy**, then the loser gets rewritten. Both are live
+copy — this is a commercial decision, not a wording tidy-up.
+
+### FAQ promises payment methods the store cannot take
+
+`/pages/faq` says: *"We currently offer: Cash on Delivery (COD), Debit & Credit Cards, Online
+Bank Transfer, Mobile Wallets (where available)."*
+
+The store has **zero payment providers installed** (`supportedDigitalWallets: []`). The copy is
+the client's own and will be true once a gateway is live — but if the store launched today,
+that answer would be false. Same root cause as the footer payment icons above.
+
+Recheck when the gateway lands; if only COD ships at launch, the answer needs cutting down.
+
 ### Store policies — drafted, awaiting client
 
 Drafts are written and tailored to the real configuration: [`docs/policies/`](docs/policies/)
@@ -142,9 +168,14 @@ Paste into `Settings → Policies`. Every `[SQUARE BRACKET]` is a decision only 
 returns window, courier name, gateway name, COD fee, dispatch time, refund processing days,
 phone, address, GST registration.
 
-Not scripted deliberately. `shopPolicyUpdate` exists and the scopes could be added — but
-injecting boilerplate legal text and marking it "done" creates the appearance of compliance
-without anyone having read it.
+`write_legal_policies` is now granted and verified, so these **can** be scripted the moment the
+client signs off. They have not been: every draft still carries `[SQUARE BRACKETS]`, and pushing
+legal text nobody has read would create the appearance of compliance rather than compliance.
+
+The live privacy policy is still **Shopify's generic auto-generated boilerplate** (18,308 chars)
+— not the tailored draft in `docs/policies/privacy-policy.md`. It is live and wrong for this
+business. Refund, shipping and terms have no body at all, so those URLs 404, which is why the
+footer does not link them.
 
 The clauses most likely to cause disputes, already written in:
 
@@ -181,28 +212,18 @@ npm run assets:client
 Structure is never touched — `data/store-structure.json` stays as is.
 See the `$warning` field in `data/assets.dummy.json`.
 
-### Collection page
-
-**Still stock Dawn.** The homepage and product page are built; the collection page is not.
-A customer clicking any category tile lands on an unstyled Dawn grid.
-
 ### Remove Shopify's demo products
 
 The dev store still carries **14 snowboards**, a ski wax, and a gift card that Shopify generated.
 They do not reach the homepage — the smart collections filter on skincare / hair-care /
 body-care tags — but they show in search and `/collections/all`.
 
-Four off-brand makeup products from our own first-pass catalog also remain
-(`silk-finish-foundation`, `velvet-matte-lipstick`, `lash-volume-mascara`, `flawless-concealer`).
-These **do** reach the homepage: they carry `best-seller` and `new` tags, so they surface in
-those carousels alongside the real range.
+Our own first-pass makeup products and their collections were deleted on 2026-07-16
+(`npm run prune` — 4 products, 10 collections). The homepage is now entirely Fazarim products.
 
-```bash
-npm run prune:dry   # show exactly what would go
-npm run prune       # delete the handles listed under `retire` in store-structure.json
-```
-
-The snowboards are not in the `retire` list — add them there if you want them gone too.
+Shopify's demo collections `frontpage`, `automated-collection` and `hydrogen` also remain.
+Neither the snowboards nor those collections are in the `retire` list — add them there and
+re-run `npm run prune` if you want them gone.
 
 ### Catalog depth
 

@@ -31,6 +31,8 @@
     "prune": "node scripts/shopify-setup.mjs prune",
     "covers:client": "node scripts/shopify-setup.mjs covers --assets data/assets.client.json",
     "scopes": "node scripts/shopify-setup.mjs scopes",
-    "setup:tabs": "node scripts/shopify-setup.mjs tabs"
+    "setup:tabs": "node scripts/shopify-setup.mjs tabs",
+    "setup:copy": "node scripts/shopify-setup.mjs copy",
+    "setup:pages": "node scripts/shopify-setup.mjs pages"
   }
 }

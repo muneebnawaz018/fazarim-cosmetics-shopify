@@ -1,0 +1,33 @@
+{
+  "$comment": "Shopify pages. Body HTML lives in content/*.html — edit those, not this index. Applied by `npm run setup:pages` (needs write_content).",
+
+  "$sourceComment": "Copy is the client's own, taken verbatim from the SRS where it exists: About Us is §8.2, FAQ is §8.5 (all 18 answers), Contact is §8.6. Wording was not invented — only formatting, headings and internal links were added.",
+
+  "$conflictComment": "TWO ANSWERS ARE NOT TRUE OF THE STORE AS IT STANDS. Both are tracked in LAUNCH_CHECKLIST.md and need a client decision before launch: (1) FAQ 'What payment methods do you accept?' promises cards, bank transfer and mobile wallets, but zero payment providers are installed — true at launch, false today. (2) FAQ 'Do you accept returns or exchanges?' says returns are accepted ONLY for damaged/defective/wrong items, while docs/policies/refund-policy.md grants a 7-day return on unopened items for any reason. Those contradict, and both would be customer-facing.",
+
+  "pages": [
+    {
+      "handle": "about-us",
+      "title": "About Us",
+      "file": "content/about-us.html",
+      "seoTitle": "About Fazarim — Pakistani skincare, hair care and body care",
+      "seoDescription": "Fazarim is a Pakistani personal care brand making soaps, shampoos, serums and lotions. Quality ingredients, honest guidance, everyday care."
+    },
+    {
+      "handle": "faq",
+      "title": "FAQ",
+      "file": "content/faq.html",
+      "seoTitle": "Frequently Asked Questions — Fazarim",
+      "seoDescription": "Delivery times, Cash on Delivery, payment methods, order tracking and returns. Answers to the questions Fazarim customers ask most."
+    },
+    {
+      "$templateComment": "Keep templateSuffix 'contact' — it maps to templates/page.contact.json, which renders the actual contact form. Dropping it turns this into a plain text page with no way to write to us.",
+      "handle": "contact",
+      "title": "Contact Us",
+      "file": "content/contact.html",
+      "templateSuffix": "contact",
+      "seoTitle": "Contact Fazarim",
+      "seoDescription": "Get in touch with Fazarim about an order, a product question, or anything else. We're here to help."
+    }
+  ]
+}

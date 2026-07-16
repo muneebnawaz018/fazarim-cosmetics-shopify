@@ -1,42 +1,270 @@
 {
-  "$comment": "PERMANENT. The store's information architecture — collections and navigation. Version-controlled, re-runnable on any store. Product rows live in sample-products.dummy.csv. Imagery lives in assets.dummy.json (dev) or assets.client.json (real).",
-
-  "$sourceComment": "Derived from the client's SRS (Software Requirements Specification, Fazarim Website): §6.1 Sitemap, §6.2 Navigation Structure, §8.1.8 Product Categories, §8.1.12 Shop by Skin Concern. Fazarim sells SKINCARE, HAIR CARE and BODY CARE — not makeup. Do not reintroduce makeup, accessories or gifts categories.",
-
+  "$comment": "PERMANENT. The store's information architecture \u2014 collections and navigation. Version-controlled, re-runnable on any store. Product rows live in sample-products.dummy.csv. Imagery lives in assets.dummy.json (dev) or assets.client.json (real).",
+  "$sourceComment": "Derived from the client's SRS (Software Requirements Specification, Fazarim Website): \u00a76.1 Sitemap, \u00a76.2 Navigation Structure, \u00a78.1.8 Product Categories, \u00a78.1.12 Shop by Skin Concern. Fazarim sells SKINCARE, HAIR CARE and BODY CARE \u2014 not makeup. Do not reintroduce makeup, accessories or gifts categories.",
   "collections": [
-    { "handle": "sale",          "title": "Sale",           "rule": { "column": "tag", "condition": "sale" } },
-    { "handle": "new-arrivals",  "title": "New Arrivals",   "rule": { "column": "tag", "condition": "new" } },
-    { "handle": "best-sellers",  "title": "Best Sellers",   "rule": { "column": "tag", "condition": "best-seller" } },
-
-    { "handle": "skincare",      "title": "Skincare",       "rule": { "column": "tag", "condition": "skincare" } },
-    { "handle": "hair-care",     "title": "Hair Care",      "rule": { "column": "tag", "condition": "hair-care" } },
-    { "handle": "body-care",     "title": "Body Care",      "rule": { "column": "tag", "condition": "body-care" } },
-    { "handle": "kits-and-bundles", "title": "Kits & Bundles", "rule": { "column": "tag", "condition": "kit" } },
-
-    { "handle": "serums",        "title": "Serums",         "rule": { "column": "type", "condition": "Serum" } },
-    { "handle": "moisturizers",  "title": "Moisturizers",   "rule": { "column": "type", "condition": "Moisturizer" } },
-    { "handle": "cleansers",     "title": "Cleansers",      "rule": { "column": "type", "condition": "Cleanser" } },
-    { "handle": "sunscreen",     "title": "Sunscreen",      "rule": { "column": "type", "condition": "Sunscreen" } },
-    { "handle": "shampoo",       "title": "Shampoo",        "rule": { "column": "type", "condition": "Shampoo" } },
-    { "handle": "hair-oil",      "title": "Hair Oil",       "rule": { "column": "type", "condition": "Hair Oil" } },
-    { "handle": "soap",          "title": "Soaps",          "rule": { "column": "type", "condition": "Soap" } },
-    { "handle": "lotion",        "title": "Lotions",        "rule": { "column": "type", "condition": "Lotion" } },
-    { "handle": "body-wash",     "title": "Body Wash",      "rule": { "column": "type", "condition": "Body Wash" } },
-
-    { "$concernComment": "SRS §8.1.12 Shop by Skin Concern — concern-tagged listings, not browse categories.",
-      "handle": "concern-acne",         "title": "Acne",          "rule": { "column": "tag", "condition": "concern-acne" } },
-    { "handle": "concern-dry-skin",     "title": "Dry Skin",      "rule": { "column": "tag", "condition": "concern-dry-skin" } },
-    { "handle": "concern-oily-skin",    "title": "Oily Skin",     "rule": { "column": "tag", "condition": "concern-oily-skin" } },
-    { "handle": "concern-sensitive",    "title": "Sensitive Skin","rule": { "column": "tag", "condition": "concern-sensitive" } },
-    { "handle": "concern-pigmentation", "title": "Pigmentation",  "rule": { "column": "tag", "condition": "concern-pigmentation" } },
-    { "handle": "concern-anti-aging",   "title": "Anti-Aging",    "rule": { "column": "tag", "condition": "concern-anti-aging" } },
-    { "handle": "concern-hair-fall",    "title": "Hair Fall",     "rule": { "column": "tag", "condition": "concern-hair-fall" } },
-    { "handle": "concern-dandruff",     "title": "Dandruff",      "rule": { "column": "tag", "condition": "concern-dandruff" } },
-    { "handle": "concern-frizzy-hair",  "title": "Frizzy Hair",   "rule": { "column": "tag", "condition": "concern-frizzy-hair" } },
-    { "handle": "concern-damaged-hair", "title": "Damaged Hair",  "rule": { "column": "tag", "condition": "concern-damaged-hair" } }
+    {
+      "handle": "sale",
+      "title": "Sale",
+      "rule": {
+        "column": "tag",
+        "condition": "sale"
+      },
+      "description": "Real discounts on the skincare, hair care and body care you already use. Stock is limited and prices return to normal when the promotion ends.",
+      "seoDescription": "Discounted Fazarim skincare, hair care and body care. Free delivery on orders over Rs. 10,000 across Pakistan."
+    },
+    {
+      "handle": "new-arrivals",
+      "title": "New Arrivals",
+      "rule": {
+        "column": "tag",
+        "condition": "new"
+      },
+      "description": "The newest additions to the Fazarim range. Every formula is dermatologist approved and tested for daily use before it reaches this page.",
+      "seoDescription": "New Fazarim skincare, hair care and body care products. Dermatologist approved, cruelty-free, made in Pakistan."
+    },
+    {
+      "handle": "best-sellers",
+      "title": "Best Sellers",
+      "rule": {
+        "column": "tag",
+        "condition": "best-seller"
+      },
+      "description": "The products our customers reorder most. If you are not sure where to start, start here.",
+      "seoDescription": "Fazarim best sellers \u2014 the most popular skincare, hair care and body care products. Free delivery over Rs. 10,000."
+    },
+    {
+      "handle": "skincare",
+      "title": "Skincare",
+      "rule": {
+        "column": "tag",
+        "condition": "skincare"
+      },
+      "description": "Serums, moisturisers, cleansers and sunscreen built around ingredients that do the work \u2014 vitamin C, niacinamide, hyaluronic acid. Formulated for Pakistani skin and Pakistani weather, and gentle enough for daily use.",
+      "seoDescription": "Fazarim skincare \u2014 serums, moisturisers, cleansers and SPF. Dermatologist approved, sulphate-free, cruelty-free. Delivered across Pakistan."
+    },
+    {
+      "handle": "hair-care",
+      "title": "Hair Care",
+      "rule": {
+        "column": "tag",
+        "condition": "hair-care"
+      },
+      "description": "Sulphate-free shampoos, medicated shampoos and hair oils for hair fall, dandruff, frizz and damage. Safe for coloured and chemically treated hair.",
+      "seoDescription": "Fazarim hair care \u2014 sulphate-free and medicated shampoos, hair oils for hair fall and dandruff. Delivered across Pakistan."
+    },
+    {
+      "handle": "body-care",
+      "title": "Body Care",
+      "rule": {
+        "column": "tag",
+        "condition": "body-care"
+      },
+      "description": "Bathing soaps, medicated soaps, body wash and moisturising lotions. Everyday care that cleans without stripping your skin.",
+      "seoDescription": "Fazarim body care \u2014 bathing and medicated soaps, body wash, moisturising lotions. Cruelty-free, delivered across Pakistan."
+    },
+    {
+      "handle": "kits-and-bundles",
+      "title": "Kits & Bundles",
+      "rule": {
+        "column": "tag",
+        "condition": "kit"
+      },
+      "description": "Complete routines in one box, priced below buying each product separately. The simplest way to start if you are new to a category.",
+      "seoDescription": "Fazarim skincare and hair care kits and bundles. Complete routines at a lower price. Free delivery over Rs. 10,000."
+    },
+    {
+      "handle": "serums",
+      "title": "Serums",
+      "rule": {
+        "column": "type",
+        "condition": "Serum"
+      },
+      "description": "Concentrated actives at concentrations that actually do something \u2014 vitamin C for tone, niacinamide for oil and breakouts.",
+      "seoDescription": "Fazarim face serums \u2014 vitamin C and niacinamide. Dermatologist approved, cruelty-free. Delivered across Pakistan."
+    },
+    {
+      "handle": "moisturizers",
+      "title": "Moisturizers",
+      "rule": {
+        "column": "type",
+        "condition": "Moisturizer"
+      },
+      "description": "Hydration that lasts the day without a heavy finish. Fragrance-free options for sensitive skin.",
+      "seoDescription": "Fazarim moisturisers for face and body. Fragrance-free, dermatologist approved. Delivered across Pakistan."
+    },
+    {
+      "handle": "cleansers",
+      "title": "Cleansers",
+      "rule": {
+        "column": "type",
+        "condition": "Cleanser"
+      },
+      "description": "Sulphate-free cleansers that remove oil and sunscreen without stripping your skin barrier. pH balanced.",
+      "seoDescription": "Fazarim face cleansers \u2014 sulphate-free and pH balanced. Gentle enough for daily use. Delivered across Pakistan."
+    },
+    {
+      "handle": "sunscreen",
+      "title": "Sunscreen",
+      "rule": {
+        "column": "type",
+        "condition": "Sunscreen"
+      },
+      "description": "Broad-spectrum protection with no white cast, light enough to wear every day. The single most useful step in any routine.",
+      "seoDescription": "Fazarim sunscreen SPF 50 PA+++. Broad-spectrum, no white cast, lightweight. Delivered across Pakistan."
+    },
+    {
+      "handle": "shampoo",
+      "title": "Shampoo",
+      "rule": {
+        "column": "type",
+        "condition": "Shampoo"
+      },
+      "description": "Sulphate-free and medicated shampoos for dandruff, damage and daily washing. Safe for coloured hair.",
+      "seoDescription": "Fazarim shampoo \u2014 sulphate-free and anti-dandruff medicated formulas. Delivered across Pakistan."
+    },
+    {
+      "handle": "hair-oil",
+      "title": "Hair Oil",
+      "rule": {
+        "column": "type",
+        "condition": "Hair Oil"
+      },
+      "description": "Cold-pressed oils for the scalp and lengths \u2014 argan for frizz and shine, rosemary and black seed for hair fall.",
+      "seoDescription": "Fazarim hair oils \u2014 argan, rosemary and black seed for hair fall, frizz and damage. Delivered across Pakistan."
+    },
+    {
+      "handle": "soap",
+      "title": "Soaps",
+      "rule": {
+        "column": "type",
+        "condition": "Soap"
+      },
+      "description": "Bathing and medicated bars. Glycerin-rich for sensitive skin, or antibacterial for body breakouts.",
+      "seoDescription": "Fazarim soaps \u2014 gentle bathing bars and medicated antibacterial soap. Delivered across Pakistan."
+    },
+    {
+      "handle": "lotion",
+      "title": "Lotions",
+      "rule": {
+        "column": "type",
+        "condition": "Lotion"
+      },
+      "description": "Fast-absorbing body moisturisers with shea and niacinamide. Non-greasy, made for daily use.",
+      "seoDescription": "Fazarim body lotions with shea butter and niacinamide. Non-greasy, 24-hour moisture. Delivered across Pakistan."
+    },
+    {
+      "handle": "body-wash",
+      "title": "Body Wash",
+      "rule": {
+        "column": "type",
+        "condition": "Body Wash"
+      },
+      "description": "Creamy, sulphate-free body wash that cleans without leaving skin tight.",
+      "seoDescription": "Fazarim body wash \u2014 sulphate-free, with glycerin and shea. Delivered across Pakistan."
+    },
+    {
+      "$concernComment": "SRS \u00a78.1.12 Shop by Skin Concern \u2014 concern-tagged listings, not browse categories.",
+      "handle": "concern-acne",
+      "title": "Acne",
+      "rule": {
+        "column": "tag",
+        "condition": "concern-acne"
+      },
+      "description": "Targeted care for breakout-prone skin \u2014 niacinamide to regulate oil, medicated cleansing for body breakouts. Introduce one product at a time.",
+      "seoDescription": "Fazarim products for acne and breakout-prone skin. Niacinamide serum, medicated soap. Delivered across Pakistan."
+    },
+    {
+      "handle": "concern-dry-skin",
+      "title": "Dry Skin",
+      "rule": {
+        "column": "tag",
+        "condition": "concern-dry-skin"
+      },
+      "description": "Hydration that holds \u2014 hyaluronic acid, glycerin and shea, in formulas that do not strip what they are meant to replace.",
+      "seoDescription": "Fazarim products for dry skin \u2014 moisturisers, body lotion, gentle cleansers. Delivered across Pakistan."
+    },
+    {
+      "handle": "concern-oily-skin",
+      "title": "Oily Skin",
+      "rule": {
+        "column": "tag",
+        "condition": "concern-oily-skin"
+      },
+      "description": "Oil control without the tightness. Sulphate-free cleansing and niacinamide, not harsh stripping.",
+      "seoDescription": "Fazarim products for oily skin \u2014 niacinamide serum, sulphate-free cleanser. Delivered across Pakistan."
+    },
+    {
+      "handle": "concern-sensitive",
+      "title": "Sensitive Skin",
+      "rule": {
+        "column": "tag",
+        "condition": "concern-sensitive"
+      },
+      "description": "Fragrance-free, minimal formulas for skin that reacts easily. Patch test anything new, even from this page.",
+      "seoDescription": "Fazarim products for sensitive skin \u2014 fragrance-free moisturisers, gentle cleansers and soap. Delivered across Pakistan."
+    },
+    {
+      "handle": "concern-pigmentation",
+      "title": "Pigmentation",
+      "rule": {
+        "column": "tag",
+        "condition": "concern-pigmentation"
+      },
+      "description": "For uneven tone and dark spots: vitamin C to brighten, and daily SPF \u2014 because sun exposure undoes the rest.",
+      "seoDescription": "Fazarim products for pigmentation and uneven skin tone \u2014 vitamin C serum and SPF 50. Delivered across Pakistan."
+    },
+    {
+      "handle": "concern-anti-aging",
+      "title": "Anti-Aging",
+      "rule": {
+        "column": "tag",
+        "condition": "concern-anti-aging"
+      },
+      "description": "Antioxidants and sun protection. Not a promise to turn back time \u2014 the honest tools that help.",
+      "seoDescription": "Fazarim anti-ageing products \u2014 vitamin C serum and broad-spectrum SPF 50. Delivered across Pakistan."
+    },
+    {
+      "handle": "concern-hair-fall",
+      "title": "Hair Fall",
+      "rule": {
+        "column": "tag",
+        "condition": "concern-hair-fall"
+      },
+      "description": "Scalp-focused care for thinning and breakage. Rosemary and black seed oil, massaged in regularly.",
+      "seoDescription": "Fazarim products for hair fall \u2014 rosemary and black seed scalp oil. Delivered across Pakistan."
+    },
+    {
+      "handle": "concern-dandruff",
+      "title": "Dandruff",
+      "rule": {
+        "column": "tag",
+        "condition": "concern-dandruff"
+      },
+      "description": "Medicated care for flaking and an itchy scalp \u2014 ketoconazole and zinc pyrithione, used two to three times a week.",
+      "seoDescription": "Fazarim anti-dandruff products \u2014 medicated shampoo with ketoconazole and zinc pyrithione. Delivered across Pakistan."
+    },
+    {
+      "handle": "concern-frizzy-hair",
+      "title": "Frizzy Hair",
+      "rule": {
+        "column": "tag",
+        "condition": "concern-frizzy-hair"
+      },
+      "description": "Smoothing oils that weigh nothing. For humidity, flyaways and rough ends.",
+      "seoDescription": "Fazarim products for frizzy hair \u2014 argan hair oil and sulphate-free shampoo. Delivered across Pakistan."
+    },
+    {
+      "handle": "concern-damaged-hair",
+      "title": "Damaged Hair",
+      "rule": {
+        "column": "tag",
+        "condition": "concern-damaged-hair"
+      },
+      "description": "Repair for heat, colour and chemical damage. Sulphate-free washing plus oils that rebuild the lengths.",
+      "seoDescription": "Fazarim products for damaged hair \u2014 repair shampoo and argan oil. Safe for coloured hair. Delivered across Pakistan."
+    }
   ],
-
-  "$retireComment": "Handles to DELETE from the store — off-brand leftovers, run via `npm run prune`. Deletion is irreversible, so this is an explicit list, never a 'delete anything not in the CSV' sweep (that would take the gift card and, later, the client's real products). The makeup entries are from our own first-pass catalog, built before the brand guidelines arrived; Fazarim sells skincare/hair care/body care only. They carried `best-seller` and `new` tags, so they were surfacing on the homepage.",
+  "$retireComment": "Handles to DELETE from the store \u2014 off-brand leftovers, run via `npm run prune`. Deletion is irreversible, so this is an explicit list, never a 'delete anything not in the CSV' sweep (that would take the gift card and, later, the client's real products). The makeup entries are from our own first-pass catalog, built before the brand guidelines arrived; Fazarim sells skincare/hair care/body care only. They carried `best-seller` and `new` tags, so they were surfacing on the homepage.",
   "retire": {
     "products": [
       "silk-finish-foundation",
@@ -57,63 +285,131 @@
       "gifts"
     ]
   },
-
-  "$menusComment": "Main menu follows SRS §6.2 exactly. TWO ITEMS ARE DELIBERATELY ABSENT: 'Fazarim Academy' (SRS §6.1 — videos, guides, doctor consultations, downloads) has no page built, and linking it would 404. Footer 'Help' stays thin for the same reason: only /search and /policies/privacy-policy resolve today. Refund, shipping and terms 404 until the client publishes them (drafts in docs/policies/). Add items here once the pages exist, then re-run `npm run setup`. Never link a page that does not exist.",
-
+  "$menusComment": "Main menu follows SRS \u00a76.2. 'Fazarim Academy' (\u00a76.1 \u2014 videos, guides, doctor consultations, downloads) is deliberately absent: no page exists and linking it would 404. The footer menu carries only URLs that resolve today \u2014 refund, shipping and terms policies 404 until the client publishes them (drafts in docs/policies/). Add them here at that point and re-run `npm run setup`. Never link a page that does not exist.",
   "menus": [
     {
       "handle": "main-menu",
       "title": "Main menu",
       "items": [
-        { "title": "Sale", "collection": "sale" },
         {
-          "title": "Skincare", "collection": "skincare",
+          "title": "Sale",
+          "collection": "sale"
+        },
+        {
+          "title": "Skincare",
+          "collection": "skincare",
           "items": [
-            { "title": "Serums",       "collection": "serums" },
-            { "title": "Moisturizers", "collection": "moisturizers" },
-            { "title": "Cleansers",    "collection": "cleansers" },
-            { "title": "Sunscreen",    "collection": "sunscreen" }
+            {
+              "title": "Serums",
+              "collection": "serums"
+            },
+            {
+              "title": "Moisturizers",
+              "collection": "moisturizers"
+            },
+            {
+              "title": "Cleansers",
+              "collection": "cleansers"
+            },
+            {
+              "title": "Sunscreen",
+              "collection": "sunscreen"
+            }
           ]
         },
         {
-          "title": "Hair Care", "collection": "hair-care",
+          "title": "Hair Care",
+          "collection": "hair-care",
           "items": [
-            { "title": "Shampoo",  "collection": "shampoo" },
-            { "title": "Hair Oil", "collection": "hair-oil" }
+            {
+              "title": "Shampoo",
+              "collection": "shampoo"
+            },
+            {
+              "title": "Hair Oil",
+              "collection": "hair-oil"
+            }
           ]
         },
         {
-          "title": "Body Care", "collection": "body-care",
+          "title": "Body Care",
+          "collection": "body-care",
           "items": [
-            { "title": "Soaps",     "collection": "soap" },
-            { "title": "Lotions",   "collection": "lotion" },
-            { "title": "Body Wash", "collection": "body-wash" }
+            {
+              "title": "Soaps",
+              "collection": "soap"
+            },
+            {
+              "title": "Lotions",
+              "collection": "lotion"
+            },
+            {
+              "title": "Body Wash",
+              "collection": "body-wash"
+            }
           ]
         },
-        { "title": "Best Sellers",   "collection": "best-sellers" },
-        { "title": "Kits & Bundles", "collection": "kits-and-bundles" }
+        {
+          "title": "Best Sellers",
+          "collection": "best-sellers"
+        },
+        {
+          "title": "Kits & Bundles",
+          "collection": "kits-and-bundles"
+        }
       ]
     },
     {
       "handle": "footer",
       "title": "Footer menu",
       "items": [
-        { "title": "Search",               "type": "SEARCH", "url": "/search" },
-        { "title": "Privacy Policy",       "type": "HTTP",   "url": "/policies/privacy-policy" },
-        { "title": "Your Privacy Choices", "type": "HTTP",   "url": "/pages/data-sharing-opt-out" }
+        {
+          "title": "Search",
+          "type": "SEARCH",
+          "url": "/search"
+        },
+        {
+          "title": "FAQ",
+          "type": "HTTP",
+          "url": "/pages/faq"
+        },
+        {
+          "title": "Contact Us",
+          "type": "HTTP",
+          "url": "/pages/contact"
+        },
+        {
+          "title": "About Us",
+          "type": "HTTP",
+          "url": "/pages/about-us"
+        },
+        {
+          "title": "Privacy Policy",
+          "type": "HTTP",
+          "url": "/policies/privacy-policy"
+        },
+        {
+          "title": "Your Privacy Choices",
+          "type": "HTTP",
+          "url": "/pages/data-sharing-opt-out"
+        }
       ]
     }
   ],
-
   "$targetsComment": "Where theme imagery gets wired into templates/index.json. Asset keys resolve against the active assets.*.json file.",
   "themeAssetTargets": {
     "hero": {
       "section": "hero",
-      "slides": ["hero-1", "hero-2", "hero-3"]
+      "slides": [
+        "hero-1",
+        "hero-2",
+        "hero-3"
+      ]
     },
     "promo": {
       "section": "promo",
       "asset": "promo"
     }
-  }
+  },
+  "$collectionCopyComment": "SRS \u00a711.1 requires category pages to carry introductory content and editable meta descriptions. `description` renders in the collection banner; `seoDescription` becomes the meta description. Applied by `npm run setup:copy`."
 }
