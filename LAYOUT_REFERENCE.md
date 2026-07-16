@@ -1,53 +1,61 @@
 # Layout Reference — Fazarim Cosmetics
 
-Strategy: **Shopaholic structure** (proven PK cosmetics) + **Drunk Elephant finish** (premium whitespace, clean type, ingredient callouts). Own brand/assets — NOT a pixel copy.
+Strategy: **Shopaholic structure** + **Drunk Elephant finish**. Own brand/assets — NOT a pixel copy.
+Both are the client's own references, named in SRS §1.6.
+
+> **Read [BRAND.md](BRAND.md) first.** It carries the verified palette, type, logo rules and
+> every deviation from the source documents. This file is the section-by-section build log.
+>
+> Fazarim sells **skincare, hair care and body care** — not makeup. Earlier revisions of this
+> file assumed cosmetics and were wrong.
 
 ## Homepage sections (top → bottom)
 
-1. **Announcement bar** — thin strip. "Free Shipping Over Rs. X" (PKR). Optional rotating.
-2. **Header** — logo left; mega-nav center/left; search + account + cart (with count) right.
-   - Mega-nav categories: Sale, Makeup, Skincare, Bath & Body, Hair, Accessories, Gifts.
-   - Dropdowns: Makeup → Face / Eye / Lips / Nails / Tools. Nested (Foundation, Concealer, Palettes...).
-3. **Hero banner** — big promo image + CTA ("Shop Sale" / "Shop New"). Slideshow-capable.
-4. **Category tiles** — grid of round/square tiles w/ icon+label: Makeup, Foundation, Lips, Eye, Moisturizer, Skincare, Bath & Body, Hair, Nail, Concealer.
-5. **Product grids** (repeat blocks):
-   - New Arrivals
-   - Best Sellers
-   - Sale
-   - each: card = image, name, PKR price, star rating, "Add to Bag" / "Choose options".
-6. **Ingredient / brand-difference callout** (Drunk Elephant flavor) — "Why Fizaram" values, clean formulas.
-7. **Instagram / UGC feed** (optional) — social proof grid.
-8. **Newsletter signup** — "15% off first order" hook. Email capture.
-9. **Footer** — category links, About/Learn, Contact/Shipping/Returns/FAQ, social icons, legal, region/currency.
+Order is dictated by SRS §8.1.3–§8.1.14, not by us. Full table in [BRAND.md](BRAND.md#homepage--srs-81).
+
+1. **Announcement bar** — "Free Shipping Over Rs. 10,000" (§8.1.4), rotating.
+2. **Header** — logo left; mega-nav; search + account + cart (§8.1.5).
+   - Nav: Sale, Skincare, Hair Care, Body Care, Best Sellers, Kits & Bundles.
+   - Dropdowns: Skincare → Serums / Moisturizers / Cleansers / Sunscreen.
+3. **Hero slider** — 3 slides, autoplay, dots (§8.1.6).
+4. **Why Choose Fazarim** — 6 trust cards (§8.1.7).
+5. **Shop by Category** — exactly 3: Skincare, Hair Care, Body Care (§8.1.8).
+6. **Sale** — carousel (§8.1.9).
+7. **New Arrivals** — carousel (§8.1.10).
+8. **Best Sellers** — carousel (§8.1.11).
+9. **Shop by Skin Concern** — 10 concern tiles (§8.1.12).
+10. **Customer Reviews** (§8.1.13) — *not built; would need fabricated testimonials.*
+11. **Footer** — 6 columns + newsletter (§8.1.14).
 
 ## Style
 
-- Palette: cream / neutral / white bg, lots of whitespace (Drunk Elephant). Accent = brand color (TBD).
-- Clean typography, high-contrast product photos.
-- Currency: PKR (Rs.). Star ratings on cards.
+- Palette: brand Option 1 — mauve `#A64D79`, green `#6EC47C` accent, black/white. See [BRAND.md](BRAND.md#colour).
+- Type: Playfair Display (standing in for Larken) + Outfit Light. Pill buttons, uppercase.
+- Currency: PKR (Rs.).
 
 ## Refs
 
-- [shopaholic.com.pk](https://www.shopaholic.com.pk/) — layout twin, drives full homepage structure
-- [drunkelephant.com](https://www.drunkelephant.com/) — footer style only (per user, 2026-07-06)
+- [shopaholic.com.pk](https://www.shopaholic.com.pk/) — navigation + homepage inspiration (SRS §1.6)
+- [drunkelephant.com](https://www.drunkelephant.com/) — homepage layout + footer inspiration (SRS §1.6)
+- **Brand Guidelines PDF** + **SRS PDF** — the authorities. Digested in [BRAND.md](BRAND.md).
 
 ## Build status
 
 | section | state |
 | ------- | ----- |
-| Announcement bar | ✅ "Free shipping on orders over Rs. 5,000" — matches the real shipping rate |
-| Header + mega-nav | ✅ logo left, 7 categories with dropdowns, cart badge, Poppins bold uppercase |
-| Hero slideshow | ✅ 2 slides — **placeholder imagery** |
-| Category tiles | ✅ 9 across (Dawn caps at 6; overridden in `assets/fazarim-custom.css`) |
+| Announcement bar | ⚠️ "Free Shipping Over Rs. 10,000" per SRS — **live shipping rate is still Rs 5,000, must be changed in Admin** |
+| Header + mega-nav | ✅ real logo left, SRS nav with dropdowns, cart badge |
+| Hero slideshow | ✅ 3 slides per SRS — **placeholder imagery** |
+| Why Choose Fazarim | ✅ 6 trust cards, directly below hero per SRS §8.1.7 |
+| Shop by Category | ✅ 3 tiles — collection cover images drive these (`npm run setup:covers`) |
 | Sale / New Arrivals / Best Sellers | ✅ live, auto-populating smart collections |
-| Makeup / Skincare grids | ✅ |
-| Promo banner | ✅ one `image-banner` — reference stacks several |
-| Brand callout ("Why Fazarim") | ✅ `multicolumn` |
-| Instagram / UGC feed | ❌ not built |
-| Newsletter | ✅ |
-| Footer | ⚠️ brand + Shop + Help columns; payment icons off until a gateway exists (see `LAUNCH_CHECKLIST.md`). Drunk Elephant treatment not applied |
+| Shop by Skin Concern | ✅ 10 concern tiles |
+| Customer Reviews | ❌ **not built** — would require inventing testimonials. Needs a reviews app |
+| Promo banner | ✅ one `image-banner` |
+| Footer | ⚠️ 3 of 6 SRS columns; payment icons off until a gateway exists |
 | **Product page** | ❌ **stock Dawn** |
 | **Collection page** | ❌ **stock Dawn** |
+| Fazarim Academy | ❌ not built — omitted from nav so it can't 404 |
 
 Social icons sit in the announcement bar, not top-right of the header as in the reference —
 Dawn has no markup for that, it needs a `header.liquid` change.

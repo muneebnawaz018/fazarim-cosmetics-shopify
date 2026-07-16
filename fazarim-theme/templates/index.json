@@ -7,11 +7,11 @@
           "type": "slide",
           "settings": {
             "image_overlay_opacity": 20,
-            "heading": "Beauty that loves your skin",
+            "heading": "Pure care. Real rezults.",
             "heading_size": "hxl",
-            "subheading": "Clean formulas. Real results. New season edit is here.",
-            "button_label": "Shop New Arrivals",
-            "link": "shopify://collections/all",
+            "subheading": "Science-backed skincare, hair care and body care made in Pakistan.",
+            "button_label": "Shop Skincare",
+            "link": "shopify://collections/skincare",
             "button_style_secondary": false,
             "show_text_box": true,
             "box_align": "middle-left",
@@ -25,24 +25,43 @@
           "type": "slide",
           "settings": {
             "image_overlay_opacity": 20,
-            "heading": "Up to 40% off — Sale is live",
+            "heading": "Care for every day",
             "heading_size": "hxl",
-            "subheading": "Limited stock on best-selling makeup & skincare.",
-            "button_label": "Shop Sale",
-            "link": "shopify://collections/all",
+            "subheading": "Sulphate-free formulas that are gentle enough to use daily.",
+            "button_label": "Shop Hair Care",
+            "link": "shopify://collections/hair-care",
             "button_style_secondary": false,
             "show_text_box": true,
-            "box_align": "middle-center",
-            "text_alignment": "center",
+            "box_align": "middle-left",
+            "text_alignment": "left",
             "text_alignment_mobile": "center",
-            "color_scheme": "scheme-3",
+            "color_scheme": "scheme-1",
             "image": "shopify://shop_images/photo-1522335789203-aabd1fc54bc9.jpg"
+          }
+        },
+        "slide-3": {
+          "type": "slide",
+          "settings": {
+            "image_overlay_opacity": 20,
+            "heading": "Built for your routine",
+            "heading_size": "hxl",
+            "subheading": "Kits and bundles that take the guesswork out of getting started.",
+            "button_label": "Shop Kits & Bundles",
+            "link": "shopify://collections/kits-and-bundles",
+            "button_style_secondary": false,
+            "show_text_box": true,
+            "box_align": "middle-left",
+            "text_alignment": "left",
+            "text_alignment_mobile": "center",
+            "color_scheme": "scheme-1",
+            "image": "shopify://shop_images/photo-1612817288484-6f916006741a.jpg"
           }
         }
       },
       "block_order": [
         "slide-1",
-        "slide-2"
+        "slide-2",
+        "slide-3"
       ],
       "settings": {
         "layout": "full_bleed",
@@ -61,77 +80,35 @@
         "cat-1": {
           "type": "featured_collection",
           "settings": {
-            "collection": "makeup"
+            "collection": "skincare"
           }
         },
         "cat-2": {
           "type": "featured_collection",
           "settings": {
-            "collection": "foundation"
+            "collection": "hair-care"
           }
         },
         "cat-3": {
           "type": "featured_collection",
           "settings": {
-            "collection": "lipstick"
-          }
-        },
-        "cat-4": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": "mascara"
-          }
-        },
-        "cat-5": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": "moisturizer"
-          }
-        },
-        "cat-6": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": "skincare"
-          }
-        },
-        "cat-7": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": "bath-body"
-          }
-        },
-        "cat-8": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": "hair"
-          }
-        },
-        "cat-9": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": "nail-polish"
+            "collection": "body-care"
           }
         }
       },
       "block_order": [
         "cat-1",
         "cat-2",
-        "cat-3",
-        "cat-4",
-        "cat-5",
-        "cat-6",
-        "cat-7",
-        "cat-8",
-        "cat-9"
+        "cat-3"
       ],
       "settings": {
-        "title": "Product Categories",
+        "title": "Shop by Category",
         "heading_size": "h1",
         "image_ratio": "square",
-        "columns_desktop": 6,
+        "columns_desktop": 3,
         "color_scheme": "scheme-1",
         "show_view_all": false,
-        "columns_mobile": "2",
+        "columns_mobile": "1",
         "swipe_on_mobile": true,
         "padding_top": 48,
         "padding_bottom": 36
@@ -158,7 +135,7 @@
         "image_shape": "default",
         "show_secondary_image": true,
         "show_vendor": false,
-        "show_rating": true,
+        "show_rating": false,
         "quick_add": "standard",
         "columns_mobile": "2",
         "padding_top": 48,
@@ -186,10 +163,10 @@
         "image_shape": "default",
         "show_secondary_image": true,
         "show_vendor": false,
-        "show_rating": true,
+        "show_rating": false,
         "quick_add": "standard",
         "columns_mobile": "2",
-        "padding_top": 36,
+        "padding_top": 48,
         "padding_bottom": 36
       }
     },
@@ -251,8 +228,8 @@
         "description_style": "body",
         "collection": "best-sellers",
         "products_to_show": 8,
-        "columns_desktop": 3,
-        "color_scheme": "scheme-1",
+        "columns_desktop": 4,
+        "color_scheme": "scheme-2",
         "full_width": false,
         "show_view_all": true,
         "view_all_style": "solid",
@@ -262,66 +239,11 @@
         "image_shape": "default",
         "show_secondary_image": true,
         "show_vendor": false,
-        "show_rating": true,
+        "show_rating": false,
         "quick_add": "standard",
         "columns_mobile": "2",
-        "padding_top": 36,
+        "padding_top": 48,
         "padding_bottom": 36
-      }
-    },
-    "brand_story": {
-      "type": "image-with-text",
-      "blocks": {
-        "caption": {
-          "type": "caption",
-          "settings": {
-            "caption": "Our promise",
-            "text_style": "caption-with-letter-spacing",
-            "text_size": "medium"
-          }
-        },
-        "heading": {
-          "type": "heading",
-          "settings": {
-            "heading": "Clean beauty, backed by science",
-            "heading_size": "h1"
-          }
-        },
-        "text": {
-          "type": "text",
-          "settings": {
-            "text": "<p>Every Fazarim formula is made with skin-loving actives and nothing you don't need. Dermatologist tested, cruelty-free, and honest about what's inside.</p>",
-            "text_style": "body"
-          }
-        },
-        "button": {
-          "type": "button",
-          "settings": {
-            "button_label": "Learn more",
-            "button_link": "shopify://collections/all",
-            "button_style_secondary": true
-          }
-        }
-      },
-      "block_order": [
-        "caption",
-        "heading",
-        "text",
-        "button"
-      ],
-      "settings": {
-        "height": "large",
-        "desktop_image_width": "medium",
-        "layout": "image_first",
-        "image_behavior": "none",
-        "content_layout": "no-overlap",
-        "desktop_content_position": "middle",
-        "desktop_content_alignment": "left",
-        "mobile_content_alignment": "left",
-        "section_color_scheme": "scheme-1",
-        "color_scheme": "scheme-2",
-        "padding_top": 40,
-        "padding_bottom": 40
       }
     },
     "why_fazarim": {
@@ -330,8 +252,8 @@
         "col-1": {
           "type": "column",
           "settings": {
-            "title": "Clean formulas",
-            "text": "<p>Made without parabens, sulfates, or mystery fillers — only what your skin needs.</p>",
+            "title": "Dermatologist Approved",
+            "text": "<p>Formulated and reviewed with dermatologists before it reaches you.</p>",
             "link_label": "",
             "link": ""
           }
@@ -339,8 +261,8 @@
         "col-2": {
           "type": "column",
           "settings": {
-            "title": "Cruelty-free",
-            "text": "<p>Never tested on animals. Kind to skin, kinder to the planet.</p>",
+            "title": "Sulphate-Free Formulations",
+            "text": "<p>Cleansers and shampoos that wash without stripping your skin or scalp.</p>",
             "link_label": "",
             "link": ""
           }
@@ -348,8 +270,35 @@
         "col-3": {
           "type": "column",
           "settings": {
-            "title": "Dermatologist tested",
-            "text": "<p>Every formula is reviewed and skin-safe for daily use, even for sensitive skin.</p>",
+            "title": "Clinically Tested",
+            "text": "<p>Tested for safety and performance, not just claims.</p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "col-4": {
+          "type": "column",
+          "settings": {
+            "title": "Premium Quality Ingredients",
+            "text": "<p>Carefully sourced actives, at concentrations that actually do something.</p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "col-5": {
+          "type": "column",
+          "settings": {
+            "title": "Safe for Daily Use",
+            "text": "<p>Gentle enough to build into an everyday routine.</p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "col-6": {
+          "type": "column",
+          "settings": {
+            "title": "Cruelty-Free",
+            "text": "<p>Never tested on animals.</p>",
             "link_label": "",
             "link": ""
           }
@@ -358,10 +307,13 @@
       "block_order": [
         "col-1",
         "col-2",
-        "col-3"
+        "col-3",
+        "col-4",
+        "col-5",
+        "col-6"
       ],
       "settings": {
-        "title": "Why Fazarim",
+        "title": "Why Choose Fazarim",
         "heading_size": "h1",
         "image_width": "third",
         "image_ratio": "adapt",
@@ -377,91 +329,91 @@
         "padding_bottom": 52
       }
     },
-    "newsletter": {
-      "type": "newsletter",
+    "concerns": {
+      "type": "collection-list",
       "blocks": {
-        "heading": {
-          "type": "heading",
+        "con-1": {
+          "type": "featured_collection",
           "settings": {
-            "heading": "Join the Fazarim family",
-            "heading_size": "h1"
+            "collection": "concern-acne"
           }
         },
-        "paragraph": {
-          "type": "paragraph",
+        "con-2": {
+          "type": "featured_collection",
           "settings": {
-            "text": "<p>Get 15% off your first order plus early access to new drops.</p>"
+            "collection": "concern-dry-skin"
           }
         },
-        "email_form": {
-          "type": "email_form",
-          "settings": {}
+        "con-3": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "concern-oily-skin"
+          }
+        },
+        "con-4": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "concern-sensitive"
+          }
+        },
+        "con-5": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "concern-pigmentation"
+          }
+        },
+        "con-6": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "concern-anti-aging"
+          }
+        },
+        "con-7": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "concern-hair-fall"
+          }
+        },
+        "con-8": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "concern-dandruff"
+          }
+        },
+        "con-9": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "concern-frizzy-hair"
+          }
+        },
+        "con-10": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "concern-damaged-hair"
+          }
         }
       },
       "block_order": [
-        "heading",
-        "paragraph",
-        "email_form"
+        "con-1",
+        "con-2",
+        "con-3",
+        "con-4",
+        "con-5",
+        "con-6",
+        "con-7",
+        "con-8",
+        "con-9",
+        "con-10"
       ],
       "settings": {
-        "color_scheme": "scheme-5",
-        "full_width": true,
-        "padding_top": 52,
-        "padding_bottom": 52
-      }
-    },
-    "makeup": {
-      "type": "featured-collection",
-      "settings": {
-        "title": "Makeup",
+        "title": "Shop by Skin Concern",
         "heading_size": "h1",
-        "description": "",
-        "show_description": false,
-        "description_style": "body",
-        "collection": "makeup",
-        "products_to_show": 8,
-        "columns_desktop": 4,
+        "image_ratio": "square",
+        "columns_desktop": 5,
         "color_scheme": "scheme-1",
-        "full_width": false,
-        "show_view_all": true,
-        "view_all_style": "solid",
-        "enable_desktop_slider": true,
-        "swipe_on_mobile": true,
-        "image_ratio": "portrait",
-        "image_shape": "default",
-        "show_secondary_image": true,
-        "show_vendor": false,
-        "show_rating": true,
-        "quick_add": "standard",
+        "show_view_all": false,
         "columns_mobile": "2",
-        "padding_top": 48,
-        "padding_bottom": 36
-      }
-    },
-    "skincare": {
-      "type": "featured-collection",
-      "settings": {
-        "title": "Skincare",
-        "heading_size": "h1",
-        "description": "",
-        "show_description": false,
-        "description_style": "body",
-        "collection": "skincare",
-        "products_to_show": 8,
-        "columns_desktop": 4,
-        "color_scheme": "scheme-2",
-        "full_width": false,
-        "show_view_all": true,
-        "view_all_style": "solid",
-        "enable_desktop_slider": true,
         "swipe_on_mobile": true,
-        "image_ratio": "portrait",
-        "image_shape": "default",
-        "show_secondary_image": true,
-        "show_vendor": false,
-        "show_rating": true,
-        "quick_add": "standard",
-        "columns_mobile": "2",
         "padding_top": 48,
         "padding_bottom": 36
       }
@@ -469,15 +421,12 @@
   },
   "order": [
     "hero",
+    "why_fazarim",
     "category_tiles",
     "sale",
     "new_arrivals",
-    "promo",
     "best_sellers",
-    "makeup",
-    "skincare",
-    "brand_story",
-    "why_fazarim",
-    "newsletter"
+    "concerns",
+    "promo"
   ]
 }

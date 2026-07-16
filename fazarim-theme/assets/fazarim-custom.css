@@ -4,9 +4,51 @@
   Loaded from layout/theme.liquid, after base.css.
 */
 
+/* ------------------------------------------------- brand type hierarchy */
+
+/*
+  Brand Guidelines p.14. Headers are Larken Bold — Larken is a commercial font
+  we have no webfont licence for, so Playfair Display stands in via the theme's
+  font picker. Swap `type_header_font` when a licence lands; nothing here
+  names the face.
+
+  Buttons are Outfit SemiBold uppercase in a pill. `buttons_radius: 40` gets
+  the pill; weight 600 is loaded explicitly in theme.liquid because the body
+  face is Light and 600 would otherwise synthesise.
+*/
+.button,
+.shopify-challenge__button,
+.customer button,
+button.shopify-payment-button__button--unbranded {
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 1.4rem;
+}
+
+/* Sub-headers: Larken Regular, uppercase, tracked. */
+.brand-subhead {
+  font-family: var(--font-heading-family);
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/*
+  Body copy is Outfit Light (300). Dawn's default line-height is tuned for
+  heavier faces and Light needs more air to stay legible at small sizes.
+*/
+.rte p,
+.rte li {
+  line-height: 1.7;
+}
+
 /* ---------------------------------------------------------------- header */
 
-/* Wordmark: bold uppercase, tightly tracked. */
+/*
+  The real logo is installed (settings.logo), so Dawn renders an <img> and the
+  text-wordmark rules below only apply if that setting is ever cleared.
+*/
 .header__heading-link {
   padding: 0;
 }
@@ -18,6 +60,16 @@
   letter-spacing: 0.08em;
   font-size: 2.6rem;
   line-height: 1;
+}
+
+/*
+  Logo artwork is mauve-on-transparent, so it needs a light backdrop. The
+  header sits on scheme-1 (white); if the header is ever moved to scheme-4
+  (black) the logo will disappear and needs a white variant from the client.
+*/
+.header__heading-logo {
+  max-height: 5.2rem;
+  width: auto;
 }
 
 /* Nav row: small, bold, uppercase, generously tracked. */
@@ -65,22 +117,16 @@
 /* ------------------------------------------------------- category tiles */
 
 /*
-  Dawn caps `columns_desktop` at 6, but the reference runs 9 across.
-  Its .grid is flexbox with calc'd widths, so we recompute for 9 rather
-  than reaching for grid-template-columns.
+  The 9-across override is gone with the makeup catalog: SRS 8.1.8 specifies
+  three categories (Skincare / Hair Care / Body Care), which Dawn's own
+  `columns_desktop: 3` handles natively.
 
-  `collection-list--9-items` is emitted by Dawn from the block count, so
-  this only applies to a 9-tile list and needs no section-id coupling.
+  "Shop by Skin Concern" (SRS 8.1.12) runs 10 tiles at 5 per row — also
+  within Dawn's 6-column cap, so again no width maths needed.
 */
-@media screen and (min-width: 990px) {
-  .collection-list--9-items.grid--6-col-desktop .grid__item {
-    width: calc(11.11% - var(--grid-desktop-horizontal-spacing) * 8 / 9);
-    max-width: calc(11.11% - var(--grid-desktop-horizontal-spacing) * 8 / 9);
-  }
-}
 
 /* Tile captions: compact, uppercase, centred under the image. */
-.collection-list--9-items .card__heading {
+.collection-list .card__heading {
   font-size: 1.3rem;
   font-weight: 600;
   text-transform: uppercase;

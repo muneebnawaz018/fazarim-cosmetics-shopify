@@ -69,6 +69,9 @@
       assign body_font_bold = settings.type_body_font | font_modify: 'weight', 'bold'
       assign body_font_italic = settings.type_body_font | font_modify: 'style', 'italic'
       assign body_font_bold_italic = body_font_bold | font_modify: 'style', 'italic'
+      # Brand spec sets buttons in Outfit SemiBold; the body face is Light, so 600
+      # is not otherwise loaded and would synthesise to bold.
+      assign body_font_semibold = settings.type_body_font | font_modify: 'weight', '600'
     %}
 
     {% style %}
@@ -76,6 +79,7 @@
       {{ body_font_bold | font_face: font_display: 'swap' }}
       {{ body_font_italic | font_face: font_display: 'swap' }}
       {{ body_font_bold_italic | font_face: font_display: 'swap' }}
+      {{ body_font_semibold | font_face: font_display: 'swap' }}
       {{ settings.type_header_font | font_face: font_display: 'swap' }}
 
       {% assign scheme_classes = '' %}

@@ -1,25 +1,64 @@
 {
-  "$comment": "PERMANENT. The store's information architecture — collections and navigation. Version-controlled, re-runnable on any store. Product rows live in sample-products.csv. Imagery lives in assets.dummy.json (dev) or assets.client.json (real).",
+  "$comment": "PERMANENT. The store's information architecture — collections and navigation. Version-controlled, re-runnable on any store. Product rows live in sample-products.dummy.csv. Imagery lives in assets.dummy.json (dev) or assets.client.json (real).",
+
+  "$sourceComment": "Derived from the client's SRS (Software Requirements Specification, Fazarim Website): §6.1 Sitemap, §6.2 Navigation Structure, §8.1.8 Product Categories, §8.1.12 Shop by Skin Concern. Fazarim sells SKINCARE, HAIR CARE and BODY CARE — not makeup. Do not reintroduce makeup, accessories or gifts categories.",
 
   "collections": [
-    { "handle": "sale",         "title": "Sale",         "rule": { "column": "tag",  "condition": "sale" } },
-    { "handle": "new-arrivals", "title": "New Arrivals", "rule": { "column": "tag",  "condition": "new" } },
-    { "handle": "best-sellers", "title": "Best Sellers", "rule": { "column": "tag",  "condition": "best-seller" } },
-    { "handle": "makeup",       "title": "Makeup",       "rule": { "column": "tag",  "condition": "makeup" } },
-    { "handle": "skincare",     "title": "Skincare",     "rule": { "column": "tag",  "condition": "skincare" } },
-    { "handle": "bath-body",    "title": "Bath & Body",  "rule": { "column": "tag",  "condition": "bath-body" } },
-    { "handle": "hair",         "title": "Hair",         "rule": { "column": "tag",  "condition": "hair" } },
-    { "handle": "accessories",  "title": "Accessories",  "rule": { "column": "tag",  "condition": "accessories" } },
-    { "handle": "gifts",        "title": "Gifts",        "rule": { "column": "tag",  "condition": "gifts" } },
+    { "handle": "sale",          "title": "Sale",           "rule": { "column": "tag", "condition": "sale" } },
+    { "handle": "new-arrivals",  "title": "New Arrivals",   "rule": { "column": "tag", "condition": "new" } },
+    { "handle": "best-sellers",  "title": "Best Sellers",   "rule": { "column": "tag", "condition": "best-seller" } },
 
-    { "handle": "foundation",   "title": "Foundation",   "rule": { "column": "type", "condition": "Foundation" } },
-    { "handle": "lipstick",     "title": "Lips",         "rule": { "column": "type", "condition": "Lipstick" } },
-    { "handle": "mascara",      "title": "Eye Makeup",   "rule": { "column": "type", "condition": "Mascara" } },
-    { "handle": "moisturizer",  "title": "Moisturizer",  "rule": { "column": "type", "condition": "Moisturizer" } },
-    { "handle": "nail-polish",  "title": "Nail Polish",  "rule": { "column": "type", "condition": "Nail Polish" } }
+    { "handle": "skincare",      "title": "Skincare",       "rule": { "column": "tag", "condition": "skincare" } },
+    { "handle": "hair-care",     "title": "Hair Care",      "rule": { "column": "tag", "condition": "hair-care" } },
+    { "handle": "body-care",     "title": "Body Care",      "rule": { "column": "tag", "condition": "body-care" } },
+    { "handle": "kits-and-bundles", "title": "Kits & Bundles", "rule": { "column": "tag", "condition": "kit" } },
+
+    { "handle": "serums",        "title": "Serums",         "rule": { "column": "type", "condition": "Serum" } },
+    { "handle": "moisturizers",  "title": "Moisturizers",   "rule": { "column": "type", "condition": "Moisturizer" } },
+    { "handle": "cleansers",     "title": "Cleansers",      "rule": { "column": "type", "condition": "Cleanser" } },
+    { "handle": "sunscreen",     "title": "Sunscreen",      "rule": { "column": "type", "condition": "Sunscreen" } },
+    { "handle": "shampoo",       "title": "Shampoo",        "rule": { "column": "type", "condition": "Shampoo" } },
+    { "handle": "hair-oil",      "title": "Hair Oil",       "rule": { "column": "type", "condition": "Hair Oil" } },
+    { "handle": "soap",          "title": "Soaps",          "rule": { "column": "type", "condition": "Soap" } },
+    { "handle": "lotion",        "title": "Lotions",        "rule": { "column": "type", "condition": "Lotion" } },
+    { "handle": "body-wash",     "title": "Body Wash",      "rule": { "column": "type", "condition": "Body Wash" } },
+
+    { "$concernComment": "SRS §8.1.12 Shop by Skin Concern — concern-tagged listings, not browse categories.",
+      "handle": "concern-acne",         "title": "Acne",          "rule": { "column": "tag", "condition": "concern-acne" } },
+    { "handle": "concern-dry-skin",     "title": "Dry Skin",      "rule": { "column": "tag", "condition": "concern-dry-skin" } },
+    { "handle": "concern-oily-skin",    "title": "Oily Skin",     "rule": { "column": "tag", "condition": "concern-oily-skin" } },
+    { "handle": "concern-sensitive",    "title": "Sensitive Skin","rule": { "column": "tag", "condition": "concern-sensitive" } },
+    { "handle": "concern-pigmentation", "title": "Pigmentation",  "rule": { "column": "tag", "condition": "concern-pigmentation" } },
+    { "handle": "concern-anti-aging",   "title": "Anti-Aging",    "rule": { "column": "tag", "condition": "concern-anti-aging" } },
+    { "handle": "concern-hair-fall",    "title": "Hair Fall",     "rule": { "column": "tag", "condition": "concern-hair-fall" } },
+    { "handle": "concern-dandruff",     "title": "Dandruff",      "rule": { "column": "tag", "condition": "concern-dandruff" } },
+    { "handle": "concern-frizzy-hair",  "title": "Frizzy Hair",   "rule": { "column": "tag", "condition": "concern-frizzy-hair" } },
+    { "handle": "concern-damaged-hair", "title": "Damaged Hair",  "rule": { "column": "tag", "condition": "concern-damaged-hair" } }
   ],
 
-  "$menusComment": "The footer 'Help' menu is deliberately thin. Only /search and /policies/privacy-policy resolve today; refund, shipping and terms 404 until the client publishes them (drafts in docs/policies/). Add those items here at that point and re-run `npm run setup`. Never link a page that does not exist.",
+  "$retireComment": "Handles to DELETE from the store — off-brand leftovers, run via `npm run prune`. Deletion is irreversible, so this is an explicit list, never a 'delete anything not in the CSV' sweep (that would take the gift card and, later, the client's real products). The makeup entries are from our own first-pass catalog, built before the brand guidelines arrived; Fazarim sells skincare/hair care/body care only. They carried `best-seller` and `new` tags, so they were surfacing on the homepage.",
+  "retire": {
+    "products": [
+      "silk-finish-foundation",
+      "velvet-matte-lipstick",
+      "lash-volume-mascara",
+      "flawless-concealer"
+    ],
+    "collections": [
+      "makeup",
+      "bath-body",
+      "hair",
+      "foundation",
+      "lipstick",
+      "mascara",
+      "moisturizer",
+      "nail-polish",
+      "accessories",
+      "gifts"
+    ]
+  },
+
+  "$menusComment": "Main menu follows SRS §6.2 exactly. TWO ITEMS ARE DELIBERATELY ABSENT: 'Fazarim Academy' (SRS §6.1 — videos, guides, doctor consultations, downloads) has no page built, and linking it would 404. Footer 'Help' stays thin for the same reason: only /search and /policies/privacy-policy resolve today. Refund, shipping and terms 404 until the client publishes them (drafts in docs/policies/). Add items here once the pages exist, then re-run `npm run setup`. Never link a page that does not exist.",
 
   "menus": [
     {
@@ -28,26 +67,31 @@
       "items": [
         { "title": "Sale", "collection": "sale" },
         {
-          "title": "Makeup", "collection": "makeup",
+          "title": "Skincare", "collection": "skincare",
           "items": [
-            { "title": "Face Makeup", "collection": "foundation" },
-            { "title": "Eye Makeup",  "collection": "mascara" },
-            { "title": "Lips",        "collection": "lipstick" },
-            { "title": "Nails",       "collection": "nail-polish" }
+            { "title": "Serums",       "collection": "serums" },
+            { "title": "Moisturizers", "collection": "moisturizers" },
+            { "title": "Cleansers",    "collection": "cleansers" },
+            { "title": "Sunscreen",    "collection": "sunscreen" }
           ]
         },
         {
-          "title": "Skincare", "collection": "skincare",
+          "title": "Hair Care", "collection": "hair-care",
           "items": [
-            { "title": "Moisturizer", "collection": "moisturizer" },
-            { "title": "Serums",      "collection": "skincare" },
-            { "title": "Sunscreen",   "collection": "skincare" }
+            { "title": "Shampoo",  "collection": "shampoo" },
+            { "title": "Hair Oil", "collection": "hair-oil" }
           ]
         },
-        { "title": "Bath and Body", "collection": "bath-body" },
-        { "title": "Hair",          "collection": "hair" },
-        { "title": "Accessories",   "collection": "accessories" },
-        { "title": "Gifts",         "collection": "gifts" }
+        {
+          "title": "Body Care", "collection": "body-care",
+          "items": [
+            { "title": "Soaps",     "collection": "soap" },
+            { "title": "Lotions",   "collection": "lotion" },
+            { "title": "Body Wash", "collection": "body-wash" }
+          ]
+        },
+        { "title": "Best Sellers",   "collection": "best-sellers" },
+        { "title": "Kits & Bundles", "collection": "kits-and-bundles" }
       ]
     },
     {
@@ -63,7 +107,13 @@
 
   "$targetsComment": "Where theme imagery gets wired into templates/index.json. Asset keys resolve against the active assets.*.json file.",
   "themeAssetTargets": {
-    "hero":  { "section": "hero",  "slides": ["hero-1", "hero-2"] },
-    "promo": { "section": "promo", "asset": "promo" }
+    "hero": {
+      "section": "hero",
+      "slides": ["hero-1", "hero-2", "hero-3"]
+    },
+    "promo": {
+      "section": "promo",
+      "asset": "promo"
+    }
   }
 }

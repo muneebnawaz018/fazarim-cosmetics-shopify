@@ -2,67 +2,67 @@
   "current": "Dawn",
   "presets": {
     "Dawn": {
-      "logo_width": 90,
+      "logo_width": 200,
       "color_schemes": {
         "scheme-1": {
           "settings": {
             "background": "#FFFFFF",
             "background_gradient": "",
-            "text": "#2B2118",
-            "button": "#2B2118",
+            "text": "#000000",
+            "button": "#A64D79",
             "button_label": "#FFFFFF",
-            "secondary_button_label": "#2B2118",
-            "shadow": "#2B2118"
+            "secondary_button_label": "#A64D79",
+            "shadow": "#000000"
           }
         },
         "scheme-2": {
           "settings": {
-            "background": "#F7F1E9",
+            "background": "#F7F4F5",
             "background_gradient": "",
-            "text": "#2B2118",
-            "button": "#2B2118",
-            "button_label": "#F7F1E9",
-            "secondary_button_label": "#2B2118",
-            "shadow": "#2B2118"
+            "text": "#000000",
+            "button": "#A64D79",
+            "button_label": "#FFFFFF",
+            "secondary_button_label": "#A64D79",
+            "shadow": "#000000"
           }
         },
         "scheme-3": {
           "settings": {
-            "background": "#B76E79",
+            "background": "#A64D79",
             "background_gradient": "",
             "text": "#FFFFFF",
             "button": "#FFFFFF",
-            "button_label": "#B76E79",
+            "button_label": "#A64D79",
             "secondary_button_label": "#FFFFFF",
-            "shadow": "#2B2118"
+            "shadow": "#000000"
           }
         },
         "scheme-4": {
           "settings": {
-            "background": "#2B2118",
+            "background": "#000000",
             "background_gradient": "",
-            "text": "#F7F1E9",
-            "button": "#F7F1E9",
-            "button_label": "#2B2118",
-            "secondary_button_label": "#F7F1E9",
-            "shadow": "#2B2118"
+            "text": "#FFFFFF",
+            "button": "#A64D79",
+            "button_label": "#FFFFFF",
+            "secondary_button_label": "#FFFFFF",
+            "shadow": "#000000"
           }
         },
         "scheme-5": {
           "settings": {
-            "background": "#EFE3D8",
+            "background": "#6EC47C",
             "background_gradient": "",
-            "text": "#2B2118",
-            "button": "#B76E79",
+            "text": "#000000",
+            "button": "#000000",
             "button_label": "#FFFFFF",
-            "secondary_button_label": "#2B2118",
-            "shadow": "#2B2118"
+            "secondary_button_label": "#000000",
+            "shadow": "#000000"
           }
         }
       },
-      "type_header_font": "poppins_n7",
+      "type_header_font": "playfair_display_n7",
       "heading_scale": 110,
-      "type_body_font": "assistant_n4",
+      "type_body_font": "outfit_n3",
       "body_scale": 100,
       "page_width": 1400,
       "spacing_sections": 0,
@@ -70,9 +70,9 @@
       "spacing_grid_vertical": 8,
       "animations_reveal_on_scroll": false,
       "animations_hover_elements": "none",
-      "buttons_border_thickness": 1,
+      "buttons_border_thickness": 0,
       "buttons_border_opacity": 100,
-      "buttons_radius": 0,
+      "buttons_radius": 40,
       "buttons_shadow_opacity": 0,
       "buttons_shadow_horizontal_offset": 0,
       "buttons_shadow_vertical_offset": 4,
@@ -189,7 +189,8 @@
             "color_scheme": "scheme-1"
           }
         }
-      }
+      },
+      "logo": "shopify://shop_images/fazarim-logo.png"
     }
   }
 }

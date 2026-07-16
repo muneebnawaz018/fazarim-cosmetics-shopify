@@ -13,12 +13,17 @@
  *   node scripts/shopify-setup.mjs images --assets data/assets.client.json
  *
  *   verify       check auth
- *   products     import from sample-products.csv
+ *   products     import from sample-products.dummy.csv
  *   collections  smart collections from structure rules
  *   images       attach product images (from the active assets file)
+ *   covers       attach collection images (category + concern tiles)
  *   assets       upload hero/promo, patch index.json
+ *   logo         upload brand/*.png, wire into theme settings
  *   menus        build nested nav
  *   all          everything, in dependency order
+ *
+ *   prune        DELETE the off-brand handles listed under `retire` in
+ *                store-structure.json. Irreversible; never part of `all`.
  *
  * Add --dry-run to any command to preview without writing.
  * Idempotent: re-running skips whatever already exists.
@@ -85,6 +90,9 @@ const BASE = `https://${ENV.SHOPIFY_STORE}/admin/api/${ENV.SHOPIFY_API_VERSION}`
 /** Namespace Shopify File `alt` text so uploads stay idempotent across assets files. */
 const altFor = (key) => `fazarim-${key}`;
 
+/** `$`-prefixed keys are inline docs in the JSON, not data. */
+const dataEntries = (obj) => Object.entries(obj ?? {}).filter(([k]) => !k.startsWith('$'));
+
 // -------------------------------------------------------------------- http
 
 async function api(path, { method = 'GET', body } = {}) {
@@ -148,7 +156,7 @@ function parseCsv(text) {
 }
 
 async function csvProducts() {
-  const rows = parseCsv(await readFile(join(ROOT, 'sample-products.csv'), 'utf8'));
+  const rows = parseCsv(await readFile(join(ROOT, 'sample-products.dummy.csv'), 'utf8'));
   const byHandle = new Map();
   for (const row of rows) {
     const handle = row.Handle?.trim();
@@ -196,20 +204,48 @@ async function paginate(path, key) {
   return out;
 }
 
+/** Tag lists are set-equal regardless of order or spacing. */
+const sameTags = (a, b) => {
+  const norm = (s) => [...new Set(String(s).split(',').map((t) => t.trim()).filter(Boolean))].sort().join('|');
+  return norm(a) === norm(b);
+};
+
 async function products() {
-  const existing = new Set((await paginate('products.json?limit=250&fields=handle', 'products')).map((p) => p.handle));
+  const existing = await paginate('products.json?limit=250&fields=id,handle,title,tags,product_type,body_html', 'products');
+  const byHandle = new Map(existing.map((p) => [p.handle, p]));
   const wanted = await csvProducts();
-  console.log(`${wanted.length} products in CSV, ${existing.size} already on store`);
+  console.log(`${wanted.length} products in CSV, ${existing.length} already on store`);
   let created = 0;
+  let updated = 0;
   for (const product of wanted) {
-    if (existing.has(product.handle)) { console.log(`  skip    ${product.handle} (exists)`); continue; }
-    if (DRY_RUN) { console.log(`  [dry] create ${product.handle}`); created++; continue; }
-    const { product: made } = await api('products.json', { method: 'POST', body: { product } });
-    console.log(`  created ${made.handle.padEnd(32)} id=${made.id}`);
-    created++;
+    const live = byHandle.get(product.handle);
+    if (!live) {
+      if (DRY_RUN) { console.log(`  [dry] create ${product.handle}`); created++; continue; }
+      const { product: made } = await api('products.json', { method: 'POST', body: { product } });
+      console.log(`  created ${made.handle.padEnd(32)} id=${made.id}`);
+      created++;
+      await sleep(300);
+      continue;
+    }
+    /*
+      Converge, don't just skip. Handles outlive their content — a product
+      retagged in the CSV must be retagged on the store, or the tag-driven
+      smart collections silently miss it. Variants and images are left alone:
+      those are merchant-owned once live.
+    */
+    const drift = {};
+    if (live.title !== product.title) drift.title = product.title;
+    if (live.product_type !== product.product_type) drift.product_type = product.product_type;
+    if (!sameTags(live.tags, product.tags)) drift.tags = product.tags;
+    if ((live.body_html ?? '') !== product.body_html) drift.body_html = product.body_html;
+    if (!Object.keys(drift).length) { console.log(`  ok      ${product.handle}`); continue; }
+    if (DRY_RUN) { console.log(`  [dry] update ${product.handle.padEnd(30)} ${Object.keys(drift).join(', ')}`); updated++; continue; }
+    await api(`products/${live.id}.json`, { method: 'PUT', body: { product: { id: live.id, ...drift } } });
+    console.log(`  updated ${product.handle.padEnd(30)} ${Object.keys(drift).join(', ')}`);
+    updated++;
     await sleep(300);
   }
-  console.log(`done: ${created} created`);
+  console.log(`done: ${created} created, ${updated} updated`);
 }
 
 async function collections() {
@@ -242,7 +278,7 @@ async function images() {
   const byHandle = new Map(all.map((p) => [p.handle, p]));
   console.log(`assets: ${ASSETS.label}`);
   let attached = 0;
-  for (const [handle, src] of Object.entries(ASSETS.productImages)) {
+  for (const [handle, src] of dataEntries(ASSETS.productImages)) {
     const product = byHandle.get(handle);
     if (!product) { console.log(`  warn    ${handle} not on store (run products first)`); continue; }
     if (product.images?.length) { console.log(`  skip    ${handle} (has image)`); continue; }
@@ -275,9 +311,9 @@ async function shopifyFiles() {
 
 async function assets() {
   console.log(`assets: ${ASSETS.label}`);
-  const keys = Object.keys(ASSETS.themeAssets);
+  const keys = dataEntries(ASSETS.themeAssets).map(([k]) => k);
   let uploaded = await shopifyFiles();
-  const todo = Object.entries(ASSETS.themeAssets).filter(([key]) => !(altFor(key) in uploaded));
+  const todo = dataEntries(ASSETS.themeAssets).filter(([key]) => !(altFor(key) in uploaded));
 
   if (todo.length && DRY_RUN) {
     todo.forEach(([key]) => console.log(`  [dry] upload ${altFor(key)}`));
@@ -310,6 +346,155 @@ async function assets() {
   await writeFile(path, `${JSON.stringify(tpl, null, 2)}\n`);
   console.log(`patched index.json: ${hero.slides.length} hero slide(s) + promo banner`);
   if (ASSETS.$warning) console.log(`\n⚠️  ${ASSETS.$warning}`);
+}
+
+/**
+ * Deletes the handles listed under `retire` in store-structure.json.
+ *
+ * Deliberately NOT part of `all` — deletion is irreversible, so it stays an
+ * explicit opt-in. Only ever touches handles named in the data file.
+ */
+async function prune() {
+  const retire = STRUCTURE.retire ?? {};
+  const liveProducts = await paginate('products.json?limit=250&fields=id,handle,title', 'products');
+  const byHandle = new Map(liveProducts.map((p) => [p.handle, p]));
+
+  const cols = {};
+  for (const kind of ['smart_collections', 'custom_collections']) {
+    for (const c of (await api(`${kind}.json?limit=250&fields=id,handle`))[kind] ?? []) {
+      cols[c.handle] = { id: c.id, kind };
+    }
+  }
+
+  const hitP = (retire.products ?? []).filter((h) => byHandle.has(h));
+  const hitC = (retire.collections ?? []).filter((h) => h in cols);
+  const goneP = (retire.products ?? []).filter((h) => !byHandle.has(h));
+  const goneC = (retire.collections ?? []).filter((h) => !(h in cols));
+
+  if (!hitP.length && !hitC.length) {
+    console.log(`nothing to prune (${goneP.length + goneC.length} already gone)`);
+    return;
+  }
+  console.log(`will DELETE ${hitP.length} product(s) and ${hitC.length} collection(s):`);
+  hitP.forEach((h) => console.log(`  product     ${h}  (${byHandle.get(h).title})`));
+  hitC.forEach((h) => console.log(`  collection  ${h}`));
+  if (DRY_RUN) return console.log('\n[dry] nothing deleted');
+
+  for (const h of hitP) {
+    await api(`products/${byHandle.get(h).id}.json`, { method: 'DELETE' });
+    console.log(`  deleted product     ${h}`);
+    await sleep(300);
+  }
+  for (const h of hitC) {
+    await api(`${cols[h].kind.replace(/s$/, '')}s/${cols[h].id}.json`, { method: 'DELETE' });
+    console.log(`  deleted collection  ${h}`);
+    await sleep(300);
+  }
+  console.log(`done: ${hitP.length} products, ${hitC.length} collections deleted`);
+}
+
+const COLLECTION_IMAGE_SET = `
+  mutation collectionUpdate($input: CollectionInput!) {
+    collectionUpdate(input: $input) { collection { handle } userErrors { field message } }
+  }`;
+
+/**
+ * Dawn's collection-list renders each collection's own featured image, so the
+ * category tiles (SRS 8.1.8) and concern tiles (8.1.12) are driven from here,
+ * not from theme settings.
+ */
+async function covers() {
+  const wanted = dataEntries(ASSETS.collectionImages);
+  if (!wanted.length) return console.log('no collectionImages in this assets file');
+  console.log(`assets: ${ASSETS.label}`);
+
+  const { collections: live } = await gql(
+    '{ collections(first: 100) { nodes { id handle image { url } } } }'
+  );
+  const byHandle = new Map(live.nodes.map((c) => [c.handle, c]));
+  let set = 0;
+  for (const [handle, src] of wanted) {
+    const c = byHandle.get(handle);
+    if (!c) { console.log(`  warn    ${handle} not on store (run collections first)`); continue; }
+    if (c.image?.url) { console.log(`  skip    ${handle} (has image)`); continue; }
+    if (DRY_RUN) { console.log(`  [dry] cover -> ${handle}`); set++; continue; }
+    const { collectionUpdate } = await gql(COLLECTION_IMAGE_SET, {
+      input: { id: c.id, image: { src, altText: `Fazarim ${handle}` } },
+    });
+    if (collectionUpdate.userErrors.length) fail(JSON.stringify(collectionUpdate.userErrors));
+    console.log(`  cover   ${handle}`);
+    set++;
+    await sleep(400);
+  }
+  console.log(`done: ${set} collection images set`);
+  if (ASSETS.$warning) console.log(`\n⚠️  ${ASSETS.$warning}`);
+}
+
+const STAGED_CREATE = `
+  mutation stagedUploadsCreate($input: [StagedUploadInput!]!) {
+    stagedUploadsCreate(input: $input) {
+      stagedTargets { url resourceUrl parameters { name value } }
+      userErrors { field message }
+    }
+  }`;
+
+/**
+ * Real brand assets, unlike `assets` which pulls dummy imagery from a URL.
+ * These are local files, so `fileCreate(originalSource:)` can't fetch them —
+ * they go through a staged upload first.
+ */
+async function logo() {
+  const LOGOS = [
+    { key: 'logo', file: 'fazarim-logo.png', setting: 'logo' },
+    { key: 'icon', file: 'fazarim-icon.png', setting: null },
+  ];
+
+  const uploaded = await shopifyFiles();
+  const todo = LOGOS.filter((l) => !(altFor(l.key) in uploaded));
+
+  if (DRY_RUN) {
+    LOGOS.forEach((l) =>
+      console.log(`  [dry] ${altFor(l.key) in uploaded ? 'skip  ' : 'upload'} ${l.file}`));
+    console.log('[dry] would set settings_data.json -> logo');
+    return;
+  }
+
+  for (const l of todo) {
+    const bytes = await readFile(join(ROOT, 'brand', l.file));
+    const { stagedUploadsCreate } = await gql(STAGED_CREATE, {
+      input: [{ filename: l.file, mimeType: 'image/png', resource: 'FILE', httpMethod: 'POST' }],
+    });
+    if (stagedUploadsCreate.userErrors.length) fail(JSON.stringify(stagedUploadsCreate.userErrors));
+    const target = stagedUploadsCreate.stagedTargets[0];
+
+    const form = new FormData();
+    for (const { name, value } of target.parameters) form.append(name, value);
+    form.append('file', new Blob([bytes], { type: 'image/png' }), l.file);
+    const put = await fetch(target.url, { method: 'POST', body: form });
+    if (!put.ok) fail(`staged upload failed for ${l.file}: ${put.status}`);
+
+    const { fileCreate } = await gql(FILE_CREATE, {
+      files: [{ originalSource: target.resourceUrl, contentType: 'IMAGE', alt: altFor(l.key) }],
+    });
+    if (fileCreate.userErrors.length) fail(JSON.stringify(fileCreate.userErrors));
+    console.log(`  upload  ${l.file}`);
+  }
+
+  let map = await shopifyFiles();
+  for (let i = 0; i < 15 && !LOGOS.every((l) => altFor(l.key) in map); i++) {
+    await sleep(2000);
+    map = await shopifyFiles();
+  }
+  const missing = LOGOS.filter((l) => !(altFor(l.key) in map));
+  if (missing.length) return console.log('warn: still processing — re-run `logo` shortly');
+
+  const path = join(ROOT, 'fazarim-theme', 'config', 'settings_data.json');
+  const data = JSON.parse(await readFile(path, 'utf8'));
+  for (const l of LOGOS.filter((x) => x.setting)) {
+    data.presets.Dawn[l.setting] = map[altFor(l.key)];
+    console.log(`  set     ${l.setting} -> ${map[altFor(l.key)]}`);
+  }
+  await writeFile(path, `${JSON.stringify(data, null, 2)}\n`);
 }
 
 const MENU_QUERY = `{ menus(first: 20) { nodes { id handle } } }`;
@@ -367,8 +552,8 @@ async function menus() {
 
 // ------------------------------------------------------------------- entry
 
-const COMMANDS = { verify, products, collections, images, assets, menus };
-const ORDER = ['verify', 'products', 'collections', 'images', 'assets', 'menus'];
+const COMMANDS = { verify, products, collections, images, covers, assets, logo, menus, prune };
+const ORDER = ['verify', 'products', 'collections', 'images', 'covers', 'assets', 'logo', 'menus'];
 
 const cmd = process.argv.slice(2).find((a) => !a.startsWith('--')) ?? 'verify';
 if (DRY_RUN) console.log('>>> DRY RUN — nothing will be written\n');

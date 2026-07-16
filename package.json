@@ -2,7 +2,7 @@
   "name": "fazarim-cosmetics-shopify",
   "version": "1.0.0",
   "private": true,
-  "description": "Fazarim Cosmetics Shopify theme — dev scripts",
+  "description": "Fazarim Cosmetics Shopify theme \u2014 dev scripts",
   "config": {
     "store": "fazarim-cosmetics.myshopify.com",
     "themeId": "160480395477"
@@ -24,6 +24,11 @@
     "images:client": "node scripts/shopify-setup.mjs images --assets data/assets.client.json",
     "list": "shopify theme list --store fazarim-cosmetics.myshopify.com",
     "check": "shopify theme check --path ./fazarim-theme",
-    "logout": "shopify auth logout"
+    "logout": "shopify auth logout",
+    "setup:logo": "node scripts/shopify-setup.mjs logo",
+    "setup:covers": "node scripts/shopify-setup.mjs covers",
+    "prune:dry": "node scripts/shopify-setup.mjs prune --dry-run",
+    "prune": "node scripts/shopify-setup.mjs prune",
+    "covers:client": "node scripts/shopify-setup.mjs covers --assets data/assets.client.json"
   }
 }

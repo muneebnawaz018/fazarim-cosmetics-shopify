@@ -75,6 +75,61 @@ with no theme change. Do not hardcode icons: Easypaisa and JazzCash logos are tr
 have no licence to ship, and `payment_type_svg_tag` has no type for them. If the client wants
 those marks, they must supply licensed assets and a custom snippet.
 
+### Free shipping threshold — banner and checkout DISAGREE
+
+**Action required in Admin.** SRS §8.1.4 specifies the announcement bar reads
+*"Free Shipping Over Rs. 10,000"*, and the theme now says that. **The live shipping rate is
+still free-over-Rs-5,000**, so checkout currently contradicts the banner.
+
+<https://admin.shopify.com/store/fazarim-cosmetics/settings/shipping>
+
+Open the Pakistan zone → the "Free" rate → change its price-based condition minimum from
+Rs 5,000 to Rs 10,000 → Save.
+
+This could not be scripted: the custom app has no `write_shipping` scope, so GraphQL
+`deliveryProfiles` returns `ACCESS_DENIED`, and the legacy REST `shipping_zones.json`
+reports no rates at all for delivery-profile-based setups.
+
+> Worth a sanity check with the client: Rs 250 shipping absorbed on every order over the
+> threshold. Raising 5,000 → 10,000 protects margin but weakens the offer.
+
+### Brand fonts — Larken is unlicensed
+
+Headers currently render in **Playfair Display**, standing in for **Larken**, which the brand
+guidelines specify. Larken is commercial (Ellen Luff) and is not on Google Fonts or in
+Shopify's library.
+
+A **webfont licence is separate from the desktop licence** used to make the PDF. Ask the
+designer/agency which they hold. If a webfont licence exists, get the `.woff2` files —
+swapping is a one-line change. Details in [BRAND.md](BRAND.md#larken-is-not-licensed).
+
+### Logo — missing formats
+
+Client supplied 1080×1080 PNGs only. Still needed:
+
+- **SVG / vector** — PNG will soften on high-DPI screens and print
+- **White or reversed variant** — current artwork is mauve-on-transparent and disappears on
+  dark backgrounds. Blocks any dark header or dark promo section.
+- **Horizontal lockup** — the full logo is 5.3:1; the icon is near-square. Fine for now.
+
+### Customer Reviews section — needs a reviews app
+
+SRS §8.1.13 specifies a testimonial carousel. **Not built**: the store has no customers, so
+building it means inventing testimonials. Needs Judge.me / Loox / Shopify Product Reviews
+collecting from real orders. Dawn has no native reviews section.
+
+### Fazarim Academy — not built
+
+SRS §6.1/§6.2 put it in the primary nav: educational videos, skin and hair guides, doctor
+consultations, downloadable resources. None exist. **Omitted from the menu** so it can't 404.
+This is a substantial feature, not a page — scope it with the client.
+
+### SEO requirements not yet met
+
+SRS §11 assigns these to the developer. Outstanding: breadcrumbs on all internal pages
+(§11.1), and the §6.3 URL scheme (`/skincare/serums`, `/academy`) which **Shopify cannot
+produce** — its URL structure is fixed at `/collections/<handle>`. Flag to the client.
+
 ### Store policies — drafted, awaiting client
 
 Drafts are written and tailored to the real configuration: [`docs/policies/`](docs/policies/)
