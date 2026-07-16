@@ -193,7 +193,7 @@ app or reverse proxy — Shopify's URL structure is fixed. Flag to the client.
 |---|------|-------|-----|
 | 1 | Tagline "RESULTS" (both PDFs) | "REZULTS" (logo) | Client confirmed logo spelling wins |
 | 2 | Larken Bold headers | Playfair Display Bold | No webfont licence |
-| 3 | Free shipping over **Rs. 10,000** (§8.1.4) | Banner says Rs 10,000 | ⚠️ **live shipping rate still Rs 5,000 — must be changed in Admin** |
+| 3 | Free shipping over **Rs. 10,000** (§8.1.4) | Rs 10,000 | ✅ resolved — banner and live rate agree |
 | 4 | URL `/skincare/serums` (§6.3) | `/collections/serums` | Shopify's URL structure is fixed |
 | 5 | Customer Reviews (§8.1.13) | not built | Would require fabricated testimonials |
 | 6 | 6-column footer (§8.1.14) | 3 columns | Most target pages don't exist yet |

@@ -129,7 +129,6 @@ Shopify Admin — that revokes it instantly.
 - **Larken headers** — commercial font, no webfont licence; Playfair Display stands in
 - **Customer Reviews** (SRS §8.1.13) — would require inventing testimonials; needs a reviews app
 - **Fazarim Academy** (SRS §6.2) — not built, omitted from nav so it can't 404
-- **Free shipping rate** — banner says Rs 10,000, live rate still Rs 5,000. Manual Admin fix
 - Store policies drafted but not filled in or published
 - Business entity, payment gateway, domain DNS — all blocked on the client
 

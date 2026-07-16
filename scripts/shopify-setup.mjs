@@ -13,6 +13,7 @@
  *   node scripts/shopify-setup.mjs images --assets data/assets.client.json
  *
  *   verify       check auth
+ *   scopes       show granted vs needed API scopes, and live-probe them
  *   products     import from sample-products.dummy.csv
  *   collections  smart collections from structure rules
  *   images       attach product images (from the active assets file)
@@ -130,6 +131,108 @@ async function verify() {
   console.log(`  currency: ${shop.currency}`);
   console.log(`  products: ${count}`);
   console.log(`  graphql:  ok (${gqlShop.name})`);
+}
+
+/*
+  The scope plan. Keep in step with SHOPIFY_PROJECT_NOTES.md.
+
+  `probe` is a real read that Shopify rejects without the scope. It exists because the docs
+  cannot be trusted on this point and introspection proves nothing:
+    - the schema lists all 452 mutations regardless of what the token holds;
+    - `shopPolicyUpdate` needs `write_legal_policies`, which is absent from Shopify's own
+      scope list;
+    - `write_shipping` is documented as "DeliveryCarrierService objects", yet it is what
+      `deliveryProfileUpdate` wants ("Requires any of `shipping` access scopes").
+  Only a live call settles it.
+
+  `tier`: have | needed | later | never
+*/
+const SCOPE_PLAN = [
+  // --- held today
+  { tier: 'have',   scope: 'read_products',                 for: 'products, collections',            probe: 'products(first:1){nodes{id}}' },
+  { tier: 'have',   scope: 'write_products',                for: 'create/update products',           probe: null },
+  { tier: 'have',   scope: 'read_files',                    for: 'Shopify Files',                    probe: 'files(first:1){nodes{id}}' },
+  { tier: 'have',   scope: 'write_files',                   for: 'image + logo upload',              probe: null },
+  { tier: 'have',   scope: 'read_online_store_navigation',  for: 'menus',                            probe: 'menus(first:1){nodes{id}}' },
+  { tier: 'have',   scope: 'write_online_store_navigation', for: 'build the nav tree',               probe: null },
+
+  // --- certain need, per the SRS
+  { tier: 'needed', scope: 'read_content',                  for: 'About/FAQ/Contact, Blog, Academy', probe: 'pages(first:1){nodes{id}}' },
+  { tier: 'needed', scope: 'write_content',                 for: 'create those pages + articles',    probe: null },
+  { tier: 'needed', scope: 'read_legal_policies',           for: 'read current policies',            probe: 'shop{shopPolicies{type}}' },
+  { tier: 'needed', scope: 'write_legal_policies',          for: 'the 4 drafts in docs/policies/',   probe: null },
+  { tier: 'needed', scope: 'read_shipping',                 for: 'delivery profiles',                probe: 'deliveryProfiles(first:1){nodes{id}}' },
+  { tier: 'needed', scope: 'write_shipping',                for: 'the free-shipping threshold',      probe: null },
+  { tier: 'needed', scope: 'read_discounts',                for: 'promos (SRS FAQ 17)',              probe: 'discountNodes(first:1){nodes{id}}' },
+  { tier: 'needed', scope: 'write_discounts',               for: 'create promo codes',               probe: null },
+  // No probe: `inventoryItems` reads fine under read_products, so it cannot isolate this scope.
+  // Only a write proves it, and that is not something to fire off as a check.
+  { tier: 'needed', scope: 'read_inventory',                for: 'stock levels',                     probe: null },
+  { tier: 'needed', scope: 'write_inventory',               for: 'set stock on real products',       probe: null },
+  { tier: 'needed', scope: 'read_locations',                for: 'the fake Toronto / Snow City locations', probe: 'locations(first:1){nodes{id}}' },
+  { tier: 'needed', scope: 'write_locations',               for: 'deactivate them',                  probe: null },
+  { tier: 'needed', scope: 'read_orders',                   for: 'order data — PII, see notes',      probe: 'orders(first:1){nodes{id}}' },
+  { tier: 'needed', scope: 'read_customers',                for: 'customer data — PII, see notes',   probe: 'customers(first:1){nodes{id}}' },
+
+  // --- only once the Academy is real
+  { tier: 'later',  scope: 'read_metaobjects',              for: 'Academy structured content',       probe: 'metaobjectDefinitions(first:1){nodes{id}}' },
+  { tier: 'later',  scope: 'write_metaobjects',             for: 'create Academy entries',           probe: null },
+  { tier: 'later',  scope: 'read_metaobject_definitions',   for: 'Academy content types',            probe: null },
+  { tier: 'later',  scope: 'write_metaobject_definitions',  for: 'define those types',               probe: null },
+];
+
+/* Deliberately NOT requested. Recorded so nobody "helpfully" ticks them later. */
+const SCOPE_REFUSED = [
+  ['write_customers', 'edits real customer records — no script needs it'],
+  ['write_orders', 'creates/modifies real orders — a bug here is unrecoverable'],
+  ['read_all_orders', 'beyond the 60-day window; needs Shopify approval'],
+  ['payment_*', 'for payment app developers, not merchants'],
+  ['read_users', 'Shopify Plus only'],
+  ['*_fulfillment_orders', 'only if the client adopts a 3PL'],
+  ['read_themes / write_themes', 'the CLI already handles themes with its own auth'],
+];
+
+/** Reports granted vs planned scopes, and live-probes each to prove it. */
+async function scopes() {
+  const { access_scopes } = await api('../../oauth/access_scopes.json');
+  const granted = new Set(access_scopes.map((s) => s.handle));
+  const LABEL = { have: 'already held', needed: 'TICK THESE — certain need', later: 'later — only if the Academy gets built' };
+
+  console.log(`app "fazarim" holds ${granted.size} scope(s)`);
+  for (const tier of ['have', 'needed', 'later']) {
+    console.log(`\n${LABEL[tier]}:`);
+    for (const { scope, for: why } of SCOPE_PLAN.filter((s) => s.tier === tier)) {
+      console.log(`  ${granted.has(scope) ? '✅' : '❌'}  ${scope.padEnd(28)} ${why}`);
+    }
+  }
+
+  const extra = [...granted].filter((g) => !SCOPE_PLAN.some((s) => s.scope === g));
+  if (extra.length) {
+    console.log(`\n⚠️  granted but NOT in the plan: ${extra.join(', ')}`);
+    console.log('    Untick unless there is a reason — every scope widens what a leaked token costs.');
+  }
+
+  console.log('\nlive probes (the docs are wrong often enough to warrant this):');
+  for (const { scope, probe } of SCOPE_PLAN.filter((s) => s.probe)) {
+    const res = await api('graphql.json', { method: 'POST', body: { query: `{ ${probe} }` } })
+      .catch(() => ({ errors: [{ extensions: { code: 'HTTP_ERROR' } }] }));
+    const denied = JSON.stringify(res.errors ?? '').includes('ACCESS_DENIED');
+    console.log(`  ${denied ? 'DENIED  ' : 'ok      '} ${scope}`);
+  }
+
+  console.log('\nnever request:');
+  for (const [s, why] of SCOPE_REFUSED) console.log(`  ${s.padEnd(24)} ${why}`);
+
+  const missing = SCOPE_PLAN.filter((s) => s.tier === 'needed' && !granted.has(s.scope)).map((s) => s.scope);
+  if (missing.length) {
+    console.log(`\nto add (${missing.length}):\n  ${missing.join('\n  ')}`);
+    console.log('\nhttps://admin.shopify.com/store/fazarim-cosmetics/settings/apps/development');
+    console.log('  fazarim → Configuration → Admin API integration → Edit → tick → Save → Update app');
+    console.log('Then re-run `npm run scopes`. On HTTP 401 the token rotated — copy the new one');
+    console.log('from the API credentials tab into .shopify.env.');
+  } else {
+    console.log('\nall needed scopes granted.');
+  }
 }
 
 /** Minimal RFC-4180 CSV parser — handles quoted fields with commas and newlines. */
@@ -552,7 +655,7 @@ async function menus() {
 
 // ------------------------------------------------------------------- entry
 
-const COMMANDS = { verify, products, collections, images, covers, assets, logo, menus, prune };
+const COMMANDS = { verify, scopes, products, collections, images, covers, assets, logo, menus, prune };
 const ORDER = ['verify', 'products', 'collections', 'images', 'covers', 'assets', 'logo', 'menus'];
 
 const cmd = process.argv.slice(2).find((a) => !a.startsWith('--')) ?? 'verify';

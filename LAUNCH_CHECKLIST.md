@@ -75,23 +75,27 @@ with no theme change. Do not hardcode icons: Easypaisa and JazzCash logos are tr
 have no licence to ship, and `payment_type_svg_tag` has no type for them. If the client wants
 those marks, they must supply licensed assets and a custom snippet.
 
-### Free shipping threshold — banner and checkout DISAGREE
+### Free shipping threshold — RESOLVED 2026-07-16
 
-**Action required in Admin.** SRS §8.1.4 specifies the announcement bar reads
-*"Free Shipping Over Rs. 10,000"*, and the theme now says that. **The live shipping rate is
-still free-over-Rs-5,000**, so checkout currently contradicts the banner.
+Banner and checkout agree. Live config, verified over the API:
 
-<https://admin.shopify.com/store/fazarim-cosmetics/settings/shipping>
+```text
+zone: Pakistan
+  [on] Standard   250.00 PKR
+  [on] Standard     0.00 PKR   when TOTAL_PRICE >= 10000.00 PKR
+```
 
-Open the Pakistan zone → the "Free" rate → change its price-based condition minimum from
-Rs 5,000 to Rs 10,000 → Save.
+Announcement bar reads "Free Shipping Over Rs. 10,000" per SRS §8.1.4.
 
-This could not be scripted: the custom app has no `write_shipping` scope, so GraphQL
-`deliveryProfiles` returns `ACCESS_DENIED`, and the legacy REST `shipping_zones.json`
-reports no rates at all for delivery-profile-based setups.
+Changed by hand in the Admin — **not scriptable**, and not for want of scope.
+`write_shipping` is granted and the rate reads fine, but `deliveryProfileUpdate` rejects it:
+the rate uses Shopify's newer conditional pricing, which has no mutation in any API version
+this store supports. See
+[SHOPIFY_PROJECT_NOTES.md](SHOPIFY_PROJECT_NOTES.md#the-free-shipping-rate--scoped-readable-still-not-writable).
 
-> Worth a sanity check with the client: Rs 250 shipping absorbed on every order over the
-> threshold. Raising 5,000 → 10,000 protects margin but weakens the offer.
+> The threshold is a margin decision, not a spec detail: Rs 250 is absorbed on every order
+> over the line. Rs 5,000 was the earlier deliberate choice; Rs 10,000 follows the SRS.
+> Worth a final word with the client before launch.
 
 ### Brand fonts — Larken is unlicensed
 

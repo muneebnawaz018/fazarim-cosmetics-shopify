@@ -43,7 +43,7 @@ Order is dictated by SRS §8.1.3–§8.1.14, not by us. Full table in [BRAND.md]
 
 | section | state |
 | ------- | ----- |
-| Announcement bar | ⚠️ "Free Shipping Over Rs. 10,000" per SRS — **live shipping rate is still Rs 5,000, must be changed in Admin** |
+| Announcement bar | ✅ "Free Shipping Over Rs. 10,000" — matches the live shipping rate |
 | Header + mega-nav | ✅ real logo left, SRS nav with dropdowns, cart badge |
 | Hero slideshow | ✅ 3 slides per SRS — **placeholder imagery** |
 | Why Choose Fazarim | ✅ 6 trust cards, directly below hero per SRS §8.1.7 |

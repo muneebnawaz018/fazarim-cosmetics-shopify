@@ -63,6 +63,21 @@ npm run logout       # switch account
 # next theme command triggers device-code browser login → log in as ceo@fazarim.com
 ```
 
+## Admin API scopes
+
+```bash
+npm run scopes       # granted vs needed, then live-probes each one
+```
+
+The custom app is **`fazarim`**. To grant more:
+[Apps → Develop apps](https://admin.shopify.com/store/fazarim-cosmetics/settings/apps/development)
+→ **fazarim** → **Configuration** → **Admin API integration** → **Edit** → tick → **Save**
+→ **Update app**. Then re-run `npm run scopes`; on `HTTP 401` the token rotated, so copy the
+new one from **API credentials** into `.shopify.env`.
+
+Full procedure and the per-scope reasoning (including why `read_customers` deserves a second
+thought): [SHOPIFY_PROJECT_NOTES.md](SHOPIFY_PROJECT_NOTES.md#how-to-change-the-apps-scopes)
+
 ## Preview links
 
 - Live preview: `https://fazarim-cosmetics.myshopify.com?preview_theme_id=160480395477`
