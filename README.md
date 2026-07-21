@@ -17,9 +17,9 @@ npm run stop     # kill it
 
 That's the whole daily loop. Edit files in `fazarim-theme/`, save, browser reloads.
 
-> ⚠️ **Never run `npm run push` or `npm run publish`** without asking first.
-> The client shares the `ceo@fazarim.com` account — anything pushed is visible to them
-> immediately. Build locally, push when it's ready to be seen.
+> ⚠️ **`npm run push` deploys to the LIVE theme** — `Fazarim Custom` is the published
+> theme, so a push is instantly visible to anyone with the store password, including the
+> client on the shared `ceo@fazarim.com` account. Build locally; push only what can be seen.
 
 ---
 

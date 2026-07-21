@@ -29,7 +29,11 @@ shopify theme dev --path ./fazarim-theme --store fazarim-cosmetics.myshopify.com
 npm run stop
 ```
 
-## Push a deploy to the custom theme
+## Push a deploy — GOES LIVE
+
+`Fazarim Custom` (160480395477) **is the published theme**. A push is immediately
+visible to anyone with the store password — including the client. Build on
+localhost first; push when it's ready to be seen.
 
 ```bash
 npm run push
