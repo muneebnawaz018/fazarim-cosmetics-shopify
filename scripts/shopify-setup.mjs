@@ -727,7 +727,9 @@ const STAGED_CREATE = `
 async function logo() {
   const LOGOS = [
     { key: 'logo', file: 'fazarim-logo.png', setting: 'logo' },
-    { key: 'icon', file: 'fazarim-icon.png', setting: null },
+    // Doubles as the favicon — without it Dawn emits no <link rel="icon"> and
+    // every browser falls back to /favicon.ico, which 404s on Shopify.
+    { key: 'icon', file: 'fazarim-icon.png', setting: 'favicon' },
   ];
 
   const uploaded = await shopifyFiles();
