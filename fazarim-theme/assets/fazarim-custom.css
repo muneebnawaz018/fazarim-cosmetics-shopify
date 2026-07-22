@@ -43,6 +43,23 @@ button.shopify-payment-button__button--unbranded {
   line-height: 1.7;
 }
 
+/* ------------------------------------------------------ carousel capture */
+
+/*
+  Dawn's desktop carousels are native overflow-x scrollers, so a trackpad
+  gesture with any horizontal drift gets captured by the carousel and the
+  page stops scrolling under the cursor. The reference site (Swiper-based,
+  overflow hidden) never does this. Hiding user overflow on desktop matches
+  that feel: arrow buttons still work — they scroll programmatically — and
+  mobile swipe is untouched (slider--tablet).
+*/
+@media screen and (min-width: 990px) {
+  .slider--desktop {
+    overflow-x: hidden;
+    scroll-snap-type: none;
+  }
+}
+
 /* ----------------------------------------------------------- breadcrumbs */
 
 /* SRS 11.1. Quiet by design — a wayfinding aid, not a headline. */

@@ -144,7 +144,7 @@ Specified order, top to bottom:
 | 1 | Announcement Bar | §8.1.4 | ✅ `header-group.json` |
 | 2 | Header & Navigation | §8.1.5 | ✅ mega menu, sticky, logo left |
 | 3 | Hero Banner Slider — **3 slides** | §8.1.6 | ✅ placeholder imagery |
-| 4 | Why Choose Fazarim — 4–6 trust cards | §8.1.7 | ✅ 6 cards |
+| 4 | Why Choose Fazarim — 4–6 trust cards | §8.1.7 | ✅ 6 cards — **moved above footer** (deviation 8) |
 | 5 | Shop by Category — **3 only** | §8.1.8 | ✅ Skincare / Hair Care / Body Care |
 | 6 | Sale | §8.1.9 | ✅ |
 | 7 | New Arrivals | §8.1.10 | ✅ |
@@ -276,3 +276,4 @@ app or reverse proxy — Shopify's URL structure is fixed. Flag to the client.
 | 5 | Customer Reviews (§8.1.13) | not built | Would require fabricated testimonials |
 | 6 | 6-column footer (§8.1.14) | newsletter + 3 columns + contact info | Remaining columns need pages that don't exist yet |
 | 7 | Fazarim Academy nav (§6.2) | omitted | No pages built; would 404 |
+| 8 | Why Choose directly under hero (§8.1.3/8.1.7) | moved above the footer | User decision 2026-07-22: mirror Shopaholic's real homepage (products first, trust props last) — the client's own reference site contradicts the SRS order |

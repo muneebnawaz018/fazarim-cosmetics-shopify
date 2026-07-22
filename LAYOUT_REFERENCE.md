@@ -11,21 +11,26 @@ Both are the client's own references, named in SRS §1.6.
 
 ## Homepage sections (top → bottom)
 
-Order is dictated by SRS §8.1.3–§8.1.14, not by us. Full table in [BRAND.md](BRAND.md#homepage--srs-81).
+Order mirrors **Shopaholic's live homepage** (user decision 2026-07-22): hero → category tiles
+→ Sale → New Arrivals → promo → Best Sellers → Skincare → Hair Care → Skin Concern → trust
+props → footer. This deviates from SRS §8.1.3, which wants Why Choose directly under the hero
+— the client's own reference site does the opposite. Full table in [BRAND.md](BRAND.md#homepage--srs-81).
 
 1. **Announcement bar** — "Free Shipping Over Rs. 10,000" (§8.1.4), rotating.
 2. **Header** — logo left; mega-nav; search + account + cart (§8.1.5).
    - Nav: Sale, Skincare, Hair Care, Body Care, Best Sellers, Kits & Bundles.
    - Dropdowns: Skincare → Serums / Moisturizers / Cleansers / Sunscreen.
 3. **Hero slider** — 3 slides, autoplay, dots (§8.1.6).
-4. **Why Choose Fazarim** — 6 trust cards (§8.1.7).
-5. **Shop by Category** — exactly 3: Skincare, Hair Care, Body Care (§8.1.8).
-6. **Sale** — carousel (§8.1.9).
-7. **New Arrivals** — carousel (§8.1.10).
+4. **Shop by Category** — exactly 3: Skincare, Hair Care, Body Care (§8.1.8).
+5. **Sale** — carousel (§8.1.9).
+6. **New Arrivals** — carousel (§8.1.10).
+7. **Promo banner** — image-banner between the carousels, as Shopaholic does.
 8. **Best Sellers** — carousel (§8.1.11).
-9. **Shop by Skin Concern** — 10 concern tiles (§8.1.12).
-10. **Customer Reviews** (§8.1.13) — *not built; would need fabricated testimonials.*
-11. **Footer** — 6 columns + newsletter (§8.1.14).
+9. **Skincare / Hair Care** — two category carousels (mirrors Shopaholic's Makeup/Skincare pair).
+10. **Shop by Skin Concern** — 10 concern tiles (§8.1.12).
+11. **Why Choose Fazarim** — 6 trust cards (§8.1.7), above the footer like Shopaholic's benefits strip.
+12. **Customer Reviews** (§8.1.13) — *not built; would need fabricated testimonials.*
+13. **Footer** — newsletter + columns (§8.1.14).
 
 ## Style
 
@@ -46,9 +51,9 @@ Order is dictated by SRS §8.1.3–§8.1.14, not by us. Full table in [BRAND.md]
 | Announcement bar | ✅ "Free Shipping Over Rs. 10,000" — matches the live shipping rate |
 | Header + mega-nav | ✅ real logo left, SRS nav with dropdowns, cart badge |
 | Hero slideshow | ✅ 3 slides per SRS — **placeholder imagery** |
-| Why Choose Fazarim | ✅ 6 trust cards, directly below hero per SRS §8.1.7 |
+| Why Choose Fazarim | ✅ 6 trust cards in one row, above the footer (Shopaholic position; SRS deviation 8) |
 | Shop by Category | ✅ 3 tiles — collection cover images drive these (`npm run setup:covers`) |
-| Sale / New Arrivals / Best Sellers | ✅ live, auto-populating smart collections |
+| Sale / New Arrivals / Best Sellers / Skincare / Hair Care | ✅ live, auto-populating smart collections |
 | Shop by Skin Concern | ✅ 10 concern tiles |
 | Customer Reviews | ❌ **not built** — would require inventing testimonials. Needs a reviews app |
 | Promo banner | ✅ one `image-banner` |
