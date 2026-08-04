@@ -86,29 +86,78 @@
         "cat-2": {
           "type": "featured_collection",
           "settings": {
-            "collection": "hair-care"
+            "collection": "serums"
           }
         },
         "cat-3": {
           "type": "featured_collection",
           "settings": {
+            "collection": "moisturizers"
+          }
+        },
+        "cat-4": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "cleansers"
+          }
+        },
+        "cat-5": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "sunscreen"
+          }
+        },
+        "cat-6": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "hair-care"
+          }
+        },
+        "cat-7": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "shampoo"
+          }
+        },
+        "cat-8": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "hair-oil"
+          }
+        },
+        "cat-9": {
+          "type": "featured_collection",
+          "settings": {
             "collection": "body-care"
+          }
+        },
+        "cat-10": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "lotion"
           }
         }
       },
       "block_order": [
         "cat-1",
         "cat-2",
-        "cat-3"
+        "cat-3",
+        "cat-4",
+        "cat-5",
+        "cat-6",
+        "cat-7",
+        "cat-8",
+        "cat-9",
+        "cat-10"
       ],
       "settings": {
         "title": "Shop by Category",
         "heading_size": "h1",
         "image_ratio": "square",
-        "columns_desktop": 3,
+        "columns_desktop": 5,
         "color_scheme": "scheme-1",
         "show_view_all": false,
-        "columns_mobile": "1",
+        "columns_mobile": "2",
         "swipe_on_mobile": true,
         "padding_top": 28,
         "padding_bottom": 24
@@ -123,15 +172,15 @@
         "show_description": false,
         "description_style": "body",
         "collection": "sale",
-        "products_to_show": 8,
-        "columns_desktop": 4,
+        "products_to_show": 10,
+        "columns_desktop": 5,
         "color_scheme": "scheme-2",
         "full_width": false,
         "show_view_all": true,
         "view_all_style": "solid",
         "enable_desktop_slider": true,
         "swipe_on_mobile": true,
-        "image_ratio": "portrait",
+        "image_ratio": "square",
         "image_shape": "default",
         "show_secondary_image": true,
         "show_vendor": false,
@@ -151,15 +200,15 @@
         "show_description": false,
         "description_style": "body",
         "collection": "new-arrivals",
-        "products_to_show": 8,
-        "columns_desktop": 4,
+        "products_to_show": 10,
+        "columns_desktop": 5,
         "color_scheme": "scheme-1",
         "full_width": false,
         "show_view_all": true,
         "view_all_style": "solid",
         "enable_desktop_slider": true,
         "swipe_on_mobile": true,
-        "image_ratio": "portrait",
+        "image_ratio": "square",
         "image_shape": "default",
         "show_secondary_image": true,
         "show_vendor": false,
@@ -227,15 +276,15 @@
         "show_description": false,
         "description_style": "body",
         "collection": "best-sellers",
-        "products_to_show": 8,
-        "columns_desktop": 4,
+        "products_to_show": 10,
+        "columns_desktop": 5,
         "color_scheme": "scheme-2",
         "full_width": false,
         "show_view_all": true,
         "view_all_style": "solid",
         "enable_desktop_slider": true,
         "swipe_on_mobile": true,
-        "image_ratio": "portrait",
+        "image_ratio": "square",
         "image_shape": "default",
         "show_secondary_image": true,
         "show_vendor": false,
@@ -427,15 +476,15 @@
         "show_description": false,
         "description_style": "body",
         "collection": "skincare",
-        "products_to_show": 8,
-        "columns_desktop": 4,
+        "products_to_show": 10,
+        "columns_desktop": 5,
         "color_scheme": "scheme-1",
         "full_width": false,
         "show_view_all": true,
         "view_all_style": "solid",
         "enable_desktop_slider": true,
         "swipe_on_mobile": true,
-        "image_ratio": "portrait",
+        "image_ratio": "square",
         "image_shape": "default",
         "show_secondary_image": true,
         "show_vendor": false,
@@ -455,15 +504,15 @@
         "show_description": false,
         "description_style": "body",
         "collection": "hair-care",
-        "products_to_show": 8,
-        "columns_desktop": 4,
+        "products_to_show": 10,
+        "columns_desktop": 5,
         "color_scheme": "scheme-2",
         "full_width": false,
         "show_view_all": true,
         "view_all_style": "solid",
         "enable_desktop_slider": true,
         "swipe_on_mobile": true,
-        "image_ratio": "portrait",
+        "image_ratio": "square",
         "image_shape": "default",
         "show_secondary_image": true,
         "show_vendor": false,

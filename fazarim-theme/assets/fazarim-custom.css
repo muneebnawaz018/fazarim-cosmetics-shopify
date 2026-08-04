@@ -4,6 +4,27 @@
   Loaded from layout/theme.liquid, after base.css.
 */
 
+/* ------------------------------------------------------ skip-to-content */
+
+/*
+  The skip link is a keyboard aid: it should be invisible until tabbed to. Dawn
+  gives it `.visually-hidden` (width/height 1px + legacy `clip`) AND `.button`,
+  and the two fight — `.button` sets `min-width: 12rem; min-height: 4.5rem`,
+  and min-* beats width/height, so the box inflates back to 120x45. The legacy
+  `clip` property does not reliably contain that inflated flex box, so the
+  button painted over the top-left corner of every page.
+
+  Fixed by zeroing the minimums while unfocused and using `clip-path`,
+  which is not subject to the same limitation. Focus styling is left to Dawn so
+  the link still appears normally for keyboard users.
+*/
+.skip-to-content-link:not(:focus) {
+  min-width: 0;
+  min-height: 0;
+  padding: 0;
+  clip-path: inset(50%);
+}
+
 /* ------------------------------------------------- brand type hierarchy */
 
 /*
@@ -248,15 +269,15 @@ button.shopify-payment-button__button--unbranded {
   }
 
   /*
-    Dawn insets the header's contents 5rem inside the page-width container, so
-    the logo and cart start well after — and end well before — the edges every
-    other section aligns to. The reference site runs its header flush to the
-    container. Dropping the padding is what lines the header up with the content
-    below it; the nav's own -1.2rem margin then puts the first link's TEXT on the
-    edge rather than its padding box.
+    Dawn insets the header's contents 5rem inside the container, so the logo and
+    cart start after — and end before — the edges everything else aligns to. The
+    reference runs its header flush to the container edge.
 
-    The selector mirrors Dawn's own `.header:not(.drawer-menu).page-width` in
-    base.css — a plain `.header` is 0-1-0 against its 0-3-0 and loses outright.
+    Zeroing the padding is only safe because the `.page-width` rule above now
+    supplies the margin itself; on its own it pinned the nav 20px from the
+    viewport edge at 1440px. The selector mirrors Dawn's own
+    `.header:not(.drawer-menu).page-width` — a plain `.header` is 0-1-0 against
+    its 0-3-0 and loses outright.
   */
   .header:not(.drawer-menu).page-width {
     padding-left: 0;
@@ -292,6 +313,48 @@ button.shopify-payment-button__button--unbranded {
     grid-area: icons;
     align-self: center;
     justify-self: end;
+  }
+}
+
+/* ------------------------------------------------------------ container */
+
+/*
+  The reference's container is `min(1400px, 100% - 96px)`: it grows to 1400px on
+  wide screens and keeps a 48px breathing margin on narrower ones. Measured —
+  content starts at 201px on an 1800px viewport and at 48px on a 1440px one.
+
+  Dawn instead uses a fixed max-width plus fixed 5rem padding, so the content box
+  shrinks by 100px at EVERY size. Two problems came out of that: at 1800px our
+  header sat 50px inside the reference's line, and when the header's padding was
+  removed to fix that, 1440px screens ended up with the nav 20px from the edge —
+  the responsiveness regression. One rule fixes both, because `.header` is itself
+  a `.page-width` element, so header and sections finally share an axis.
+*/
+@media screen and (min-width: 990px) {
+  .page-width {
+    width: min(var(--page-width), 100% - 9.6rem);
+    max-width: none;
+    padding-left: 0;
+    padding-right: 0;
+    margin-inline: auto;
+  }
+}
+
+/*
+  Sticky header: logo/social row scrolls away, nav row pins.
+
+  Dawn sticks the whole header at `top: 0`, so both rows stay on screen. Pulling
+  the header up by exactly the height of its first row leaves the nav row
+  sitting at the top of the viewport while the logo row scrolls off above it.
+
+  The offset is measured in assets/fazarim-header.js — it depends on the logo
+  height and the header padding, both editable in the theme editor. The 0px
+  fallback means that if the script ever fails to run, the header simply behaves
+  as Dawn shipped it rather than breaking.
+*/
+@media screen and (min-width: 990px) {
+  .shopify-section-header-sticky {
+    top: calc(-1 * var(--fz-header-sticky-offset, 0px));
   }
 }
 
@@ -429,6 +492,33 @@ button.shopify-payment-button__button--unbranded {
   right: 0.1rem;
 }
 
+/* ----------------------------------------------------------- hero height */
+
+/*
+  Dawn's `banner--large` is a fixed 72rem tall at any width, so on a 786px-tall
+  screen the hero ran past the fold — 34px announcement + 122px header + 720px
+  hero = 876px before the next section even starts.
+
+  The reference sizes its hero by ASPECT RATIO instead: measured 1800x631.8,
+  a constant 2.85:1 that shrinks with the viewport rather than holding one
+  height. At 1440px wide that is ~505px, putting the fold comfortably clear.
+
+  `min-height: 0` is required — Dawn's is what pins the height, and an
+  aspect-ratio cannot shrink a box below its own min-height. The selector must
+  out-rank Dawn's `.banner--large:not(.banner--adapt)` (0-2-0, loaded after this
+  file), so it carries `.slideshow` as well to reach 0-3-0.
+*/
+@media screen and (min-width: 750px) {
+  .slideshow.banner--large:not(.banner--adapt) {
+    min-height: 0;
+    aspect-ratio: 2.85 / 1;
+  }
+
+  .slideshow.banner .slideshow__slide {
+    min-height: 0;
+  }
+}
+
 /* --------------------------------------------------------- hero controls */
 
 /*
@@ -498,6 +588,82 @@ button.shopify-payment-button__button--unbranded {
     overflow: visible;
     clip-path: none;
   }
+}
+
+/* ------------------------------------------------------ carousel bounds */
+
+/*
+  Dawn's desktop product carousels are full-bleed: the scrolling <ul> spans the
+  whole viewport and the first slide carries a left margin to fake a gutter. The
+  result is a card sliced in half by the right edge of the screen.
+
+  The reference keeps its carousel inside the container — the row ends exactly
+  where the section heading ends. Same container maths as `.page-width`, plus
+  zeroing Dawn's fake gutter, which would otherwise push the first card inward
+  and leave the row off-axis with the heading above it.
+*/
+@media screen and (min-width: 990px) {
+  /*
+    Two variants exist: sections with more products than columns render
+    `slider-component-desktop` (full-bleed scroller), the rest render
+    `page-width-desktop` (padded grid). Both need the same container maths or
+    the sections sit on different axes down the page.
+  */
+  .collection slider-component.slider-component-desktop,
+  .collection slider-component.page-width-desktop,
+  .collection slider-component.slider-mobile-gutter {
+    width: min(var(--page-width), 100% - 9.6rem);
+    margin-inline: auto;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .collection .slider--desktop .grid__item:first-child,
+  .collection .slider .grid__item:first-child {
+    margin-left: 0;
+  }
+
+  /*
+    Dawn insets these section headings by 5rem so they line up with the fake
+    gutter of the full-bleed slider. Now that the slider sits inside the
+    container, that inset leaves the heading 50px right of its own products.
+    Dawn's rule is `.collection__title.title-wrapper--self-padded-tablet-down`
+    at 0-2-0 in template-collection.css, which loads AFTER this file — matching
+    its specificity loses the tie on order, so the third class is what actually
+    wins (0-3-0).
+  */
+  .collection__title.title-wrapper--self-padded-tablet-down.page-width {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+/* --------------------------------------------------------- product cards */
+
+/*
+  Card text, measured off the reference at 1440px: title 13px / 400, price
+  16px / 400, both in the body face. Dawn renders card titles in the heading
+  face at ~20px bold, which is what made the grids feel oversized — the type was
+  competing with the section headings above it.
+
+  Typeface stays Outfit rather than their DM Sans, same call as the nav: size,
+  weight and colour are matched, the face is ours.
+*/
+.card__heading,
+.card__heading a,
+.card-information .card__heading {
+  font-family: var(--font-body-family);
+  font-size: 1.4rem;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 1.4;
+}
+
+.card-information .price,
+.card-information .price__regular,
+.card-information .price-item {
+  font-size: 1.6rem;
+  font-weight: 400;
 }
 
 /* ------------------------------------------------------- category tiles */

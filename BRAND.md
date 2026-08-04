@@ -301,4 +301,5 @@ app or reverse proxy — Shopify's URL structure is fixed. Flag to the client.
 | 6 | 6-column footer (§8.1.14) | newsletter + 3 columns + contact info | Remaining columns need pages that don't exist yet |
 | 7 | Fazarim Academy nav (§6.2) | omitted | No pages built; would 404 |
 | 8 | Why Choose directly under hero (§8.1.3/8.1.7) | moved above the footer | User decision 2026-07-22: mirror Shopaholic's real homepage (products first, trust props last) — the client's own reference site contradicts the SRS order |
+| 10 | Shop by Category — exactly 3 (§8.1.8) | 10 tiles, 5 per row | User decision 2026-08-04: match the reference's category density. All three SRS categories remain, joined by seven subcategories that already exist as collections |
 | 9 | Palette has no yellow | `#F5C518` gold in the announcement bar | Nothing in the palette is legible as a small highlight on black — mauve scores 2.8, gold 11.2. Scoped to that strip only. See [Gold is the one non-palette colour](#gold-is-the-one-non-palette-colour) |

@@ -62,6 +62,52 @@ black, per client preference. Everything else is matched to the measurement.
 Tap targets stay at 4.4rem even though the reference uses 40px buttons — the glyph and pitch
 match visually while the hit area stays comfortable.
 
+## Product grids — measured from the reference
+
+Read in DevTools at 1440px (2026-08-04):
+
+| property | reference | ours |
+| -------- | --------- | ---- |
+| Cards per row | 5 | 5 |
+| Card width | 249px | 228–241px (our container is 45px narrower) |
+| Gap | 25px | 24px (theme setting steps by 4) |
+| Image ratio | square, 1.0 | square |
+| Card title | DM Sans 13px / 400 | Outfit 14px / 400 |
+| Card price | DM Sans 16px / 400 | 16px / 400 |
+
+Applied to the five homepage carousels, the collection grid and search results.
+Dawn's default was 4 across with portrait images and ~20px bold serif titles, which is what
+made the sections look oversized — the card titles were competing with the section headings.
+
+`products_per_page` is capped to steps of 4 by Dawn's schema (min 8, max 36), so 20 is used —
+four clean rows of five. 25 is rejected by the theme editor.
+
+### Container width — the rule everything hangs off
+
+The reference container is **`min(1400px, 100% - 96px)`**: it grows to 1400px on wide screens
+and keeps a 48px margin on narrower ones. Measured content start: 201px at 1800px viewport,
+48px at 1440px.
+
+Dawn instead uses a fixed max-width plus a fixed 5rem padding, so the content box loses 100px at
+*every* size. That mismatch caused two visible bugs — the header sitting 50px inside the
+reference line at 1800px, and (after the header padding was removed to fix that) the nav sitting
+20px from the screen edge at 1440px. One `.page-width` rule now handles both, and since `.header`
+is itself a `.page-width` element, the header and the sections finally share one axis.
+
+Carousels needed the same treatment: Dawn's desktop product sliders are full-bleed, spanning the
+whole viewport with a fake gutter on the first slide, which sliced the last card at the screen
+edge. They are now bounded to the container, so every row ends where the headings end.
+
+### Shop by Category — 10 tiles, 5 per row
+
+Matches the reference's "PRODUCT CATEGORIES" pattern: broad categories mixed with specific
+product types. Uses collections that already exist — Skincare, Serums, Moisturizers, Cleansers,
+Sunscreen / Hair Care, Shampoo, Hair Oil, Body Care, Lotions.
+
+**Deviates from SRS §8.1.8**, which specifies exactly three categories. User decision
+2026-08-04: match the reference's density. The three SRS categories are all still present as
+tiles, alongside seven subcategories.
+
 ## Style
 
 - Palette: brand Option 1 — mauve `#A64D79`, green `#6EC47C` accent, black/white. See [BRAND.md](BRAND.md#colour).
