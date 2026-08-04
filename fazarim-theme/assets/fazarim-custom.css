@@ -322,13 +322,40 @@ button.shopify-payment-button__button--unbranded {
   width: auto;
 }
 
-/* Nav row: small, bold, uppercase, generously tracked. */
+/*
+  Nav row, measured off the reference at 1800px rather than eyeballed:
+  14px / 700 / uppercase, tracking effectively zero (theirs is -0.07px).
+
+  Typeface stays Outfit. The reference runs DM Sans, but the font is the one
+  thing here that is genuinely Fazarim's rather than theirs — Brand Guidelines
+  p.14. Size, weight, tracking and colour all match; the typeface does not.
+*/
 .header__inline-menu .header__menu-item {
-  font-size: 1.3rem;
-  font-weight: 600;
+  font-size: 1.4rem;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.09em;
+  letter-spacing: 0;
   padding-block: 1.2rem;
+}
+
+/*
+  Dawn fades menu items to 75% opacity, so our nav read as mixed shades — the
+  first item solid, the rest grey-ish. The reference sets every item to solid
+  black and reserves any lightening for hover.
+*/
+.header__inline-menu .header__menu-item,
+.header__inline-menu .header__menu-item:visited {
+  color: rgb(var(--color-foreground));
+}
+
+/*
+  Dawn reserves 2.7rem on the right of dropdown items for the caret, which made
+  those links sit 39px apart against 24px for the plain ones. The reference runs
+  24px between every item (its caret lives inside that gap), so trimming to
+  2.2rem evens the rhythm out. Plain links already match at 24px.
+*/
+.header__inline-menu summary.list-menu__item {
+  padding-right: 2.2rem;
 }
 
 /* Dawn underlines the active link; the reference marks it with colour instead. */
@@ -349,9 +376,47 @@ button.shopify-payment-button__button--unbranded {
   padding-block: 0.6rem;
 }
 
+/* ------------------------------------------------------------ nav icons */
+
+/*
+  Reference icons render at 28px on a 42px pitch, drawn as 24x24 outlines with a
+  1.2 stroke. Ours are now the same family (see assets/icon-search.svg,
+  icon-account.svg, icon-cart*.svg — redrawn, not copied) so a single size rule
+  works across all three.
+
+  This previously used 2.2rem, taken from a 22.4px measurement that was actually
+  a nested inner <svg> on their page rather than the rendered icon. It also only
+  worked for two of three: Dawn's cart art filled ~43% of a 40x40 viewBox while
+  search and account filled an 18x19 one edge to edge, so identical box sizes
+  produced a cart at half scale. The redrawn icons share one viewBox and fill it
+  consistently, which is what makes uniform sizing possible at all.
+
+  The 4.4rem box stays as the tap target — 42px is already at the low end of a
+  comfortable touch target, so the pitch is closed with margin instead of by
+  shrinking the hit area.
+*/
+.header__icons .header__icon .icon,
+.header__icons .header__icon--cart .icon {
+  width: 2.8rem;
+  height: 2.8rem;
+}
+
+.header__icons .header__icon {
+  margin-inline: -0.1rem;
+}
+
+/* Icons are solid black on the reference, no fading. */
+.header__icons .header__icon {
+  color: rgb(var(--color-foreground));
+}
+
 /*
   Cart badge is always rendered now (see sections/header.liquid) so an empty
   cart shows "0", matching the reference. Dawn only sized it for 1+ digits.
+
+  Mauve stays (brand, and the client likes it) but the badge was floating 4px
+  ABOVE the icon box with nothing connecting them. The reference tucks its badge
+  3px INSIDE the top edge so it overlaps the glyph and reads as attached.
 */
 .cart-count-bubble {
   min-width: 1.7rem;
@@ -359,9 +424,80 @@ button.shopify-payment-button__button--unbranded {
   font-size: 1rem;
   font-weight: 600;
   bottom: auto;
-  top: -0.4rem;
+  top: 0.3rem;
   left: auto;
-  right: -0.6rem;
+  right: 0.1rem;
+}
+
+/* --------------------------------------------------------- hero controls */
+
+/*
+  Dawn parks the slideshow's arrows/dots/pause in a 46px white strip UNDER the
+  image, which reads as a separate band between the hero and the next section.
+  Lifting them onto the image bottom removes that band — the slideshow's height
+  drops by the strip's height, since the media was the only other thing sizing
+  it.
+
+  The translucent pill is not decoration: the controls are near-black
+  (rgba(0,0,0,0.75)) and the hero photography is light and busy, so straight
+  over the image they would disappear against pale areas. The pill keeps them
+  legible on any slide, including client photos we have not seen yet.
+*/
+@media screen and (min-width: 750px) {
+  /*
+    Scoped to the custom element, not a `.slideshow` class — the slideshow's
+    wrapper carries only `slider-mobile-gutter mobile-text-below`, so a
+    `.slideshow .slideshow__controls` selector matches nothing at all.
+  */
+  slideshow-component .slideshow__controls {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    width: auto;
+    border: 0;
+    border-radius: 4rem;
+    background: rgb(255 255 255 / 88%);
+    padding-inline: 0.6rem;
+    box-shadow: 0 0.2rem 1.2rem rgb(0 0 0 / 12%);
+  }
+
+  /*
+    The pause button is hidden, not deleted, and that distinction matters twice.
+
+    1. Dawn's JS branches on `this.sliderAutoplayButton` existing. Remove the
+       element and the slideshow stops pausing on hover and on focus — the
+       opposite of what hiding it is meant to achieve.
+    2. WCAG 2.2.2 (SRS §9.7) wants a pause mechanism for content that auto-moves
+       for more than five seconds. Keeping the button in the accessibility tree
+       and revealing it on keyboard focus preserves that; it simply stays out of
+       sight for everyone else.
+
+    The slideshow already pauses on hover, pauses on focus, never auto-rotates
+    for `prefers-reduced-motion` users, and stops for good once an arrow is
+    clicked (global.js) — no visible behavior depends on this button.
+  */
+  slideshow-component .slideshow__autoplay.slider-button {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border-left: 0;
+  }
+
+  /* Keyboard users get it back the moment they tab to it. */
+  slideshow-component .slideshow__autoplay.slider-button:focus-visible {
+    position: static;
+    width: 4.4rem;
+    height: 4.4rem;
+    overflow: visible;
+    clip-path: none;
+  }
 }
 
 /* ------------------------------------------------------- category tiles */

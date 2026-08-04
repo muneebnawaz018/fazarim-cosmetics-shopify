@@ -32,6 +32,36 @@ props → footer. This deviates from SRS §8.1.3, which wants Why Choose directl
 12. **Customer Reviews** (§8.1.13) — *not built; would need fabricated testimonials.*
 13. **Footer** — newsletter + columns (§8.1.14).
 
+## Header — measured from the reference, not estimated
+
+Values read off [shopaholic.com.pk](https://www.shopaholic.com.pk/) in DevTools at a 1800px
+viewport (2026-08-04). Re-measure before changing any of them; screenshots are not accurate
+enough for this, and earlier passes went wrong by eyeballing ratios off cropped images.
+
+| property | reference | ours |
+| -------- | --------- | ---- |
+| Container | 1400px, contents flush to its edges | same |
+| Nav type | DM Sans 14px / 700, tracking −0.07px, solid black, uppercase | Outfit 14px / 700, tracking 0, solid black |
+| Nav gaps | 24px plain, 34px where a caret follows | same |
+| Icon glyphs | 28px, 24x24 viewBox, 1.2 outline stroke, black | same |
+| Icon pitch | 42px | 41–42px |
+| Cart badge | 18px circle, 3px inside the icon's top edge | 17px, 3px inset, mauve |
+
+The header icons were redrawn as outlines to match (`assets/icon-search.svg`, `icon-account.svg`,
+`icon-cart.svg`, `icon-cart-empty.svg`). Geometry is ours — the reference's own path data is
+their asset, so only the style was matched: 24x24 viewBox, 1.2 stroke, `currentColor`.
+
+Dawn's originals could not be sized uniformly: the cart art filled ~43% of a 40x40 viewBox while
+search and account filled 18x19 edge to edge, so one size rule rendered the cart at half scale.
+All four now share a viewBox and fill it consistently.
+
+Two deliberate departures: the **typeface stays Outfit** (brand, Guidelines p.14 — the
+reference's DM Sans is theirs, not ours), and the **cart badge stays mauve** rather than their
+black, per client preference. Everything else is matched to the measurement.
+
+Tap targets stay at 4.4rem even though the reference uses 40px buttons — the glyph and pitch
+match visually while the hit area stays comfortable.
+
 ## Style
 
 - Palette: brand Option 1 — mauve `#A64D79`, green `#6EC47C` accent, black/white. See [BRAND.md](BRAND.md#colour).
