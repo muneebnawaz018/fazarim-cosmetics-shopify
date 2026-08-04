@@ -7,7 +7,7 @@
       "settings": {
         "color_scheme": "scheme-4",
         "show_line_separator": false,
-        "show_social": true,
+        "show_social": false,
         "auto_rotate": true,
         "change_slides_speed": 5,
         "enable_country_selector": false,
@@ -17,7 +17,7 @@
         "announcement-bar-0": {
           "type": "announcement",
           "settings": {
-            "text": "Free Shipping Over Rs. 10,000",
+            "text": "Free Shipping Over <strong>Rs. 10,000</strong>",
             "text_alignment": "center",
             "color_scheme": "scheme-4",
             "link": ""
@@ -26,7 +26,7 @@
         "announcement-bar-1": {
           "type": "announcement",
           "settings": {
-            "text": "Delivery across Pakistan \u2022 3\u20135 business days",
+            "text": "Delivery across Pakistan \u2022 <strong>3\u20135 business days</strong>",
             "text_alignment": "center",
             "color_scheme": "scheme-4",
             "link": ""

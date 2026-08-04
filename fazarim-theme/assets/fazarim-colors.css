@@ -1,0 +1,54 @@
+/*
+  Fazarim colour tokens — the single source of truth for every hex in this theme.
+
+  Rule: no raw hex anywhere else in fazarim-*.css. If a colour is needed, it gets
+  a token here first. That is what stops the "three slightly different mauves"
+  problem, which had already started: the announcement bar was carrying #fae7c9
+  and #f5c518, both lifted from the reference site and neither in the brand
+  palette.
+
+  Source of truth for the values: Brand Guidelines p.12 (Option 1), pixel-sampled
+  and recorded in BRAND.md. Do not eyeball new shades — derive them from these.
+
+  Shopify's own colour schemes (config/settings_data.json) hold the SAME values
+  for theme-wide backgrounds/text, because Dawn's scheme system drives sections
+  the theme editor controls. These tokens cover everything Dawn does not.
+*/
+
+:root {
+  /* ---------------------------------------------------------- brand core */
+
+  --fz-mauve: #a64d79; /* PRIMARY. Buttons, links, headings. 5.30 on white — AA */
+  --fz-green: #6ec47c; /* SECONDARY. 2.13 on white — BACKGROUND ONLY, black text */
+  --fz-grey: #848484; /* TERTIARY. 3.74 — large text only, never body copy */
+
+  --fz-black: #000000;
+  --fz-white: #ffffff;
+
+  /* Supporting greys, Brand Guidelines "Custom 1/2/3". */
+  --fz-grey-dark: #5b5b5b;
+  --fz-grey-mid: #a0a0a0;
+  --fz-grey-light: #dbdbdb;
+
+  /* Faint mauve wash used for section backgrounds — mauve at ~4% over white. */
+  --fz-mauve-tint: #f7f4f5;
+
+  /* -------------------------------------------------- announcement bar */
+
+  /*
+    The reference site runs cream + gold on black. Cream (#fae7c9) is a warm
+    off-white that reads as "not quite white" next to the mauve brand, so the
+    base text is plain white and the highlight carries the accent instead.
+
+    Gold is the one non-palette colour we keep: the brand has no yellow, and the
+    highlight needs to be legible on black (mauve scores 2.8 there — too low).
+    Flagged as deviation in BRAND.md.
+  */
+  --fz-announcement-bg: var(--fz-black);
+  --fz-announcement-text: var(--fz-white);
+  --fz-gold: #f5c518; /* 11.2 on black — AA at small sizes */
+
+  /* Arrows sit quiet until hovered, as on the reference. */
+  --fz-announcement-arrow: rgb(255 255 255 / 35%);
+  --fz-announcement-arrow-hover: var(--fz-gold);
+}

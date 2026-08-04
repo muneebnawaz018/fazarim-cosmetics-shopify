@@ -48,6 +48,30 @@ of the logo's colours — either would leave the logo permanently off-palette.
 | White | `#FFFFFF` | page background |
 | Custom 1/2/3 | `#5B5B5B` `#A0A0A0` `#DBDBDB` | supporting greys |
 
+### Where these live in code
+
+`fazarim-theme/assets/fazarim-colors.css` — **the only file allowed to contain a raw hex.**
+Every rule in `fazarim-custom.css` reads a `--fz-*` token from it. Loaded ahead of
+`fazarim-custom.css` in `theme.liquid`, so the tokens exist before anything consumes them.
+
+This exists because near-duplicate shades had already begun to creep in: the announcement
+bar was carrying a cream `#fae7c9` and a gold `#f5c518` copied from the reference site,
+neither of which is a Fazarim colour. Adding a colour means adding a token first.
+
+Dawn's own colour schemes (`config/settings_data.json`) hold the same values independently —
+they drive the sections merchants edit in the theme editor and can't read CSS variables.
+Change a brand colour and both places need it.
+
+### Gold is the one non-palette colour
+
+`--fz-gold: #F5C518`, used only for the announcement bar's highlighted amount.
+
+The brand has no yellow. It's here because the announcement bar is black, and the palette
+offers nothing legible on black for a small highlight — mauve scores 2.8 there, well under
+the 4.5 that SRS §9.7 demands. Gold scores 11.2. The reference site solves the same problem
+the same way. Confined to that one strip; if the client rejects it, the fallback is plain
+white text with no highlight, not a mauve one.
+
 ### Contrast — two colours are traps
 
 SRS §9.7 mandates WCAG 2.1. Measured against white:
@@ -277,3 +301,4 @@ app or reverse proxy — Shopify's URL structure is fixed. Flag to the client.
 | 6 | 6-column footer (§8.1.14) | newsletter + 3 columns + contact info | Remaining columns need pages that don't exist yet |
 | 7 | Fazarim Academy nav (§6.2) | omitted | No pages built; would 404 |
 | 8 | Why Choose directly under hero (§8.1.3/8.1.7) | moved above the footer | User decision 2026-07-22: mirror Shopaholic's real homepage (products first, trust props last) — the client's own reference site contradicts the SRS order |
+| 9 | Palette has no yellow | `#F5C518` gold in the announcement bar | Nothing in the palette is legible as a small highlight on black — mauve scores 2.8, gold 11.2. Scoped to that strip only. See [Gold is the one non-palette colour](#gold-is-the-one-non-palette-colour) |

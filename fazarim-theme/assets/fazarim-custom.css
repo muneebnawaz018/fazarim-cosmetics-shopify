@@ -98,7 +98,202 @@ button.shopify-payment-button__button--unbranded {
   color: rgb(var(--color-foreground));
 }
 
+/* ------------------------------------------------------ announcement bar */
+
+/*
+  Dawn tags the message `h5`, so it rendered in the display serif at heading
+  size — a fat banner. The reference bar is a thin sans strip.
+*/
+.announcement-bar__message {
+  font-family: var(--font-body-family);
+  font-size: 1.2rem;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  color: var(--fz-announcement-text);
+
+  /*
+    Height comes from the strip, not from padding on the text. Padding made the
+    bar's height a side effect of the message box, which also dragged the arrows
+    around (they pin to top: 50% of that height). Fixed height + flex centering
+    keeps the two independent.
+  */
+  padding-top: 0;
+  padding-bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 3.4rem;
+}
+
+/*
+  The whole line pulses white → gold together, not just the amount. Deliberately
+  slow (3s) and a colour fade rather than an on/off blink — a hard blink at speed
+  is both cheap-looking and a WCAG 2.3.1 risk.
+
+  Animating the <p> and letting <strong> inherit means the two stay in step. The
+  amount still reads as the emphasis via weight rather than a separate colour;
+  a separate colour on it would put it out of phase with the rest of the line.
+*/
+.announcement-bar__message {
+  animation: fz-announcement-pulse 3s ease-in-out infinite;
+}
+
+.announcement-bar__message strong {
+  color: inherit;
+  font-weight: 600;
+}
+
+@keyframes fz-announcement-pulse {
+  0%,
+  100% {
+    color: var(--fz-announcement-text);
+  }
+
+  50% {
+    color: var(--fz-gold);
+  }
+}
+
+/* Vestibular-safe: hold a static state, drop the motion. */
+@media (prefers-reduced-motion: reduce) {
+  .announcement-bar__message {
+    animation: none;
+  }
+
+  .announcement-bar__message strong {
+    color: var(--fz-gold);
+  }
+}
+
+/*
+  Dawn stretches the slider full-width, stranding the arrows at the screen
+  edges. The reference clusters arrows tight around a centered message.
+
+  Flex-shrinking the slider fought Dawn's grid sizing and came out lopsided,
+  so instead: the slide stays full-width (text-align centers the message on
+  the page's true axis) and the arrows are pinned symmetrically at a fixed
+  distance from that center.
+*/
+.announcement-bar-slider {
+  position: relative;
+}
+
+.announcement-bar-slider .slider-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1;
+
+  /* Quiet until wanted, gold on hover — matching the reference's arrows. */
+  color: var(--fz-announcement-arrow);
+  transition: color 0.2s ease;
+}
+
+/*
+  `:not([disabled])` is not decoration — it matches Dawn's own hover rule in
+  component-slider.css, which is the same specificity as a plain
+  `.announcement-bar-slider .slider-button:hover` and loads AFTER this file, so
+  the tie went to Dawn and the arrow turned white instead of gold. Repeating the
+  `:not()` wins on specificity rather than on load order.
+*/
+.announcement-bar-slider .slider-button:not([disabled]):hover,
+.announcement-bar-slider .slider-button:not([disabled]):focus-visible {
+  color: var(--fz-announcement-arrow-hover);
+}
+
+/* Dawn's caret inherits `color` via currentColor, so the SVG follows along. */
+.announcement-bar-slider .slider-button .icon {
+  color: inherit;
+}
+
+/*
+  Offset from centre, not from the edges: the arrows have to clear the LONGEST
+  message, otherwise they collide on one slide and look fine on the other.
+  The longest message ("Delivery across Pakistan • 3–5 business days") is 264px
+  wide, so 132px each side of centre; 17.5rem leaves ~14px of air beyond it.
+  Anything tighter overlaps that slide while still looking correct on the short
+  one — check both slides after editing this, not just the visible one.
+*/
+.announcement-bar-slider .slider-button--prev {
+  left: calc(50% - 17.5rem);
+}
+
+.announcement-bar-slider .slider-button--next {
+  right: calc(50% - 17.5rem);
+}
+
+@media screen and (max-width: 749px) {
+  .announcement-bar-slider .slider-button--prev {
+    left: 0.5rem;
+  }
+
+  .announcement-bar-slider .slider-button--next {
+    right: 0.5rem;
+  }
+}
+
 /* ---------------------------------------------------------------- header */
+
+/*
+  Reference header is three rows: thin announcement / logo + social icons /
+  nav + search-account-cart. Dawn's top-left layout puts the utility icons on
+  the logo row, so re-place the grid: socials up, icons down beside the nav.
+*/
+@media screen and (min-width: 990px) {
+  .header--top-left {
+    grid-template-areas:
+      'heading social'
+      'navigation icons';
+    grid-template-columns: 1fr auto;
+  }
+
+  /*
+    Dawn insets the header's contents 5rem inside the page-width container, so
+    the logo and cart start well after — and end well before — the edges every
+    other section aligns to. The reference site runs its header flush to the
+    container. Dropping the padding is what lines the header up with the content
+    below it; the nav's own -1.2rem margin then puts the first link's TEXT on the
+    edge rather than its padding box.
+
+    The selector mirrors Dawn's own `.header:not(.drawer-menu).page-width` in
+    base.css — a plain `.header` is 0-1-0 against its 0-3-0 and loses outright.
+  */
+  .header:not(.drawer-menu).page-width {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  /*
+    Dawn offsets the logo link by -0.75rem to cancel the 0.75rem padding it
+    normally carries. We zero that padding elsewhere in this file, so the
+    negative margin had nothing left to cancel and dragged the logo 7.5px past
+    the container edge. Selector matches Dawn's `.header--top-left
+    .header__heading-link` (0-2-0) — a bare class loses to it.
+
+    The cart's own -1.2rem is deliberately left alone: its 4.4rem tap target is
+    wider than the glyph inside, so the overhanging box is what puts the glyph
+    optically on the edge. Zeroing it would inset the icon by ~10px.
+  */
+  .header--top-left .header__heading-link {
+    margin-left: 0;
+  }
+
+  .header__social {
+    grid-area: social;
+    align-self: center;
+    justify-self: end;
+  }
+
+  .header__social .list-social__link {
+    padding: 0.6rem;
+  }
+
+  .header--top-left .header__icons {
+    grid-area: icons;
+    align-self: center;
+    justify-self: end;
+  }
+}
 
 /*
   The real logo is installed (settings.logo), so Dawn renders an <img> and the
