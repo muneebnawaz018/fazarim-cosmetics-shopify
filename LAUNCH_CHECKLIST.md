@@ -232,10 +232,28 @@ Shopify's demo collections `frontpage`, `automated-collection` and `hydrogen` al
 Neither the snowboards nor those collections are in the `retire` list — add them there and
 re-run `npm run prune` if you want them gone.
 
-### Catalog depth
+### Catalog depth — 10 products are invented
 
-14 products across 6 homepage carousels means the same items repeat across Sale, New Arrivals
-and Best Sellers. The reference site carries hundreds — its density **is** the design.
+The homepage carousels only become carousels when a collection holds more products than the
+grid shows. With 14 real products, Sale had 2 and New Arrivals had 5, so both rendered as a
+short static row with no arrows.
+
+**10 invented products** were seeded on 2026-08-05 to fix that, listed in
+`data/products.dummy.json` and created by `npm run seed:products`:
+
+| handle | why it exists |
+| ------ | ------------- |
+| hyaluronic-acid-serum, retinol-night-cream, rosewater-toner, charcoal-detox-mask, green-tea-face-wash | skincare depth |
+| keratin-repair-hair-mask, coconut-hair-serum, argan-haircare-duo | hair-care depth |
+| vitamin-e-body-butter, aloe-soothing-gel | body-care depth |
+
+Made-up names, made-up prices, Unsplash stock photography. **Delete or replace them with the
+client's real catalogue before go-live** — they are live storefront products, not drafts.
+Three real products (anti-dandruff-shampoo, gentle-bathing-soap, vitamin-c-serum) were also
+tagged `sale`; they already carried a `compare_at_price`, so they belonged there anyway and
+that tag can stay.
+
+Even so, the reference site carries hundreds of products — its density **is** the design.
 Set client expectations.
 
 ### Ingredient lists are dummy data

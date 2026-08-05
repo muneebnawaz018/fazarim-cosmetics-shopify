@@ -624,6 +624,37 @@ button.shopify-payment-button__button--unbranded {
   }
 
   /*
+    Card width has to be recomputed for the same reason. Dawn sizes desktop
+    slider cards as
+
+      (100% - var(--desktop-margin-left-first-item)) / 5 - spacing * 2
+
+    which only makes sense on a full-bleed 100vw track: the first term pays for
+    the fake gutter, the second for the card that peeks in from the right. Now
+    that the track IS the container, both subtractions are wrong twice over —
+    at 1440 they take 58px + 48px per card and leave a 249px card at 209px, so
+    five cards fill 1141px of a 1344px row and a sixth and part of a seventh
+    creep into view.
+
+    Sizing off the row itself instead: 5 x 249.6 + 4 x 24 gap = 1344, exactly
+    the container. Five cards per view, the rest scroll, and the card lands on
+    the reference's 249px.
+
+    Dawn's rule is `.slider--desktop.grid--5-col-desktop .grid__item` (0-3-0),
+    injected per section so it loads after this file. `.product-grid` is the
+    fourth class that wins the tie.
+  */
+  .collection .product-grid.slider--desktop.grid--5-col-desktop .grid__item {
+    width: calc(20% - var(--grid-desktop-horizontal-spacing) * 4 / 5);
+    max-width: calc(20% - var(--grid-desktop-horizontal-spacing) * 4 / 5);
+  }
+
+  .collection .product-grid.slider--desktop.grid--4-col-desktop .grid__item {
+    width: calc(25% - var(--grid-desktop-horizontal-spacing) * 3 / 4);
+    max-width: calc(25% - var(--grid-desktop-horizontal-spacing) * 3 / 4);
+  }
+
+  /*
     Dawn insets these section headings by 5rem so they line up with the fake
     gutter of the full-bleed slider. Now that the slider sits inside the
     container, that inset leaves the heading 50px right of its own products.
@@ -635,6 +666,163 @@ button.shopify-payment-button__button--unbranded {
   .collection__title.title-wrapper--self-padded-tablet-down.page-width {
     padding-left: 0;
     padding-right: 0;
+  }
+}
+
+/* -------------------------------------------- carousel header + controls */
+
+/*
+  Reference layout for Sale / New Arrivals: heading top-left with a "View all"
+  text link beneath it, and the carousel arrows top-RIGHT on the heading row —
+  not stranded under the products as Dawn ships them.
+
+  The arrows cannot be moved in the markup: Dawn's SliderComponent looks for
+  `.slider-buttons` INSIDE `slider-component` and bails out entirely if it is
+  missing, which would leave dead arrows. So they stay put in the DOM and are
+  positioned from `.collection`, using the same container maths as everything
+  else so the last arrow lands exactly on the container edge.
+*/
+@media screen and (min-width: 990px) {
+  .collection {
+    position: relative;
+  }
+
+  /*
+    Dawn makes `slider-component` itself `position: relative`, so it captured
+    the absolute positioning below and the arrows landed inside the carousel
+    instead of on the heading row. Dropping it to static hands the job to
+    `.collection`; nothing else in these sections is absolutely positioned
+    against the component.
+  */
+  .collection slider-component {
+    position: static;
+  }
+
+  .collection .slider-buttons {
+    position: absolute;
+    top: 3rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(var(--page-width), 100% - 9.6rem);
+    display: flex;
+    justify-content: flex-end;
+    gap: 1.2rem;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Reference shows arrows only — no "1 of 3" counter. */
+  .collection .slider-buttons .slider-counter {
+    display: none;
+  }
+
+  .collection .slider-buttons .slider-button {
+    width: 3.4rem;
+    height: 3.4rem;
+  }
+}
+
+/*
+  Carousel arrows — long arrows, not carets.
+
+  Dawn ships a 6px chevron (`icon-caret.svg`) rotated 90deg per direction, which
+  reads as a tiny tick at 34px. The reference uses a long arrow that fills the
+  whole button: 24x24 viewBox, 1.1 stroke, shaft running the full width with the
+  head on the end. `icon-slider-arrow.svg` is our own drawing of that shape —
+  their path data is their asset, so only the treatment was matched.
+
+  Undoing Dawn takes four overrides, all of them fighting rules in
+  component-slider.css that loads after this file:
+
+    .slider-button .icon                    height: 0.6rem   (sizes the caret)
+    .slider-button--next .icon              rotate(-90deg)   (points it down)
+    .slider-button--prev .icon              rotate(90deg)
+    .slider-button--next/prev:hover .icon   + scale(1.1)
+
+  The rotations must go — the arrow is already horizontal — and prev mirrors
+  instead. Every selector below carries `.slider-buttons` as an extra class so
+  it outranks Dawn's 0-2-0 rather than tying with it and losing on load order.
+*/
+.slider-buttons .slider-button .icon-slider-arrow {
+  width: 100%;
+  height: 100%;
+}
+
+.slider-buttons .slider-button .svg-wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+
+.slider-buttons .slider-button--next .icon-slider-arrow {
+  transform: none;
+}
+
+.slider-buttons .slider-button--prev .icon-slider-arrow {
+  transform: scaleX(-1);
+}
+
+/*
+  Hover nudges the arrow along its own axis instead of scaling it — a stroked
+  arrow scaled up thickens its own line, which reads as a weight change rather
+  than motion. `scaleX(-1)` has to be reapplied on prev or the mirror is lost,
+  and its translate runs positive because the axis is flipped.
+*/
+.slider-buttons .slider-button--next:not([disabled]):hover .icon-slider-arrow {
+  transform: translateX(0.3rem);
+}
+
+.slider-buttons .slider-button--prev:not([disabled]):hover .icon-slider-arrow {
+  transform: scaleX(-1) translateX(0.3rem);
+}
+
+.slider-buttons .slider-button .icon-slider-arrow {
+  transition: transform var(--duration-short) ease;
+}
+
+/* Reference dims the spent direction to 20% rather than hiding it. */
+.slider-buttons .slider-button[disabled] .icon-slider-arrow {
+  color: rgba(var(--color-foreground), 0.2);
+}
+
+.slider-buttons .slider-button {
+  color: rgb(var(--color-foreground));
+  padding: 0;
+}
+
+@media screen and (min-width: 990px) {
+  /* Re-opened so the rules that follow keep their original desktop scope. */
+
+  /*
+    The view-all link belongs directly under the heading, but Dawn renders it
+    LAST in the markup — after the carousel. Absolute positioning it needs a
+    hard-coded offset equal to the heading's height, which put the link on top
+    of the heading the moment the heading size differed from the guess.
+
+    Flex ordering moves it without depending on any measurement: the section
+    becomes a column and the link is ordered between the title and the slider.
+  */
+  .collection {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .collection .collection__title {
+    order: 0;
+    margin-bottom: 0.8rem;
+  }
+
+  .collection .collection__view-all {
+    order: 1;
+    width: min(var(--page-width), 100% - 9.6rem);
+    align-self: center;
+    margin: 0 0 2.4rem;
+    text-align: left;
+  }
+
+  .collection slider-component,
+  .collection .collection__slider {
+    order: 2;
   }
 }
 
@@ -666,6 +854,56 @@ button.shopify-payment-button__button--unbranded {
   font-weight: 400;
 }
 
+/* Reference centres its card text under the image. */
+.card__content .card__information,
+.card__content .card__heading,
+.card__content .price {
+  text-align: center;
+}
+
+.card__heading,
+.card__heading a {
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+/*
+  Sale price is called out in colour, the original struck through beside it.
+  The reference uses red (#C31818); mauve is used here instead because the
+  brand palette has no red and mauve already carries every other accent on the
+  site. Swap `--fz-mauve` for a red token if the client wants the louder cue.
+*/
+.card-information .price--on-sale .price-item--sale {
+  color: var(--fz-mauve);
+}
+
+.card-information .price--on-sale .price-item--regular {
+  text-decoration: line-through;
+  opacity: 0.55;
+}
+
+/*
+  Discount badge: outlined square at the top-left of the image, matching the
+  reference's treatment rather than Dawn's filled pill at the bottom.
+*/
+.card__badge .badge.fz-badge-sale {
+  background: var(--fz-white);
+  color: var(--fz-mauve);
+  border: 0.1rem solid var(--fz-mauve);
+  border-radius: 0;
+  font-size: 1.1rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 0.3rem 0.7rem;
+}
+
+/*
+  Position comes from the theme's own `badge_position` setting (now "top left"),
+  not a CSS override — Dawn places the badge with flex alignment and the class
+  is `bottom left` / `top left` as two separate classes, so offset overrides
+  like `top: 1rem` do nothing.
+*/
+
 /* ------------------------------------------------------- category tiles */
 
 /*
@@ -689,4 +927,55 @@ button.shopify-payment-button__button--unbranded {
 .collection-list-title {
   text-transform: uppercase;
   letter-spacing: 0.06em;
+}
+
+/* ------------------------------------------------ homepage section dividers
+
+  Sections used to alternate between two colour schemes, so the page read as
+  bands of white and grey. The reference keeps every section on one background
+  and separates them with a hairline instead, which is quieter and stops the
+  product cards from sitting on two different backgrounds down the page.
+
+  Their implementation, measured off the live site:
+
+    .section--divider-solid::before {
+      content: ''; position: absolute; inset: 0 var(--space-outer);
+      box-shadow: inset 0 1px var(--color-border);
+    }
+
+  Same idea here, drawn on the section that FOLLOWS — a top border needs no
+  knowledge of whether anything comes after it, so the last section can never
+  leave a stray line above the footer.
+*/
+#MainContent > .shopify-section {
+  position: relative;
+}
+
+#MainContent > .shopify-section + .shopify-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(var(--page-width), 100% - 9.6rem);
+  border-top: 0.1rem solid var(--fz-section-divider);
+  pointer-events: none;
+}
+
+/*
+  The reference suppresses the divider after a full-width section. A hairline
+  butted against the bottom of an edge-to-edge image reads as a rendering
+  seam rather than a separator — it has no gutter to sit inside.
+
+  Section ids are prefixed with the template id (`template--123__hero`), so
+  these match on the suffix rather than hard-coding that number.
+
+  The `.shopify-section` on the last selector is load-bearing. The rule above is
+  (1,2,0) — one id and two classes — so suppressing the promo's own divider with
+  `#MainContent > [id$='__promo']::before` scores (1,1,0) and quietly loses.
+*/
+#MainContent > [id$='__hero'] + .shopify-section::before,
+#MainContent > [id$='__promo'] + .shopify-section::before,
+#MainContent > .shopify-section[id$='__promo']::before {
+  content: none;
 }

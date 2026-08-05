@@ -43,7 +43,6 @@
 
   if section.settings.collection.all_products_count > section.settings.products_to_show
     assign products_to_display = section.settings.products_to_show
-    assign more_in_collection = true
   endif
 
   assign columns_mobile_int = section.settings.columns_mobile | plus: 0
@@ -174,7 +173,7 @@
             aria-controls="Slider-{{ section.id }}"
           >
             <span class="svg-wrapper">
-              {{- 'icon-caret.svg' | inline_asset_content -}}
+              {{- 'icon-slider-arrow.svg' | inline_asset_content -}}
             </span>
           </button>
           <div class="slider-counter caption">
@@ -191,14 +190,22 @@
             aria-controls="Slider-{{ section.id }}"
           >
             <span class="svg-wrapper">
-              {{- 'icon-caret.svg' | inline_asset_content -}}
+              {{- 'icon-slider-arrow.svg' | inline_asset_content -}}
             </span>
           </button>
         </div>
       {%- endif -%}
     </slider-component>
 
-    {%- if section.settings.show_view_all and more_in_collection -%}
+    {%- comment -%}
+      Dawn only renders this link when the collection holds MORE products than
+      the carousel shows. Every Fazarim collection currently fits inside the
+      carousel, so the link never appeared. The reference site shows it
+      regardless ("View sale products") because it is a way into the collection
+      page, not a signal that something is hidden — so `more_in_collection` is
+      no longer part of the test.
+    {%- endcomment -%}
+    {%- if section.settings.show_view_all -%}
       <div class="center collection__view-all{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
         <a
           href="{{ section.settings.collection.url }}"

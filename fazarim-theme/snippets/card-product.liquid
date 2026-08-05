@@ -135,11 +135,21 @@
                   {{- 'products.product.sold_out' | t -}}
                 </span>
               {%- elsif card_product.compare_at_price > card_product.price and card_product.available -%}
+                {%- comment -%}
+                  Reference site shows the actual saving ("44% OFF"), not the word "Sale".
+                  Rounded down so the badge never over-promises a discount.
+                {%- endcomment -%}
+                {%- assign fz_saving = card_product.compare_at_price
+                  | minus: card_product.price
+                  | times: 100.0
+                  | divided_by: card_product.compare_at_price
+                  | floor
+                -%}
                 <span
                   id="NoMediaStandardBadge-{{ section_id }}-{{ card_product.id }}"
-                  class="badge badge--bottom-left color-{{ settings.sale_badge_color_scheme }}"
+                  class="badge badge--bottom-left fz-badge-sale color-{{ settings.sale_badge_color_scheme }}"
                 >
-                  {{- 'products.product.on_sale' | t -}}
+                  {{ fz_saving }}% OFF
                 </span>
               {%- endif -%}
             </div>
@@ -559,11 +569,17 @@
                 {{- 'products.product.sold_out' | t -}}
               </span>
             {%- elsif card_product.compare_at_price > card_product.price and card_product.available -%}
+              {%- assign fz_saving = card_product.compare_at_price
+                | minus: card_product.price
+                | times: 100.0
+                | divided_by: card_product.compare_at_price
+                | floor
+              -%}
               <span
                 id="Badge-{{ section_id }}-{{ card_product.id }}"
-                class="badge badge--bottom-left color-{{ settings.sale_badge_color_scheme }}"
+                class="badge badge--bottom-left fz-badge-sale color-{{ settings.sale_badge_color_scheme }}"
               >
-                {{- 'products.product.on_sale' | t -}}
+                {{ fz_saving }}% OFF
               </span>
             {%- endif -%}
           </div>

@@ -1,0 +1,110 @@
+{
+  "$comment": "DUMMY / DEV ONLY. Extra catalogue depth so the homepage carousels have more products than visible columns — Dawn only renders slider arrows when a collection overflows its grid. Seeded by `npm run seed:products`.",
+  "$warning": "DO NOT LAUNCH WITH THESE. Invented products with Unsplash stock photography and made-up prices. Delete or replace with the client's real catalogue before go-live. Tracked in LAUNCH_CHECKLIST.md.",
+  "$tagsComment": "Tags drive the smart collections in store-structure.json. `sale` products must carry a compareAtPrice — the card badge computes its percentage from the gap.",
+  "vendor": "Fazarim",
+  "products": [
+    {
+      "handle": "hyaluronic-acid-serum",
+      "title": "Hyaluronic Acid Serum",
+      "type": "Serum",
+      "tags": ["skincare", "sale", "new", "concern-dry-skin"],
+      "price": "2650.00",
+      "compareAtPrice": "3300.00",
+      "image": "https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?w=1200&q=80",
+      "body": "A lightweight humectant serum that draws moisture into the skin and holds it there. Layer under a moisturiser morning and night."
+    },
+    {
+      "handle": "retinol-night-cream",
+      "title": "Retinol Night Cream",
+      "type": "Moisturizer",
+      "tags": ["skincare", "new", "best-seller", "concern-anti-aging"],
+      "price": "3400.00",
+      "compareAtPrice": "3900.00",
+      "image": "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=1200&q=80",
+      "body": "An encapsulated retinol cream for overnight renewal. Start twice a week and build up as your skin adjusts."
+    },
+    {
+      "handle": "green-tea-face-wash",
+      "title": "Green Tea Face Wash",
+      "type": "Cleanser",
+      "tags": ["skincare", "sale", "concern-oily-skin"],
+      "price": "1450.00",
+      "compareAtPrice": "1800.00",
+      "image": "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=1200&q=80",
+      "body": "A gentle gel cleanser with green tea extract that lifts oil and grime without stripping the skin barrier."
+    },
+    {
+      "handle": "vitamin-e-body-butter",
+      "title": "Vitamin E Body Butter",
+      "type": "Lotion",
+      "tags": ["body-care", "sale", "concern-dry-skin"],
+      "price": "1900.00",
+      "compareAtPrice": "2400.00",
+      "image": "https://images.unsplash.com/photo-1612817288484-6f916006741a?w=1200&q=80",
+      "body": "A rich whipped butter for dry elbows, knees and heels. Sinks in without leaving a greasy film."
+    },
+    {
+      "handle": "keratin-repair-hair-mask",
+      "title": "Keratin Repair Hair Mask",
+      "type": "Hair Treatment",
+      "tags": ["hair-care", "new", "sale", "concern-damaged-hair"],
+      "price": "2100.00",
+      "compareAtPrice": "2700.00",
+      "image": "https://images.unsplash.com/photo-1535585209827-a15fcdbc4c2d?w=1200&q=80",
+      "body": "A weekly deep-conditioning mask for heat-damaged and chemically treated hair. Leave on ten minutes, then rinse."
+    },
+    {
+      "handle": "rosewater-toner",
+      "title": "Rosewater Toner",
+      "type": "Toner",
+      "tags": ["skincare", "new", "best-seller", "concern-sensitive"],
+      "price": "1350.00",
+      "compareAtPrice": null,
+      "image": "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=1200&q=80",
+      "body": "An alcohol-free rosewater mist that rebalances skin after cleansing and preps it for serum."
+    },
+    {
+      "handle": "charcoal-detox-mask",
+      "title": "Charcoal Detox Mask",
+      "type": "Mask",
+      "tags": ["skincare", "sale", "concern-acne"],
+      "price": "1750.00",
+      "compareAtPrice": "2200.00",
+      "image": "https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?w=1200&q=80",
+      "body": "Activated charcoal and kaolin clay draw out congestion from the T-zone. Use once or twice a week."
+    },
+    {
+      "handle": "argan-haircare-duo",
+      "title": "Argan Shampoo & Conditioner Duo",
+      "type": "Kit",
+      "tags": ["hair-care", "kit", "new", "best-seller"],
+      "price": "4200.00",
+      "compareAtPrice": "5100.00",
+      "image": "https://images.unsplash.com/photo-1512496015851-a90fb38ba796?w=1200&q=80",
+      "body": "The full argan wash routine in one bundle — sulphate-free shampoo plus the matching conditioner."
+    },
+    {
+      "handle": "aloe-soothing-gel",
+      "title": "Aloe Soothing Gel",
+      "type": "Gel",
+      "tags": ["body-care", "skincare", "best-seller", "concern-sensitive"],
+      "price": "990.00",
+      "compareAtPrice": null,
+      "image": "https://images.unsplash.com/photo-1631729371254-42c2892f0e6e?w=1200&q=80",
+      "body": "Cooling aloe gel for sun-exposed or irritated skin. Works on face and body alike."
+    },
+    {
+      "handle": "coconut-hair-serum",
+      "title": "Coconut Hair Serum",
+      "type": "Hair Serum",
+      "tags": ["hair-care", "sale", "new", "concern-frizzy-hair"],
+      "price": "1550.00",
+      "compareAtPrice": "1950.00",
+      "image": "https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?w=1200&q=80",
+      "body": "A light finishing serum that tames frizz and adds shine to damp or dry hair."
+    }
+  ],
+  "$retagComment": "Products that already carry a compareAtPrice but were never tagged into the Sale collection. They were showing a struck-through price with no way to reach them from the Sale carousel.",
+  "retagAsSale": ["anti-dandruff-shampoo", "gentle-bathing-soap", "vitamin-c-serum"]
+}

@@ -33,6 +33,14 @@
   /* Faint mauve wash used for section backgrounds — mauve at ~4% over white. */
   --fz-mauve-tint: #f7f4f5;
 
+  /*
+    Homepage sections are separated by a hairline, not by alternating
+    backgrounds. The reference draws it at #aaaaaa, which is our existing
+    `--fz-grey-mid` to within two hex points — reusing the token rather than
+    introducing a fifteenth near-identical grey.
+  */
+  --fz-section-divider: var(--fz-grey-mid);
+
   /* -------------------------------------------------- announcement bar */
 
   /*

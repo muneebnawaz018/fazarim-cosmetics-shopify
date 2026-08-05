@@ -98,6 +98,18 @@ Carousels needed the same treatment: Dawn's desktop product sliders are full-ble
 whole viewport with a fake gutter on the first slide, which sliced the last card at the screen
 edge. They are now bounded to the container, so every row ends where the headings end.
 
+Bounding the track broke the card width as a knock-on. Dawn sizes desktop slider cards as
+`(100% - var(--desktop-margin-left-first-item)) / 5 - spacing * 2` — maths that only holds on a
+full-bleed track, where the first term pays for the fake gutter and the second for the card
+peeking in from the right. Against a 1344px container it took 58px + 48px off every card,
+rendering a 249px card at 209px, so five cards filled 1141px of the row and a sixth and part of
+a seventh drifted into view. Cards are now sized off the row itself: 5 x 249.6 + 4 x 24 gap =
+1344 exactly. Five per view, the rest scroll, and the card lands on the reference's 249px.
+
+**A carousel needs more products than columns.** Below six products Dawn renders a plain static
+row with no arrows at all — that is a data condition, not a layout fault. See
+[LAUNCH_CHECKLIST.md](LAUNCH_CHECKLIST.md) on the ten invented products seeded to clear it.
+
 ### Shop by Category — 10 tiles, 5 per row
 
 Matches the reference's "PRODUCT CATEGORIES" pattern: broad categories mixed with specific
