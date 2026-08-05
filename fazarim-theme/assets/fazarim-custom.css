@@ -960,6 +960,17 @@ button.shopify-payment-button__button--unbranded {
   width: min(var(--page-width), 100% - 9.6rem);
   border-top: 0.1rem solid var(--fz-section-divider);
   pointer-events: none;
+
+  /*
+    Load-bearing. Dawn wraps every section's content in
+    `.color-scheme-1.isolate.gradient`, which is `position: relative; z-index: 0`
+    and paints an opaque background across the section's full height. That puts
+    it on the same layer as this pseudo-element (z-index auto resolves to 0), so
+    tree order decides the winner — and `::before` comes first, meaning the white
+    wrapper painted straight over the line. The rule computed correctly the whole
+    time; the pixels just never survived compositing.
+  */
+  z-index: 1;
 }
 
 /*
