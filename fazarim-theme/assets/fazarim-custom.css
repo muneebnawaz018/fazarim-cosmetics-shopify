@@ -387,17 +387,23 @@ button.shopify-payment-button__button--unbranded {
 
 /*
   Nav row, measured off the reference at 1800px rather than eyeballed:
-  14px / 700 / uppercase, tracking effectively zero (theirs is -0.07px).
+  14px / uppercase, tracking effectively zero (theirs is -0.07px).
+
+  Weight is a deliberate departure. The reference runs 700, and this rule did
+  too, but bold uppercase across six items reads heavy next to Outfit Light body
+  copy. 500 went too far the other way and the nav lost its footing, so 600 —
+  present without shouting. 600 is already loaded as a real font file in
+  theme.liquid for buttons, so the browser does not have to fake it.
 
   Typeface stays Outfit. The reference runs DM Sans, but the font is the one
   thing here that is genuinely Fazarim's rather than theirs — Brand Guidelines
-  p.14. Size, weight, tracking and colour all match; the typeface does not.
+  p.14.
 */
 .header__inline-menu .header__menu-item {
   font-size: 1.4rem;
-  font-weight: 700;
+  font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0;
+  letter-spacing: 0.02em;
   padding-block: 1.2rem;
 }
 
@@ -807,16 +813,45 @@ button.shopify-payment-button__button--unbranded {
     flex-direction: column;
   }
 
+  /*
+    Heading to first product measured 94px. Four separate margins stacked to get
+    there: 25px on the h2 inside the title wrapper, another 25px below the
+    wrapper itself, 24px under the view-all link, then 16px of slider padding.
+    Each looked reasonable alone; together they pushed every carousel's products
+    a third of a card away from the heading that names them.
+
+    Zeroing the wrapper and pinning the h2 keeps the heading, link and row as
+    one group.
+  */
   .collection .collection__title {
     order: 0;
+  }
+
+  /*
+    `.title-wrapper` is the third class, not decoration: Dawn sets the wrapper's
+    25px bottom margin through that class, so `.collection .collection__title`
+    only ties at 0-2-0 and loses on load order — the same trap as the heading
+    inset and the arrow hover earlier in this file.
+  */
+  .collection .collection__title.title-wrapper {
+    margin-bottom: 0;
+  }
+
+  .collection .collection__title .title {
     margin-bottom: 0.8rem;
+  }
+
+  /* Dawn floats the slider track 16px clear of whatever precedes it. */
+  .collection slider-component .slider {
+    margin-top: 0.8rem;
+    margin-bottom: 0;
   }
 
   .collection .collection__view-all {
     order: 1;
     width: min(var(--page-width), 100% - 9.6rem);
     align-self: center;
-    margin: 0 0 2.4rem;
+    margin: 0 0 1.6rem;
     text-align: left;
   }
 
@@ -915,10 +950,14 @@ button.shopify-payment-button__button--unbranded {
   within Dawn's 6-column cap, so again no width maths needed.
 */
 
-/* Tile captions: compact, uppercase, centred under the image. */
+/*
+  Tile captions: compact, uppercase, centred under the image. Weight 400 to
+  match the reference's card titles — these ran 600, which left them the only
+  bold text on the page once the section headings dropped to 400.
+*/
 .collection-list .card__heading {
   font-size: 1.3rem;
-  font-weight: 600;
+  font-weight: 400;
   text-transform: uppercase;
   letter-spacing: 0.04em;
   text-align: center;
@@ -1401,4 +1440,56 @@ button.shopify-payment-button__button--unbranded {
 */
 .footer .footer-block__heading {
   margin-bottom: 1.6rem;
+}
+
+/* ---------------------------------------------------------- section headings
+
+  Measured on the reference at 1440: every section heading is 27px, weight 400,
+  uppercase, line-height 29.7 — "PRODUCT CATEGORIES", "SALE", "NEW ARRIVALS"
+  and the rest all share one size. Ours ran Playfair 700 on a 110 heading scale,
+  so they came out both heavier and larger than anything they introduced.
+
+  Two changes sit outside this file, in settings_data.json, because they are the
+  actual source of the weight rather than a symptom:
+
+    type_header_font  playfair_display_n7 -> _n4   (700 -> 400)
+    heading_scale     110 -> 100
+
+  The typeface stays Playfair. The reference sets its headings in DM Sans, the
+  same face as its body copy, but ours is a serif display face by brand — size,
+  weight and case match, the typeface deliberately does not.
+*/
+.collection__title .title,
+.collection-list-title,
+.multicolumn .title,
+.title-wrapper-with-link .title,
+.rich-text__heading,
+.slideshow__heading {
+  font-size: 2.7rem;
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+/* --------------------------------------------------------- hero slide arrows
+
+  Arrows off on the hero; the dots stay and remain the control.
+
+  Scoped on `.slideshow__controls`, which only the hero has. The announcement
+  bar is also a `slideshow-component` but wraps its buttons in
+  `.announcement-bar-slider`, so it keeps its arrows — they are the only way to
+  move between messages there, since it has no dots.
+
+  Scoping this on `.banner` does NOT work: that class sits on a sibling of the
+  controls, not an ancestor of them.
+
+  Dawn's SliderComponent JS reads these buttons on init and would throw if they
+  were removed from the markup, so they are hidden rather than deleted. Keyboard
+  and swipe navigation are unaffected: the dots are real buttons and the track
+  still responds to arrow keys.
+*/
+.slideshow__controls .slider-button--prev,
+.slideshow__controls .slider-button--next {
+  display: none;
 }
