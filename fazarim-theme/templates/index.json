@@ -522,10 +522,24 @@
         "padding_top": 28,
         "padding_bottom": 24
       }
+    },
+    "signup_band": {
+      "type": "fazarim-signup-band",
+      "settings": {
+        "show_logo": true,
+        "heading": "Sign up for skincare notes worth reading",
+        "placeholder": "Enter your email",
+        "button_label": "Subscribe",
+        "image": "shopify://shop_images/photo-1570172619644-dfd03ed5d881.jpg",
+        "image_caption": "Hydra Glow Moisturizer",
+        "padding_top": 32,
+        "padding_bottom": 32
+      }
     }
   },
   "order": [
     "hero",
+    "why_fazarim",
     "category_tiles",
     "sale",
     "new_arrivals",
@@ -534,6 +548,6 @@
     "skincare_grid",
     "hair_care_grid",
     "concerns",
-    "why_fazarim"
+    "signup_band"
   ]
 }

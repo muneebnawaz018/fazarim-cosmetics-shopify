@@ -1104,3 +1104,233 @@ button.shopify-payment-button__button--unbranded {
 .card-information .price--on-sale .price__sale s.price-item--regular {
   margin-right: 0;
 }
+
+/* ------------------------------------------------------- pre-footer sign-up
+
+  Modelled on drunkelephant.com's `.footer-section2`, measured at 1440 on
+  2026-08-05: a 1400x350 flex row, `space-between`, holding a 350px tinted
+  circle, a 700px sign-up column (inner panel 660x350, 5px radius) and a 350px
+  product image. So 25 / 50 / 25.
+
+  Their proportions, our palette: the circle and panel take the brand mauve tint
+  rather than their pale blue, and the heading is our display face rather than
+  their lowercase sans.
+*/
+.fz-signup__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2.4rem;
+  justify-items: center;
+}
+
+@media screen and (min-width: 990px) {
+  .fz-signup__grid {
+    /*
+      25/50/25 by ratio rather than DE's fixed 350px, so the band tracks our
+      container instead of breaking below 1400.
+    */
+    /*
+      Percentages, not `1fr 2fr 1fr`. Fractional units divide what is left AFTER
+      the gaps, so adding a 24px gap either side pulled the squares from 336 to
+      324 — and because they are `aspect-ratio: 1`, the whole band lost that
+      height with them, landing at 24.1% of its own width against the
+      reference's 25.0%. Percentages resolve against the container instead, so
+      the squares hold their quarter and the gap comes out of the middle column.
+    */
+    grid-template-columns: 28% 1fr 28%;
+    align-items: stretch;
+
+    /*
+      Drunk Elephant runs 350 + 700 + 350 = 1400 with no gap at all: their panel
+      butts straight against the product image. It reads fine on their side
+      because the circle is round, so the left join has visual air even without
+      a gap — but the square image on the right has none, and ours showed the
+      same seam.
+    */
+    gap: 2.4rem;
+  }
+}
+
+/* The circle is sized by its own column, so it stays round at any width. */
+.fz-signup__mark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1;
+  width: 100%;
+  max-width: 35rem;
+  border-radius: 50%;
+  background-color: var(--fz-mauve-tint);
+}
+
+.fz-signup__mark-img {
+  width: 58%;
+  height: auto;
+}
+
+.fz-signup__mark-text {
+  font-family: var(--font-heading-family);
+  font-size: 2.4rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.fz-signup__panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  width: 100%;
+
+  /*
+    Stacked, the panel shares the 35rem cap the circle and image already carry —
+    without it the panel ran the full column width and sat 5px proud of them on
+    each side.
+  */
+  max-width: 35rem;
+  padding: 4rem 2.4rem;
+  border-radius: 0.5rem;
+  background-color: var(--fz-mauve-tint);
+  text-align: center;
+}
+
+@media screen and (min-width: 990px) {
+  /*
+    No fixed height. A hard `min-height: 35rem` matched DE's 350px band, but our
+    container is narrower, so the square columns come out 336 and the panel stood
+    14px proud of them. Stretching the row instead lets the circle's own
+    aspect-ratio set the height and the panel follow, at any container width.
+  */
+  .fz-signup__panel {
+    height: 100%;
+
+    /* Side by side the panel is the wide column — the stacked cap must lift. */
+    max-width: none;
+  }
+
+}
+
+.fz-signup__heading {
+  margin: 0;
+  max-width: 30ch;
+  font-family: var(--font-heading-family);
+  font-size: 2rem;
+  line-height: 1.3;
+}
+
+.fz-signup__form {
+  width: 100%;
+  max-width: 45rem;
+}
+
+/*
+  One rounded bar holding field and button, as DE does — theirs is 451x40 with
+  the button inline on the right, not stacked beneath.
+*/
+.fz-signup__field {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  padding: 0 0.6rem 0 2rem;
+  border-radius: 4rem;
+  background-color: rgb(255 255 255 / 70%);
+}
+
+.fz-signup__input {
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 4.4rem;
+  border: 0;
+  background: transparent;
+  font-family: var(--font-body-family);
+  font-size: 1.4rem;
+  color: rgb(var(--color-foreground));
+}
+
+.fz-signup__input:focus {
+  outline: none;
+}
+
+.fz-signup__input:focus-visible {
+  outline: 0.2rem solid rgb(var(--color-foreground));
+  outline-offset: 0.4rem;
+  border-radius: 0.4rem;
+}
+
+.fz-signup__submit {
+  flex: 0 0 auto;
+  padding: 0 2rem;
+  height: 3.4rem;
+  border: 0;
+  border-radius: 4rem;
+  background-color: var(--fz-mauve);
+  color: var(--fz-white);
+  font-family: var(--font-body-family);
+  font-size: 1.2rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.fz-signup__submit:hover {
+  background-color: var(--fz-black);
+}
+
+.fz-signup__message {
+  margin: 1rem 0 0;
+  font-size: 1.3rem;
+}
+
+.fz-signup__message--error {
+  color: rgb(var(--color-error, 200 40 40));
+}
+
+.fz-signup__promo {
+  position: relative;
+  width: 100%;
+  max-width: 35rem;
+  aspect-ratio: 1;
+}
+
+/*
+  `display: block` is doing work: as an inline image it sat on the text
+  baseline, so the promo box measured 345 against the circle's 336.
+*/
+.fz-signup__promo-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Caption chip, lower-left, as on the reference. */
+.fz-signup__caption {
+  position: absolute;
+  left: 1.2rem;
+  bottom: 1.2rem;
+  padding: 0.5rem 1rem;
+  background-color: rgb(255 255 255 / 88%);
+  font-size: 1.2rem;
+  letter-spacing: 0.02em;
+}
+
+/*
+  The 35rem cap on the circle and product image belongs to the stacked layout
+  only. Side by side it fought the column: once the squares were widened past
+  350px they stopped filling their tracks, centred inside them, and the band
+  lost its flush edges — 61 and 1379 instead of 48 and 1392, with the gaps
+  reading 37 against the 24 actually set.
+
+  This lives at the end of the file on purpose. The same override inside the
+  earlier `min-width: 990px` block only fixed the circle: `.fz-signup__promo`
+  declares its cap further down, and at equal specificity the later declaration
+  wins regardless of the media query. Ordering, not specificity.
+*/
+@media screen and (min-width: 990px) {
+  .fz-signup__mark,
+  .fz-signup__promo {
+    max-width: none;
+  }
+}
