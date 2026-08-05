@@ -990,3 +990,137 @@ button.shopify-payment-button__button--unbranded {
 #MainContent > .shopify-section[id$='__promo']::before {
   content: none;
 }
+
+/* ------------------------------------------------------- product card media
+
+  The reference's cards look like product cutouts. They are not: measured on the
+  live site, each is a plain 1080x1080 JPG with `object-fit: fill` and no
+  padding. The framing is baked into the photograph — a studio shot on white,
+  product centred, margin around it. No transparency and no CSS involved.
+
+  Ours are Unsplash lifestyle photographs at 3:2, cropped edge-to-edge by Dawn's
+  `object-fit: cover`, so each card fills with marble, fabric or a hand and the
+  product itself is whatever survives the crop. That reads as a photo gallery
+  rather than a catalogue.
+
+  `contain` on a white field is the closest honest approximation: the whole
+  frame is shown, inset, on the same background the card sits on. It also means
+  the day real square-on-white product shots land, they drop in already framed
+  correctly and this rule becomes a no-op for them.
+
+  Trade-off worth knowing: a 3:2 photo inside a square leaves bands above and
+  below. Cropping hid that by throwing away a third of every image.
+
+  Dawn's rule is `.card__media .media img` (0-3-0) in component-card.css, which
+  loads after this file — `.card__inner` is the fourth class that wins the tie.
+*/
+.card__inner .card__media .media img {
+  object-fit: contain;
+}
+
+/*
+  Transparent, not a colour of its own. Cards carry `card_color_scheme`, which
+  was scheme-2 (the mauve tint) — invisible while full-bleed crops covered every
+  pixel, but the moment the image is inset it framed each product in a tinted
+  square on a white page. That setting is now scheme-1, and leaving this
+  transparent means the card follows whatever scheme it is placed in rather than
+  pinning itself to one.
+*/
+.card__inner .card__media .media {
+  background-color: transparent;
+  padding: 6%;
+}
+
+/*
+  Padding on the media box would normally shrink the image inside it, but Dawn's
+  `.media > img` is absolutely positioned to `inset: 0`, which resolves against
+  the padding box only for statically positioned children. Sizing the image to
+  the content box explicitly keeps the inset honest.
+*/
+.card__inner .card__media .media > img {
+  width: calc(100% - 12%);
+  height: calc(100% - 12%);
+  inset: 6%;
+}
+
+/* --------------------------------------------- product card bottom alignment
+
+  Add-to-cart buttons sat at different heights across a row. Two variables stack
+  up: titles wrap to two lines on longer names, and a sale price wraps to a
+  second line where the regular price does not (measured: price block 45px vs
+  22px). Each card ended up as tall as its own content — 410, 388, 430, 410, 410
+  down one row — so the buttons landed 42px apart.
+
+  The grid items themselves are already equal height (440 each); the problem is
+  that Dawn's wrapper chain between the `li` and the card is `display: block`,
+  so none of that height reaches the card. Stretching the chain and letting the
+  card's last row absorb the slack pins the button to the bottom regardless of
+  how many lines the title or price take.
+
+  `align-content: space-between` rather than flex + `margin-top: auto`: Dawn
+  lays `.card__content` out as a grid with named areas for the badge and
+  quick-add. Converting it to flex would drop those placements; this keeps the
+  grid intact and only changes how leftover vertical space is distributed.
+*/
+.product-grid > li {
+  display: flex;
+}
+
+.product-grid > li > product-component,
+.product-grid > li > .card-wrapper,
+.product-grid > li > product-component > .card-wrapper {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+}
+
+.product-grid .card-wrapper .card {
+  flex: 1 1 auto;
+}
+
+.product-grid .card--standard .card__content {
+  align-content: space-between;
+}
+
+/* ------------------------------------------------------- sale price stacking
+
+  Dawn renders `.price__sale` as `display: inline`, so the struck original and
+  the sale price flow as one line of text and break only when they happen not to
+  fit. Short pairs sat side by side, long ones wrapped — the same card layout
+  reading two different ways down a row.
+
+  A flex column makes the break deliberate: original above, sale below, on every
+  card regardless of how many digits the price has.
+
+  The absolutely-positioned rule below is not cosmetic. `.price__sale` contains
+  two `.visually-hidden` labels ("Regular price" / "Sale price") for screen
+  readers. Inline they collapse, but as flex children they become real rows —
+  measured 16px each, so 32px of empty space in the middle of every price.
+  Taking them out of flow keeps them in the accessibility tree while removing
+  them from the layout.
+*/
+.card-information .price--on-sale .price__sale {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+.card-information .price--on-sale .price__sale > .visually-hidden {
+  position: absolute;
+}
+
+/*
+  Dawn gives the struck price `margin-right: 10px` to separate it from the sale
+  price sitting beside it. Stacked, that margin is dead weight on one side only,
+  so the original rendered 5px left of the sale price below it. The wrapper span
+  centres its child; zeroing the margin is what actually squares the two.
+*/
+.card-information .price--on-sale .price__sale > span:not([class]) {
+  display: flex;
+  justify-content: center;
+}
+
+.card-information .price--on-sale .price__sale s.price-item--regular {
+  margin-right: 0;
+}

@@ -219,6 +219,22 @@ npm run assets:client
 Structure is never touched — `data/store-structure.json` stays as is.
 See the `$warning` field in `data/assets.dummy.json`.
 
+**Shoot specification — give the client this, not "send us photos".** Measured off
+the reference site on 2026-08-05, their product cards are plain **1080x1080 JPGs**:
+studio shot on a white background, product centred, generous margin baked into the
+frame. No transparency, no cutouts, no CSS trickery — the framing is in the file.
+
+Anything shot to that spec drops straight into the current cards. Our placeholders
+are 3:2 Unsplash lifestyle photographs, which is why they letterbox today.
+
+| requirement | value |
+| ----------- | ----- |
+| Aspect | 1:1 square |
+| Size | 1080x1080 minimum |
+| Background | plain white, consistent across the range |
+| Framing | product centred, ~15% clear margin all round |
+| Format | JPG (transparent PNG is not needed and costs more) |
+
 ### Remove Shopify's demo products
 
 The dev store still carries **14 snowboards**, a ski wax, and a gift card that Shopify generated.
