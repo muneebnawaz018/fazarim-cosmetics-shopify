@@ -993,54 +993,34 @@ button.shopify-payment-button__button--unbranded {
 
 /* ------------------------------------------------------- product card media
 
-  The reference's cards look like product cutouts. They are not: measured on the
-  live site, each is a plain 1080x1080 JPG with `object-fit: fill` and no
-  padding. The framing is baked into the photograph — a studio shot on white,
-  product centred, margin around it. No transparency and no CSS involved.
+  Cards fill their square edge to edge, cropping from the centre.
 
-  Ours are Unsplash lifestyle photographs at 3:2, cropped edge-to-edge by Dawn's
-  `object-fit: cover`, so each card fills with marble, fabric or a hand and the
-  product itself is whatever survives the crop. That reads as a photo gallery
-  rather than a catalogue.
+  This was briefly `object-fit: contain` on a white field, to imitate the
+  reference's inset product shots. That was the wrong tool. The reference's
+  cards are plain 1080x1080 JPGs with the margin baked into the photograph —
+  every source image is already square, so `contain` and `cover` render
+  identically there.
 
-  `contain` on a white field is the closest honest approximation: the whole
-  frame is shown, inset, on the same background the card sits on. It also means
-  the day real square-on-white product shots land, they drop in already framed
-  correctly and this rule becomes a no-op for them.
+  Ours are Unsplash lifestyle photographs in mixed orientations: 3:2 landscape,
+  2:3 portrait, some square. `contain` fits each whole frame inside the box, so
+  a landscape shot rendered short and wide, a portrait one tall and narrow, and
+  a row of cards came out visibly ragged with different amounts of white around
+  each. Uniform geometry is worth more than showing the full frame.
 
-  Trade-off worth knowing: a 3:2 photo inside a square leaves bands above and
-  below. Cropping hid that by throwing away a third of every image.
+  `cover` guarantees every card presents the same shape. It throws away the
+  edges of off-ratio images, which is the accepted cost until real square
+  product photography lands — spec in LAUNCH_CHECKLIST.md.
 
-  Dawn's rule is `.card__media .media img` (0-3-0) in component-card.css, which
-  loads after this file — `.card__inner` is the fourth class that wins the tie.
+  Card panels stay on `scheme-1` (white) rather than the mauve tint they used to
+  carry, so nothing shows through where an image fails to load.
 */
 .card__inner .card__media .media img {
-  object-fit: contain;
+  object-fit: cover;
+  object-position: center center;
 }
 
-/*
-  Transparent, not a colour of its own. Cards carry `card_color_scheme`, which
-  was scheme-2 (the mauve tint) — invisible while full-bleed crops covered every
-  pixel, but the moment the image is inset it framed each product in a tinted
-  square on a white page. That setting is now scheme-1, and leaving this
-  transparent means the card follows whatever scheme it is placed in rather than
-  pinning itself to one.
-*/
 .card__inner .card__media .media {
   background-color: transparent;
-  padding: 6%;
-}
-
-/*
-  Padding on the media box would normally shrink the image inside it, but Dawn's
-  `.media > img` is absolutely positioned to `inset: 0`, which resolves against
-  the padding box only for statically positioned children. Sizing the image to
-  the content box explicitly keeps the inset honest.
-*/
-.card__inner .card__media .media > img {
-  width: calc(100% - 12%);
-  height: calc(100% - 12%);
-  inset: 6%;
 }
 
 /* --------------------------------------------- product card bottom alignment
