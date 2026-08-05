@@ -1287,50 +1287,118 @@ button.shopify-payment-button__button--unbranded {
   color: rgb(var(--color-error, 200 40 40));
 }
 
-.fz-signup__promo {
-  position: relative;
+/*
+  Third column: About Us, in place of the reference's product shot.
+
+  It was left bare on white at first, on the theory that a tinted circle plus a
+  tinted panel was already enough colour for one band. Wrong call — the image it
+  replaced was a solid 350px block, so removing it left two contained elements
+  and a run of loose text, and the row stopped reading as a band at all.
+
+  It now takes the same tint, radius and padding as the sign-up panel. Text
+  stays left-aligned rather than centred like the panel: it is a paragraph of
+  address and copy, not a single call to action.
+*/
+.fz-signup__about {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1.2rem;
   width: 100%;
   max-width: 35rem;
   aspect-ratio: 1;
+  padding: 4rem 2.8rem;
+  border-radius: 0.5rem;
+  background-color: var(--fz-mauve-tint);
+}
+
+.fz-signup__about-heading {
+  margin: 0;
+  font-size: 2rem;
+  line-height: 1.3;
+}
+
+.fz-signup__about-text {
+  font-size: 1.4rem;
+  line-height: 1.7;
+}
+
+.fz-signup__about-text p {
+  margin: 0 0 1rem;
+}
+
+.fz-signup__about-text p:last-child {
+  margin-bottom: 0;
+}
+
+.fz-signup__about-link {
+  align-self: flex-start;
+  font-size: 1.4rem;
 }
 
 /*
-  `display: block` is doing work: as an inline image it sat on the text
-  baseline, so the promo box measured 345 against the circle's 336.
-*/
-.fz-signup__promo-img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-/* Caption chip, lower-left, as on the reference. */
-.fz-signup__caption {
-  position: absolute;
-  left: 1.2rem;
-  bottom: 1.2rem;
-  padding: 0.5rem 1rem;
-  background-color: rgb(255 255 255 / 88%);
-  font-size: 1.2rem;
-  letter-spacing: 0.02em;
-}
-
-/*
-  The 35rem cap on the circle and product image belongs to the stacked layout
+  The 35rem cap on the circle and the About column belongs to the stacked layout
   only. Side by side it fought the column: once the squares were widened past
   350px they stopped filling their tracks, centred inside them, and the band
   lost its flush edges — 61 and 1379 instead of 48 and 1392, with the gaps
   reading 37 against the 24 actually set.
 
   This lives at the end of the file on purpose. The same override inside the
-  earlier `min-width: 990px` block only fixed the circle: `.fz-signup__promo`
+  earlier `min-width: 990px` block only fixed the circle: the third column
   declares its cap further down, and at equal specificity the later declaration
   wins regardless of the media query. Ordering, not specificity.
 */
 @media screen and (min-width: 990px) {
   .fz-signup__mark,
-  .fz-signup__promo {
+  .fz-signup__about {
     max-width: none;
   }
+}
+
+/* ------------------------------------------------------------ footer spacing
+
+  The footer carried three separate spacers stacked on top of each other for
+  what is now two short link lists:
+
+    .footer__content-top     padding-bottom  50px
+    .footer__content-bottom  padding-top     30px
+    .footer__copyright       margin-top      15px
+
+  Nearly a hundred pixels of air between the last link and the copyright line.
+  Dawn sizes those for a footer carrying a newsletter, social row and four
+  columns; ours has neither the newsletter (it moved to the sign-up band) nor
+  the brand column (it moved into "Why Choose Fazarim").
+
+  The border on `.footer__content-bottom` already separates the copyright, so
+  the padding is doing the same job twice.
+*/
+.footer .footer__content-top {
+  padding-bottom: 2.4rem;
+}
+
+.footer .footer__content-bottom {
+  padding-top: 1.6rem;
+}
+
+.footer .footer__content-bottom-wrapper .footer__copyright {
+  margin-top: 0;
+}
+
+/*
+  Footer columns.
+
+  This went through two wrong shapes before landing. First the footer was cut to
+  two link lists, which Dawn spread evenly so each block took 660px of a 1344px
+  row while its longest link measured about 110px — two narrow lists trailed by
+  550px of nothing each. Then centring the pair fixed the axis but not the
+  emptiness: a centred huddle on a full-width black band reads worse than the
+  stranded version did.
+
+  Neither was a layout problem. A four-column footer with two columns of content
+  is a content problem, and no amount of alignment fixes it. Brand and Contact
+  are back, so the row is full and Dawn's own even distribution is correct
+  again — hence no grid override here at all, only spacing.
+*/
+.footer .footer-block__heading {
+  margin-bottom: 1.6rem;
 }

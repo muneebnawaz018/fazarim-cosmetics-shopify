@@ -7,8 +7,12 @@
     newsletter         700 wide, inner panel 660 x 350, radius 5px
     promo image        350 x 350, caption chip lower-left
 
-  So 25 / 50 / 25. Their proportions, our palette and type — the panel takes the
-  brand mauve tint rather than their pale blue, and copy is ours.
+  Their proportions, our palette and type — the panel takes the brand mauve tint
+  rather than their pale blue, and copy is ours.
+
+  The third column holds About Us rather than their product shot. That copy used
+  to be a footer block; moving it here is what lets the footer collapse to two
+  link lists.
 
   The email field is Shopify's `customer` form, the same one Dawn's newsletter
   section posts through, so subscribers land in the normal customer list.
@@ -88,15 +92,18 @@
       {%- endform -%}
     </div>
 
-    {%- if section.settings.image != blank -%}
-      <div class="fz-signup__promo">
-        {{
-          section.settings.image
-          | image_url: width: 700
-          | image_tag: loading: 'lazy', class: 'fz-signup__promo-img', widths: '350, 700'
-        }}
-        {%- if section.settings.image_caption != blank -%}
-          <span class="fz-signup__caption">{{ section.settings.image_caption }}</span>
+    {%- if section.settings.about_text != blank or section.settings.about_heading != blank -%}
+      <div class="fz-signup__about">
+        {%- if section.settings.about_heading != blank -%}
+          <h2 class="fz-signup__about-heading">{{ section.settings.about_heading }}</h2>
+        {%- endif -%}
+        {%- if section.settings.about_text != blank -%}
+          <div class="fz-signup__about-text rte">{{ section.settings.about_text }}</div>
+        {%- endif -%}
+        {%- if section.settings.about_link_label != blank -%}
+          <a class="fz-signup__about-link link" href="{{ section.settings.about_link | default: '#' }}">
+            {{ section.settings.about_link_label }}
+          </a>
         {%- endif -%}
       </div>
     {%- endif -%}
@@ -163,17 +170,30 @@
     },
     {
       "type": "header",
-      "content": "Product image"
-    },
-    {
-      "type": "image_picker",
-      "id": "image",
-      "label": "Image"
+      "content": "About"
     },
     {
       "type": "text",
-      "id": "image_caption",
-      "label": "Caption"
+      "id": "about_heading",
+      "label": "Heading",
+      "default": "About Us"
+    },
+    {
+      "type": "richtext",
+      "id": "about_text",
+      "label": "Text",
+      "default": "<p>Science-based skincare, hair care and body care. Safe, effective formulas for everyday self-care.</p><p>Office no. 401, Building A1, Sheranwala Heights, near Izmir Town, Canal Road, Lahore<br/>ceo@fazarim.com</p>"
+    },
+    {
+      "type": "text",
+      "id": "about_link_label",
+      "label": "Link label",
+      "default": "Read our story"
+    },
+    {
+      "type": "url",
+      "id": "about_link",
+      "label": "Link"
     },
     {
       "type": "header",

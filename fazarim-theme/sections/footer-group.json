@@ -5,14 +5,6 @@
     "footer": {
       "type": "footer",
       "blocks": {
-        "brand": {
-          "type": "text",
-          "settings": {
-            "heading": "Fazarim",
-            "subtext": "<p>Science-based skincare, hair care and body care. Safe, effective formulas for everyday self-care.</p><p>Office no. 401, Building A1, Sheranwala Heights, near Izmir Town, Canal Road, Lahore<br>ceo@fazarim.com</p>",
-            "show_social": true
-          }
-        },
         "shop": {
           "type": "link_list",
           "settings": {
@@ -26,26 +18,40 @@
             "heading": "Help",
             "menu": "footer"
           }
+        },
+        "brand": {
+          "type": "brand_information",
+          "settings": {
+            "show_social": false
+          }
+        },
+        "contact": {
+          "type": "text",
+          "settings": {
+            "heading": "Contact",
+            "subtext": "<p>Office no. 401, Building A1, Sheranwala Heights, near Izmir Town, Canal Road, Lahore</p><p>ceo@fazarim.com</p>"
+          }
         }
       },
       "block_order": [
         "brand",
         "shop",
-        "help"
+        "help",
+        "contact"
       ],
       "settings": {
         "color_scheme": "scheme-4",
         "newsletter_enable": false,
         "newsletter_heading": "Subscribe to our emails",
-        "enable_follow_on_shop": true,
-        "show_social": true,
+        "enable_follow_on_shop": false,
+        "show_social": false,
         "enable_country_selector": false,
         "enable_language_selector": false,
         "payment_enable": false,
         "show_policy": true,
         "margin_top": 0,
-        "padding_top": 52,
-        "padding_bottom": 36
+        "padding_top": 32,
+        "padding_bottom": 24
       }
     }
   },

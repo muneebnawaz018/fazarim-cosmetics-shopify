@@ -530,10 +530,12 @@
         "heading": "Sign up for skincare notes worth reading",
         "placeholder": "Enter your email",
         "button_label": "Subscribe",
-        "image": "shopify://shop_images/photo-1570172619644-dfd03ed5d881.jpg",
-        "image_caption": "Hydra Glow Moisturizer",
         "padding_top": 32,
-        "padding_bottom": 32
+        "padding_bottom": 32,
+        "about_heading": "About Us",
+        "about_text": "<p>Science-based skincare, hair care and body care, made in Pakistan. Safe, effective formulas for everyday self-care — no borrowed claims, no filler.</p>",
+        "about_link_label": "Read our story",
+        "about_link": "/pages/about-us"
       }
     }
   },
